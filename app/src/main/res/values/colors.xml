@@ -9,5 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="mainBlue">#007AFF</color>
     <color name="Welcome">#FAFAFA</color>
+    <color name="light_blue">#E3F2FD</color>
+    <color name="blue">#2196F3</color>
+    <color name="dark_blue">#1565C0</color>
+
 
 </resources>
