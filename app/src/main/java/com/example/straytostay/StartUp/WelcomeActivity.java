@@ -1,4 +1,4 @@
-package com.example.straytostay;
+package com.example.straytostay.StartUp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.widget.ImageButton;
+
+import com.example.straytostay.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 

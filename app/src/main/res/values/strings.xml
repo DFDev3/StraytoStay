@@ -12,4 +12,6 @@
     <string name="encuentra_un_nuevo_amigo">Encuentra un nuevo amigo</string>
     <string name="iniciemos">Iniciemos</string>
     <string name="straytostay">StraytoStay</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
