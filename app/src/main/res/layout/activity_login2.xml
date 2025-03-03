@@ -41,6 +41,15 @@
                 android:background="@drawable/edittext_rounded"
                 android:padding="12dp"/>
 
+            <TextView
+                android:id="@+id/email_error"
+                android:paddingTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp"
+                android:visibility="gone"/>
+
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
@@ -50,6 +59,15 @@
                 android:background="@drawable/edittext_rounded"
                 android:padding="12dp"
                 android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/password_error"
+                android:paddingTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/login_button"

@@ -44,6 +44,15 @@
                     android:background="@drawable/edittext_rounded"
                     android:padding="12dp"/>
 
+                <TextView
+                    android:id="@+id/name_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/last_name"
                     android:layout_width="match_parent"
@@ -53,6 +62,14 @@
                     android:padding="12dp"
                     android:layout_marginTop="8dp"/>
 
+                <TextView
+                    android:id="@+id/lastname_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
                 <EditText
                     android:id="@+id/phone"
                     android:layout_width="match_parent"
@@ -63,6 +80,15 @@
                     android:padding="12dp"
                     android:layout_marginTop="8dp"/>
 
+                <TextView
+                    android:id="@+id/phone_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/citizen_id"
                     android:layout_width="match_parent"
@@ -72,6 +98,15 @@
                     android:padding="12dp"
                     android:layout_marginTop="8dp"/>
 
+                <TextView
+                    android:id="@+id/citizenid_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/neighborhood"
                     android:layout_width="match_parent"
@@ -80,6 +115,15 @@
                     android:background="@drawable/edittext_rounded"
                     android:padding="12dp"
                     android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/neighborhood_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/email"
@@ -91,6 +135,15 @@
                     android:padding="12dp"
                     android:layout_marginTop="8dp"/>
 
+                <TextView
+                    android:id="@+id/email_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
@@ -100,6 +153,15 @@
                     android:background="@drawable/edittext_rounded"
                     android:padding="12dp"
                     android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/password_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:paddingTop="4dp"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/register_button"

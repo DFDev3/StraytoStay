@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailInput, passwordInput;
     private Button loginButton;
-    private TextView registerText;
+    private TextView registerText, emailError, passwordError;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
@@ -35,7 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         emailInput = findViewById(R.id.email);
+        emailError = findViewById(R.id.email_error);
         passwordInput = findViewById(R.id.password);
+        passwordError = findViewById(R.id.password_error);
         loginButton = findViewById(R.id.login_button);
         registerText = findViewById(R.id.register_text);
         progressBar = findViewById(R.id.progress_bar);
@@ -59,12 +61,17 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
 
+        emailError.setVisibility(View.GONE);
+        passwordError.setVisibility(View.GONE);
+
         if (TextUtils.isEmpty(email)) {
-            emailInput.setError("Email is required");
+            emailError.setText("Email is required");
+            emailError.setVisibility(View.VISIBLE);
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            passwordInput.setError("Password is required");
+            passwordError.setText("Password is required");
+            passwordError.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -74,13 +81,34 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        String errorMessage;
+                        Exception exception = task.getException();
+
+                        if (exception != null) {
+                            String errorCode = exception.getMessage();
+
+                            if (errorCode.contains("badly formatted")) {
+                                errorMessage = "Invalid email format";
+                            } else if (errorCode.contains("password is invalid") || errorCode.contains("The supplied auth credential is incorrect")) {
+                                errorMessage = "Incorrect password";
+                            } else if (errorCode.contains("no user record corresponding")) {
+                                errorMessage = "No account found with this email";
+                            } else {
+                                errorMessage = "Authentication failed. Please try again.";
+                            }
+                        } else {
+                            errorMessage = "Unknown error occurred.";
+                        }
+
+                        passwordError.setText(errorMessage);
+                        passwordError.setVisibility(View.VISIBLE);
                     }
                 });
     }
+
+
 
 }

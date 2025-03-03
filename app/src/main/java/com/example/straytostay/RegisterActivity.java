@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private TextView nameError, lastNameError, phoneError, emailError, passwordError, citizenidError, neighborhoodError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
+        nameError = findViewById(R.id.name_error);
+        lastNameError = findViewById(R.id.lastname_error);
+        phoneError = findViewById(R.id.phone_error);
+        emailError = findViewById(R.id.email_error);
+        passwordError = findViewById(R.id.password_error);
+        citizenidError = findViewById(R.id.citizenid_error);
+        neighborhoodError = findViewById(R.id.neighborhood_error);
         nameInput = findViewById(R.id.name);
         lastNameInput = findViewById(R.id.last_name);
         phoneInput = findViewById(R.id.phone);
@@ -58,51 +66,74 @@ public class RegisterActivity extends AppCompatActivity {
         String name = nameInput.getText().toString().trim();
         String lastName = lastNameInput.getText().toString().trim();
         String phone = phoneInput.getText().toString().trim();
-        String citizenId = citizenIdInput.getText().toString().trim();
-        String neighborhood = neighborhoodInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
+        String citizenid = citizenIdInput.getText().toString().trim();
+        String neighborhood = neighborhoodInput.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(RegisterActivity.this, "Email and Password are required", Toast.LENGTH_SHORT).show();
-            return;
+        // Hide previous errors
+        nameError.setVisibility(View.GONE);
+        lastNameError.setVisibility(View.GONE);
+        phoneError.setVisibility(View.GONE);
+        emailError.setVisibility(View.GONE);
+        passwordError.setVisibility(View.GONE);
+
+
+        boolean hasError = false;
+
+        if (TextUtils.isEmpty(name)) {
+            nameError.setText("First name is required");
+            nameError.setVisibility(View.VISIBLE);
+            hasError = true;
         }
+        if (TextUtils.isEmpty(lastName)) {
+            lastNameError.setText("Last name is required");
+            lastNameError.setVisibility(View.VISIBLE);
+            hasError = true;
+        }
+        if (TextUtils.isEmpty(phone) || phone.length() < 10) {
+            phoneError.setText("Enter a valid phone number");
+            phoneError.setVisibility(View.VISIBLE);
+            hasError = true;
+        }
+        if (TextUtils.isEmpty(citizenid)) {
+            citizenidError.setText("Citizen ID is required");
+            citizenidError.setVisibility(View.VISIBLE);
+            hasError = true;
+        }
+        if (TextUtils.isEmpty(neighborhood)) {
+            neighborhoodError.setText("Neighborhood is required");
+            neighborhoodError.setVisibility(View.VISIBLE);
+            hasError = true;
+        }
+        if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailError.setText("Enter a valid email address");
+            emailError.setVisibility(View.VISIBLE);
+            hasError = true;
+        }
+        if (TextUtils.isEmpty(password) || password.length() < 6) {
+            passwordError.setText("Password must be at least 6 characters");
+            passwordError.setVisibility(View.VISIBLE);
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            saveUserData(user.getUid(), name, lastName, phone, citizenId, neighborhood, email);
-                        }
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(RegisterActivity.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
-
-    private void saveUserData(String userId, String name, String lastName, String phone, String citizenId, String neighborhood, String email) {
-        User user = new User(name, lastName, phone, citizenId, neighborhood, email, 0); // AdminID = 0
-
-        db.collection("users").document(userId).set(user)
-                .addOnCompleteListener(task -> {
+                .addOnCompleteListener(this, task -> {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
                     } else {
-                        // NEW: If Firestore fails, delete the user from Authentication to avoid ghost accounts
-                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                        if (currentUser != null) {
-                            currentUser.delete();
-                        }
-                        Toast.makeText(RegisterActivity.this, "Failed to save user data. Please try again.", Toast.LENGTH_SHORT).show();
+                        String errorMessage = task.getException().getMessage();
+                        emailError.setText(errorMessage);
+                        emailError.setVisibility(View.VISIBLE);
                     }
                 });
     }
+
 
 }
