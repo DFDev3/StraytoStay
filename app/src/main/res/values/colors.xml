@@ -12,11 +12,9 @@
     <color name="light_blue">#E3F2FD</color>
     <color name="blue">#2196F3</color>
     <color name="dark_blue">#1565C0</color>
-    <color name="light_pink">#FFD1D1</color>
-    <color name="bottom_nav_inactive">#B0B0B0</color>
-    <color name="bottom_nav_active">#FF4081</color>
-    <color name="light_gray">#888C8C</color>
-
+    <color name="light_gray">#acb9bd</color>
+    <color name="light_pink">#d9add3</color>
+    <color name="red">#FF004E</color>
 
 
 

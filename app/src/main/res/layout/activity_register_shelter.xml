@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/light_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/shelter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Shelter Name" />
+
+        <EditText
+            android:id="@+id/shelter_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address" />
+
+        <EditText
+            android:id="@+id/shelter_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/shelter_permiso_ica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Permiso ICA" />
+
+        <EditText
+            android:id="@+id/shelter_nit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="NIT" />
+
+        <EditText
+            android:id="@+id/shelter_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/shelter_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <!-- Profit / Non-Profit Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is the shelter Profit or Non-Profit?"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:paddingTop="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/shelter_profit_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/profit_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profit" />
+
+            <RadioButton
+                android:id="@+id/profit_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non-Profit" />
+        </RadioGroup>
+
+        <!-- Vets Availability Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the shelter have vets available?"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:paddingTop="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/shelter_vets_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/vets_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/vets_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/shelter_register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
+</ScrollView>

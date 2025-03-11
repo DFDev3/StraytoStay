@@ -5,10 +5,4 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="BottomNavActive">
-        <item name="android:color">@color/bottom_nav_active</item>
-        <item name="android:background">@color/light_pink</item>
-    </style>
-
-
 </resources>

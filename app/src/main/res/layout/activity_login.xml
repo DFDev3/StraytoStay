@@ -81,10 +81,20 @@
                 android:background="@drawable/button_rounded"/>
 
             <TextView
-                android:id="@+id/register_text"
+                android:id="@+id/register_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account? Register"
+                android:textColor="@color/dark_blue"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/register_shelter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register as a shelter"
                 android:textColor="@color/dark_blue"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"

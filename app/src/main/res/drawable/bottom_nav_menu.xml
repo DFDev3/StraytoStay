@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_find"
+        android:icon="@drawable/instagram_icon"
+        android:title="Find your"/>
+
+    <item
+        android:id="@+id/nav_adopt"
+        android:icon="@drawable/instagram_icon"
+        android:title="Adopt"/>
+
+    <item
+        android:id="@+id/nav_photo"
+        android:icon="@drawable/instagram_icon"
+        android:title="Photo"/>
+
+    <item
+        android:id="@+id/nav_adoption"
+        android:icon="@drawable/instagram_icon"
+        android:title="Adoption"/>
+
+    <item
+        android:id="@+id/nav_meet"
+        android:icon="@drawable/instagram_icon"
+        android:title="Meet the"/>
+</menu>

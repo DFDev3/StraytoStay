@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private Button loginButton;
-    private TextView registerText, emailError, passwordError;
+    private TextView registerUser, registerShelter, emailError, passwordError;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
@@ -37,7 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.password);
         passwordError = findViewById(R.id.password_error);
         loginButton = findViewById(R.id.login_button);
-        registerText = findViewById(R.id.register_text);
+        registerUser = findViewById(R.id.register_user);
+        registerShelter = findViewById(R.id.register_shelter);
         progressBar = findViewById(R.id.progress_bar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -47,10 +48,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        registerText.setOnClickListener(new View.OnClickListener() {
+        registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        registerShelter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterShelterActivity.class));
             }
         });
     }

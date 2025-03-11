@@ -18,6 +18,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".StartUp.RegisterShelterActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".StartUp.RegisterActivity"
             android:exported="false" />
         <activity
