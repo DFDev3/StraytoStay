@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:gravity="center_horizontal"
+    tools:context=".HomeActivity">
+
+    <!-- Header reutilizable -->
+    <include
+        layout="@layout/header" />
+
+    <!-- Contenido central de la pantalla -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Aquí va el contenido específico de la vista de inicio -->
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¡Bienvenido a StrayToStay!"
+                android:textColor="#005BA1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="16dp" />
+
+            <!-- Puedes agregar más Cards, imágenes o RecyclerViews aquí -->
+            <include layout="@layout/card_actualizacion" />
+            <include layout="@layout/card_actualizacion" />
+
+            <!-- ... -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Barra de navegación inferior reutilizable -->
+    <include
+        layout="@layout/bottom_nav_bar" />
+
+</LinearLayout>

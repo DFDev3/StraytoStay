@@ -16,6 +16,12 @@
     <color name="bottom_nav_inactive">#B0B0B0</color>
     <color name="bottom_nav_active">#FF4081</color>
     <color name="light_gray">#888C8C</color>
+    <color name="nav_icon_color">#004080</color>
+    <color name="nav_text_color">#004080</color>
+    <color name="blue_primary">#1E88E5</color>
+    <color name="orange_primary">#FB8C00</color>
+
+
 
 
 
