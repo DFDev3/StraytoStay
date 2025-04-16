@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomNavbar"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="#005BA1"
+    android:paddingHorizontal="24dp"
+    android:weightSum="5">
+
+<ImageView
+android:id="@+id/nav_home"
+android:layout_width="0dp"
+android:layout_height="40dp"
+android:layout_weight="1"
+android:src="@drawable/Inicio"
+android:contentDescription="Inicio" />
+
+<ImageView
+android:id="@+id/nav_pets"
+android:layout_width="0dp"
+android:layout_height="40dp"
+android:layout_weight="1"
+android:src="@drawable/Mascotas"
+android:contentDescription="Mascotas" />
+
+<ImageView
+android:id="@+id/nav_entities"
+android:layout_width="0dp"
+android:layout_height="40dp"
+android:layout_weight="1"
+android:src="@drawable/Entidades"
+android:contentDescription="Entidades" />
+
+<ImageView
+android:id="@+id/nav_resources"
+android:layout_width="0dp"
+android:layout_height="40dp"
+android:layout_weight="1"
+android:src="@drawable/Recursos"
+android:contentDescription="Recursos" />
+
+<ImageView
+android:id="@+id/nav_profile"
+android:layout_width="0dp"
+android:layout_height="40dp"
+android:layout_weight="1"
+android:src="@drawable/Perfil"
+android:contentDescription="Perfil" />
+    </LinearLayout>
