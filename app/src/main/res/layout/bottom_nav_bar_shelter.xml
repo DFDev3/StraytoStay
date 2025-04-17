@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navBarEntidad"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_gravity="bottom"
+    android:background="@color/blue_primary"
+    android:padding="4dp">
+
+    <ImageButton
+        android:id="@+id/nav_adopcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_adopciones"
+        android:contentDescription="@string/adopcion"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:tint="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/nav_seguimiento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_seguimiento"
+        android:contentDescription="@string/seguimiento"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:tint="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/nav_perfil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_perfil"
+        android:contentDescription="@string/perfil"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:tint="@android:color/white" />
+
+</LinearLayout>

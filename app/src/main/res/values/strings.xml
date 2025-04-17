@@ -13,6 +13,10 @@
     <string name="iniciemos">Iniciemos</string>
     <string name="straytostay">StraytoStay</string>
     <string name="app_logo">StraytoStay</string>
+    <string name="adopcion">Animales</string>
+    <string name="seguimiento">Seguimiento</string>
+    <string name="perfil">Perfil</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
