@@ -12,7 +12,7 @@
     <!-- 🔹 Header fixed at top -->
     <include
         android:id="@+id/header"
-        layout="@layout/header" />
+        layout="@layout/comp_header" />
 
     <!-- 🔹 Fragment container in the middle, fills remaining space -->
     <FrameLayout
@@ -24,6 +24,6 @@
     <!-- 🔹 Fixed custom bottom navbar -->
     <include
         android:id="@+id/bottomNavbarEntidad"
-        layout="@layout/bottom_nav_bar_shelter"/>
+        layout="@layout/comp_navbar_shelter"/>
 
 </LinearLayout>

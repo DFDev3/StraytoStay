@@ -23,7 +23,7 @@ public class FindFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         // Inflar el layout principal del fragmento
-        View view = inflater.inflate(R.layout.fragment_mascotas_adoptante, container, false);
+        View view = inflater.inflate(R.layout.adop_find_fragment, container, false);
 
         // Buscar los spinners desde el layout incluido
         spinnerTipo = view.findViewById(R.id.spinnerTipo);

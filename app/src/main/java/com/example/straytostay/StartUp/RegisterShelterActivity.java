@@ -33,7 +33,7 @@ public class RegisterShelterActivity  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_shelter);
+        setContentView(R.layout.shelter_register_activity);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

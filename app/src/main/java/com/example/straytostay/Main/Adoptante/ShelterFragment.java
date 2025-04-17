@@ -14,6 +14,6 @@ public class ShelterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_shelter, container, false);
+        return inflater.inflate(R.layout.adop_entities_fragment, container, false);
     }
 }

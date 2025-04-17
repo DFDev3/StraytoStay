@@ -14,6 +14,6 @@ public class FollowUpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_follow_up, container, false);
+        return inflater.inflate(R.layout.shelter_followup_fragment, container, false);
     }
 }

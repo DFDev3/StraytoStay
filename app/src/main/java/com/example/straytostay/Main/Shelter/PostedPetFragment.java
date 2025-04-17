@@ -14,6 +14,6 @@ public class PostedPetFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_posted_pet, container, false);
+        return inflater.inflate(R.layout.shelter_postedpet_fragment, container, false);
     }
 }

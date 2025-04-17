@@ -16,7 +16,7 @@ public class BaseAdoptanteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base); // The XML with LinearLayout and <include>s
+        setContentView(R.layout.adop_base_activity); // The XML with LinearLayout and <include>s
 
         // Find all navbar icons
         navHome = findViewById(R.id.nav_home);

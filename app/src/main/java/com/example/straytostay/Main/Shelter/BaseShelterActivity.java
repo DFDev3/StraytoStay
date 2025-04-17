@@ -18,7 +18,7 @@ public class BaseShelterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_shelter); // The XML with LinearLayout and <include>s
+        setContentView(R.layout.shelter_base); // The XML with LinearLayout and <include>s
 
         // Find all navbar icons;
         navPets = findViewById(R.id.nav_adopcion);

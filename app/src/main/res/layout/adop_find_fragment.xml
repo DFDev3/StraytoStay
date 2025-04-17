@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <!-- Barra de filtro arriba -->
-    <include layout="@layout/fragment_filter_bar_adoptante"/>
+    <include layout="@layout/comp_search_filter"/>
 
     <!-- Cards debajo -->
     <ScrollView
@@ -19,8 +19,8 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <include layout="@layout/fragment_card_animal" />
-            <include layout="@layout/fragment_card_animal" />
+            <include layout="@layout/comp_card_pet" />
+            <include layout="@layout/comp_card_pet" />
 
 
         </LinearLayout>
