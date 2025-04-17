@@ -23,7 +23,7 @@ public class BaseAdoptanteActivity extends AppCompatActivity {
         navPets = findViewById(R.id.nav_pets);
         navEntities = findViewById(R.id.nav_entities);
         navResources = findViewById(R.id.nav_resources);
-        navProfile = findViewById(R.id.nav_profile);
+        navProfile = findViewById(R.id.nav_profile_adop);
 
         // Set default fragment (home)
         if (savedInstanceState == null) {

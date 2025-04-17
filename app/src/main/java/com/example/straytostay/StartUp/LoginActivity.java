@@ -2,6 +2,7 @@ package com.example.straytostay.StartUp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         if (adminId != null) {
                                             int role = adminId.intValue();
+                                            Log.e("YOOOOOOOOO", "rol: " + role);
                                             routeUserByRole(role);
                                         } else {
                                             Toast.makeText(LoginActivity.this, "Missing user role.", Toast.LENGTH_SHORT).show();
@@ -125,10 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
 
-
-                        startActivity(new Intent(this, BaseAdoptanteActivity.class));
-
-                        finish();
                     } else {
                         String errorMessage;
                         Exception exception = task.getException();

@@ -88,7 +88,7 @@ public class RegisterShelterActivity  extends AppCompatActivity {
 
                         // Store shelter data in Firestore with adminID = 2
                         Map<String, Object> shelterData = new HashMap<>();
-                        shelterData.put("adminID", 1);
+                        shelterData.put("adminId", 1);
                         shelterData.put("name", name);
                         shelterData.put("address", address);
                         shelterData.put("phone", phone);
