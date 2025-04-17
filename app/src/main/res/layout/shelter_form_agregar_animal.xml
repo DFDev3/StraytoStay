@@ -134,5 +134,15 @@
             android:textStyle="bold"
             android:layout_marginBottom="32dp"/>
 
+        <Button
+            android:id="@+id/btnConfirmPublish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirmar publicacion"
+            android:background="@drawable/bg_button_border_blue"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp"/>
+
     </LinearLayout>
 </ScrollView>

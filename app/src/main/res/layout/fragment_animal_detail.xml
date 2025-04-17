@@ -58,7 +58,15 @@
             android:textSize="16sp"
             android:textColor="#424242"
             android:layout_marginBottom="8dp" />
-
+        <!-- Esterilizado -->
+        <TextView
+            android:id="@+id/textEsterilizado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Esterilizado"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
         <!-- Descripción -->
         <TextView
             android:id="@+id/textDescripcion"
