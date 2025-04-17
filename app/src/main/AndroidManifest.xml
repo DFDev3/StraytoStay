@@ -16,6 +16,9 @@
             android:name=".Main.Shelter.BaseShelterActivity"
             android:exported="false" />
         <activity
+            android:name=".Main.Shelter.FormAgregarAnimalActivity"
+            android:exported="false" />
+        <activity
             android:name=".Main.Admin.BaseAdminActivity"
             android:exported="false" />
         <activity
