@@ -16,14 +16,14 @@ public class BaseAdoptanteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base); // The XML with LinearLayout and <include>s
+        setContentView(R.layout.adop_base_activity); // The XML with LinearLayout and <include>s
 
         // Find all navbar icons
         navHome = findViewById(R.id.nav_home);
         navPets = findViewById(R.id.nav_pets);
         navEntities = findViewById(R.id.nav_entities);
         navResources = findViewById(R.id.nav_resources);
-        navProfile = findViewById(R.id.nav_profile);
+        navProfile = findViewById(R.id.nav_profile_adop);
 
         // Set default fragment (home)
         if (savedInstanceState == null) {

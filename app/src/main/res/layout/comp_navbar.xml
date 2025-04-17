@@ -43,7 +43,7 @@ android:src="@drawable/recursos"
 android:contentDescription="Recursos" />
 
 <ImageView
-android:id="@+id/nav_profile"
+android:id="@+id/nav_profile_adop"
 android:layout_width="0dp"
 android:layout_height="40dp"
 android:layout_weight="1"

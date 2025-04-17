@@ -35,8 +35,8 @@
                 android:paddingTop="16dp" />
 
             <!-- Puedes agregar más Cards, imágenes o RecyclerViews aquí -->
-            <include layout="@layout/card_actualizacion" />
-            <include layout="@layout/card_actualizacion" />
+            <include layout="@layout/comp_card_news" />
+            <include layout="@layout/comp_card_news" />
 
             <!-- ... -->
 
