@@ -16,7 +16,33 @@
     <string name="adopcion">Animales</string>
     <string name="seguimiento">Seguimiento</string>
     <string name="perfil">Perfil</string>
+    <!-- Título del formulario -->
+    <string name="agregar_animal">Agregar Animal</string>
 
+    <!-- Campos del formulario -->
+    <string name="nombre">Nombre</string>
+    <string name="edad">Edad</string>
+    <string name="raza">Raza</string>
+    <string name="tipo">Tipo</string>
+    <string name="vacunas">Vacunas</string>
+    <string name="esterilizacion">Esterilización</string>
+    <string name="tamano">Tamaño</string>
+    <string name="descripcion">Descripción</string>
+
+    <!-- Botón -->
+    <string name="agregar_imagen">+ Agregar imagen</string>
+
+    <!-- Opciones para los spinners -->
+    <string-array name="tipo_array">
+        <item>Perro</item>
+        <item>Gato</item>
+        <item>Otro</item>
+    </string-array>
+
+    <string-array name="esterilizacion_array">
+        <item>Sí</item>
+        <item>No</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

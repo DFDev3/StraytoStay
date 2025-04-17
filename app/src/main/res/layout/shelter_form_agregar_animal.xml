@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#F0F0F0"> <!-- Fondo gris claro para contraste -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="8dp"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        android:clipToPadding="false"
+        android:layout_marginBottom="32dp">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/agregar_animal"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#0D47A1"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Nombre -->
+        <EditText
+            android:id="@+id/inputNombre"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/nombre"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
+
+        <!-- Edad -->
+        <EditText
+            android:id="@+id/inputEdad"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/edad"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="number" />
+
+        <!-- Raza -->
+        <EditText
+            android:id="@+id/inputRaza"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/raza"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
+
+        <!-- Tipo -->
+        <Spinner
+            android:id="@+id/spinnerTipo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Esterilización -->
+        <Spinner
+            android:id="@+id/spinnerEsterilizacion"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Sexo -->
+        <Spinner
+            android:id="@+id/spinnerSexo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Vacunas -->
+        <EditText
+            android:id="@+id/inputVacunas"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/vacunas"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
+
+        <!-- Tamaño -->
+        <EditText
+            android:id="@+id/inputTamano"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/tamano"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
+
+        <!-- Descripción -->
+        <EditText
+            android:id="@+id/inputDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:hint="@string/descripcion"
+            android:gravity="top"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp"
+            android:inputType="textMultiLine" />
+
+        <!-- Botón Agregar Imagen -->
+        <Button
+            android:id="@+id/btnAgregarImagen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/agregar_imagen"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#FFA726"
+            android:background="@drawable/rounded_button_orange"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp"/>
+
+    </LinearLayout>
+</ScrollView>
