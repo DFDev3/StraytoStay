@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.straytostay.Main.Adoptante.FollowUpFragment;
-import com.example.straytostay.Main.Adoptante.PostedPetFragment;
+import com.example.straytostay.Main.Shelter.PostedPetFragment;
 import com.example.straytostay.R;
 
 public class BaseShelterActivity extends AppCompatActivity {

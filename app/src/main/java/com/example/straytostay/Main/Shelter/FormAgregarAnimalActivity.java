@@ -2,29 +2,37 @@ package com.example.straytostay.Main.Shelter;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.straytostay.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AgregarAnimalActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class FormAgregarAnimalActivity extends AppCompatActivity {
 
     private EditText inputNombre, inputEdad, inputRaza, inputVacunas, inputTamano, inputDescripcion;
     private Spinner spinnerTipo, spinnerEsterilizacion, spinnerSexo;
     private Button btnAgregarImagen;
-
+    private FirebaseFirestore db;
     private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_formulario_agregar_animal); // Asegúrate del nombre
+        setContentView(R.layout.shelter_form_agregar_animal); // Asegúrate del nombre
 
         // Inicializar Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("animales");
+        databaseReference = FirebaseDatabase.getInstance().getReference("mascotas");
 
         // Referencias UI
         inputNombre = findViewById(R.id.inputNombre);
@@ -33,7 +41,6 @@ public class AgregarAnimalActivity extends AppCompatActivity {
         inputVacunas = findViewById(R.id.inputVacunas);
         inputTamano = findViewById(R.id.inputTamano);
         inputDescripcion = findViewById(R.id.inputDescripcion);
-
         spinnerTipo = findViewById(R.id.spinnerTipo);
         spinnerEsterilizacion = findViewById(R.id.spinnerEsterilizacion);
         spinnerSexo = findViewById(R.id.spinnerSexo);
@@ -91,12 +98,16 @@ public class AgregarAnimalActivity extends AppCompatActivity {
         animal.put("descripcion", descripcion);
 
         // Guardar en Firebase
-        databaseReference.child(id).setValue(animal).addOnSuccessListener(unused -> {
-            Toast.makeText(this, "Animal registrado correctamente", Toast.LENGTH_SHORT).show();
-            finish(); // O limpia los campos si prefieres
-        }).addOnFailureListener(e -> {
-            Toast.makeText(this, "Error al registrar: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        });
+        db.collection("mascotas")
+                .document(id)
+                .set(animal)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(this, "Animal registrado correctamente", Toast.LENGTH_SHORT).show();
+                    finish(); // o limpiar campos si prefieres
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error al registrar: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }
 

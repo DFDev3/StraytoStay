@@ -1,49 +1,70 @@
 package com.example.straytostay.Main.Adoptante;
-
+import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
-public class DetalleAnimalActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnimalDetail extends Fragment {
 
     private ImageView imageAnimal;
     private TextView textNombre, textEdadRaza, textSexo, textTamano,
-            textContenidoDescripcion, textNombreRefugio;
-    private LinearLayout layoutVacunas;
+    textContenidoDescripcion, textNombreRefugio, textVacunas;
 
     private DatabaseReference databaseReference;
     private String animalId;
 
+    public static AnimalDetail newInstance(String animalId) {
+        AnimalDetail fragment = new AnimalDetail();
+        Bundle args = new Bundle();
+        args.putString("animalId", animalId);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_animal); // Asegúrate de usar el layout correcto
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.adop_animal_detail, container, false);
 
-        // Recibir ID desde Intent
-        animalId = getIntent().getStringExtra("animalId");
+        // Obtener ID del animal desde argumentos
+        if (getArguments() != null) {
+            animalId = getArguments().getString("animalId");
+        }
 
-        // Inicializar vistas
-        imageAnimal = findViewById(R.id.imageAnimal);
-        textNombre = findViewById(R.id.textNombre);
-        textEdadRaza = findViewById(R.id.textEdadRaza);
-        textSexo = findViewById(R.id.textSexo);
-        textTamano = findViewById(R.id.textTamano);
-        textContenidoDescripcion = findViewById(R.id.textContenidoDescripcion);
-        textNombreRefugio = findViewById(R.id.textNombreRefugio);
-        layoutVacunas = findViewById(R.id.layoutVacunas);
+        // Referencias UI
+        imageAnimal = view.findViewById(R.id.imageAnimal);
+        textNombre = view.findViewById(R.id.textNombre);
+        textEdadRaza = view.findViewById(R.id.textEdadRaza);
+        textSexo = view.findViewById(R.id.textSexo);
+        textTamano = view.findViewById(R.id.textTamano);
+        textContenidoDescripcion = view.findViewById(R.id.textContenidoDescripcion);
+        textNombreRefugio = view.findViewById(R.id.textNombreRefugio);
+        textVacunas = view.findViewById(R.id.layoutVacunas);
 
-        // Obtener referencia Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("animales").child(animalId);
+        // Firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference("mascotas").child(animalId);
 
-        // Cargar datos
         cargarDatosAnimal();
+
+        return view;
     }
 
     private void cargarDatosAnimal() {
@@ -59,44 +80,23 @@ public class DetalleAnimalActivity extends AppCompatActivity {
                     String tamano = snapshot.child("tamano").getValue(String.class);
                     String descripcion = snapshot.child("descripcion").getValue(String.class);
                     String refugio = snapshot.child("refugio").getValue(String.class);
-                    String imagenUrl = snapshot.child("imagenUrl").getValue(String.class); // opcional
+                    String imagenUrl = snapshot.child("imagenUrl").getValue(String.class);
+                    String vacunas = snapshot.child("vacunas").getValue(String.class);
 
-                    List<String> vacunas = new ArrayList<>();
-                    for (DataSnapshot v : snapshot.child("vacunas").getChildren()) {
-                        vacunas.add(v.getValue(String.class));
-                    }
-
-                    // Setear datos
                     textNombre.setText(nombre);
                     textEdadRaza.setText(edad + " · " + raza);
                     textSexo.setText("Sexo: " + sexo);
                     textTamano.setText("Tamaño: " + tamano);
                     textContenidoDescripcion.setText(descripcion);
                     textNombreRefugio.setText(refugio);
+                    textVacunas.setText(vacunas);
 
-                    // Cargar vacunas como lista
-                    layoutVacunas.removeAllViews();
-                    for (String vacuna : vacunas) {
-                        TextView vText = new TextView(DetalleAnimalActivity.this);
-                        vText.setText("- " + vacuna);
-                        vText.setTextColor(Color.DKGRAY);
-                        vText.setTextSize(15);
-                        layoutVacunas.addView(vText);
-                    }
-
-                    // Si usas imagen
-                    if (imagenUrl != null && !imagenUrl.isEmpty()) {
-                        Glide.with(DetalleAnimalActivity.this)
-                                .load(imagenUrl)
-                                .centerCrop()
-                                .into(imageAnimal);
-                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(DetalleAnimalActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error al cargar datos", Toast.LENGTH_SHORT).show();
             }
         });
     }
