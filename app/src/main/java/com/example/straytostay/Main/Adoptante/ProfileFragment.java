@@ -71,20 +71,6 @@ public class ProfileFragment extends Fragment {
                         if (documentSnapshot.exists()) {
                             Log.d("ProfileFragment", "User data found in Firestore (users)");
                             displayUserInfo(documentSnapshot, "User");
-                        } else {
-                            // If user not found in "users", try "shelters"
-                            db.collection("shelters").document(uid)
-                                    .get()
-                                    .addOnSuccessListener(shelterSnapshot -> {
-                                        if (shelterSnapshot.exists()) {
-                                            Log.d("ProfileFragment", "Shelter data found in Firestore (shelters)");
-                                            displayUserInfo(shelterSnapshot, "Shelter");
-                                        } else {
-                                            Log.e("ProfileFragment", "User/Shelter not found in Firestore");
-                                            userTypeText.setText("User Type: Not found");
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> Log.e("ProfileFragment", "Error fetching shelter data", e));
                         }
                     })
                     .addOnFailureListener(e -> Log.e("ProfileFragment", "Error fetching user data", e));
@@ -95,11 +81,12 @@ public class ProfileFragment extends Fragment {
 
     private void displayUserInfo(DocumentSnapshot documentSnapshot, String userType) {
         String name = documentSnapshot.getString("name");
+        String lastName = documentSnapshot.getString("lastName");
         String phone = documentSnapshot.getString("phone");
         String address = documentSnapshot.contains("address") ? documentSnapshot.getString("address") : "N/A";
-        Long adminId = documentSnapshot.contains("adminID") ? documentSnapshot.getLong("adminID") : -1;
+        Long adminId = documentSnapshot.contains("adminId") ? documentSnapshot.getLong("adminId") : -1;
 
-        nameText.setText("Name: " + (name != null ? name : "N/A"));
+        nameText.setText("Name: " + (name != null ? name : "N/A") + " " + (lastName != null ? lastName :"N/A"));
         phoneText.setText("Phone: " + (phone != null ? phone : "N/A"));
         addressText.setText("Address: " + address);
         adminIdText.setText("AdminID: " + adminId);

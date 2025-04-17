@@ -14,8 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.straytostay.Main.Adoptante.BaseActivity;
-import com.example.straytostay.Main.Adoptante.HomeFragment;
+import com.example.straytostay.Main.Adoptante.BaseAdoptanteActivity;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -100,12 +99,12 @@ public class RegisterShelterActivity  extends AppCompatActivity {
                         shelterData.put("hasVets", hasVets);
 
 
-                        db.collection("shelters").document(shelterId)
+                        db.collection("users").document(shelterId)
                                 .set(shelterData)
                                 .addOnSuccessListener(aVoid -> {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(RegisterShelterActivity.this, "Shelter Registered Successfully", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(RegisterShelterActivity.this, BaseActivity.class));
+                                    startActivity(new Intent(RegisterShelterActivity.this, BaseAdoptanteActivity.class));
                                     finish();
                                 })
                                 .addOnFailureListener(e -> {

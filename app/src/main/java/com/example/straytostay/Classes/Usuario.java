@@ -1,24 +1,24 @@
-package com.example.straytostay.models;
+package com.example.straytostay.Classes;
 
-public class User {
+public class Usuario {
     private String name;
     private String lastName;
     private String phone;
     private String citizenId;
-    private String neighborhood;
+    private String address;
     private String email;
     private int adminId;
 
-    public User() {
+    public Usuario() {
         // Required empty constructor for Firestore
     }
 
-    public User(String name, String lastName, String phone, String citizenId, String neighborhood, String email, int adminId) {
+    public Usuario(String name, String lastName, String phone, String citizenId, String address, String email, int adminId) {
         this.name = name;
         this.lastName = lastName;
         this.phone = phone;
         this.citizenId = citizenId;
-        this.neighborhood = neighborhood;
+        this.address = address;
         this.email = email;
         this.adminId = adminId;
     }
@@ -56,12 +56,12 @@ public class User {
         this.citizenId = citizenId;
     }
 
-    public String getNeighborhood() {
-        return neighborhood;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {

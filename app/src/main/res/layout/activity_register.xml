@@ -78,10 +78,10 @@
 
         <!-- Barrio -->
         <EditText
-            android:id="@+id/neighborhoodInput"
+            android:id="@+id/addressInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Barrio"
+            android:hint="  Dirección"
             android:drawableLeft="@drawable/ic_location"
             android:padding="12dp"
             android:background="@drawable/edittext_background"

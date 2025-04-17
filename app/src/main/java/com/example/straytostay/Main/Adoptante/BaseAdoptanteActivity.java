@@ -1,7 +1,6 @@
 package com.example.straytostay.Main.Adoptante;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,13 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.straytostay.R;
-import com.example.straytostay.Main.Adoptante.HomeFragment;
-import com.example.straytostay.Main.Adoptante.FindFragment;
-import com.example.straytostay.Main.Adoptante.ShelterFragment;
-import com.example.straytostay.Main.Adoptante.TipsFragment;
-import com.example.straytostay.Main.Adoptante.ProfileFragment;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseAdoptanteActivity extends AppCompatActivity {
 
     private ImageView navHome, navPets, navEntities, navResources, navProfile;
 
