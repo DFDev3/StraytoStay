@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/comp_postulante_card" />
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agendar visita"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#0D47A1"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Fecha -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona una fecha:"
+            android:textColor="#424242"
+            android:layout_marginBottom="4dp" />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="true"
+            android:spinnersShown="false"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Franja horaria -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Franja horaria:"
+            android:textColor="#424242"
+            android:layout_marginBottom="4dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupFranja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/radioManana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mañana" />
+
+            <RadioButton
+                android:id="@+id/radioTarde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tarde"
+                android:layout_marginStart="24dp" />
+        </RadioGroup>
+
+        <!-- Botón agendar -->
+
+        <!-- Card de postulante (reutilizable si aplica) -->
+        <Button
+            android:id="@+id/btnAgendarCita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/rounded_button_orange"
+            android:backgroundTint="#388E3C"
+            android:padding="12dp"
+            android:text="Agendar cita"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+</ScrollView>

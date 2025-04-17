@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Imagen del animal -->
+        <ImageView
+            android:id="@+id/imageAnimal"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_input_rounded"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Nombre, edad y raza -->
+        <TextView
+            android:id="@+id/textNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Luna"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#0D47A1" />
+
+        <TextView
+            android:id="@+id/textEdadRaza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 años · Gata mestiza"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Sexo -->
+        <TextView
+            android:id="@+id/textSexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sexo: Hembra"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Tamaño -->
+        <TextView
+            android:id="@+id/textTamano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tamaño: Mediano"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
+        <!-- Estado -->
+        <TextView
+            android:id="@+id/textEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado: Adopcion"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/textDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción"
+            android:textStyle="bold"
+            android:textColor="#0D47A1"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/textContenidoDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luna es una gata juguetona y cariñosa que ama dormir al sol."
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Vacunas -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vacunas"
+            android:textStyle="bold"
+            android:textColor="#0D47A1"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutVacunas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+            <!-- Vacunas individuales se agregarán dinámicamente -->
+        </LinearLayout>
+        <include layout="@layout/comp_buttons_animal_en_estado_adopcion" />
+        <include layout="@layout/comp_postulante_card" />
+        <include layout="@layout/comp_seguimiento" />
+
+
+
+    </LinearLayout>
+</ScrollView>
