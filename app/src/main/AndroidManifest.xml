@@ -12,20 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StraytoStay"
         tools:targetApi="31">
-
         <activity
-            android:name="BaseActivity"
+            android:name=".Main.Adoptante.BaseActivity"
             android:exported="false" />
-
         <activity
             android:name=".StartUp.RegisterShelterActivity"
             android:exported="false" />
-
         <activity
             android:name=".StartUp.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".StartUp.WelcomeActivity"
+            android:name=".StartUp.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.StraytoStay">
             <intent-filter>
@@ -35,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StartUp.LoginActivity"
+            android:name=".Main.Adoptante.HomeAdoptanteActivity"
             android:exported="false"
             android:theme="@style/Theme.StraytoStay" />
     </application>

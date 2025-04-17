@@ -32,22 +32,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        nameError = findViewById(R.id.name_error);
-        lastNameError = findViewById(R.id.lastname_error);
-        phoneError = findViewById(R.id.phone_error);
-        emailError = findViewById(R.id.email_error);
-        passwordError = findViewById(R.id.password_error);
-        citizenidError = findViewById(R.id.citizenid_error);
-        neighborhoodError = findViewById(R.id.neighborhood_error);
-        nameInput = findViewById(R.id.name);
-        lastNameInput = findViewById(R.id.last_name);
-        phoneInput = findViewById(R.id.phone);
-        citizenIdInput = findViewById(R.id.citizen_id);
-        neighborhoodInput = findViewById(R.id.neighborhood);
-        emailInput = findViewById(R.id.email);
-        passwordInput = findViewById(R.id.password);
-        registerButton = findViewById(R.id.register_button);
-        progressBar = findViewById(R.id.progress_bar);
+        nameInput = findViewById(R.id.firstNameInput);
+        lastNameInput = findViewById(R.id.lastNameInput);
+        phoneInput = findViewById(R.id.phoneInput);
+        citizenIdInput = findViewById(R.id.idInput);
+        neighborhoodInput = findViewById(R.id.neighborhoodInput);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        registerButton = findViewById(R.id.registerButton);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,7 +15,7 @@ android:id="@+id/nav_home"
 android:layout_width="0dp"
 android:layout_height="40dp"
 android:layout_weight="1"
-android:src="@drawable/Inicio"
+android:src="@drawable/inicio"
 android:contentDescription="Inicio" />
 
 <ImageView
@@ -23,7 +23,7 @@ android:id="@+id/nav_pets"
 android:layout_width="0dp"
 android:layout_height="40dp"
 android:layout_weight="1"
-android:src="@drawable/Mascotas"
+android:src="@drawable/mascotas"
 android:contentDescription="Mascotas" />
 
 <ImageView
@@ -31,7 +31,7 @@ android:id="@+id/nav_entities"
 android:layout_width="0dp"
 android:layout_height="40dp"
 android:layout_weight="1"
-android:src="@drawable/Entidades"
+android:src="@drawable/entidades"
 android:contentDescription="Entidades" />
 
 <ImageView
@@ -39,7 +39,7 @@ android:id="@+id/nav_resources"
 android:layout_width="0dp"
 android:layout_height="40dp"
 android:layout_weight="1"
-android:src="@drawable/Recursos"
+android:src="@drawable/recursos"
 android:contentDescription="Recursos" />
 
 <ImageView
@@ -47,6 +47,6 @@ android:id="@+id/nav_profile"
 android:layout_width="0dp"
 android:layout_height="40dp"
 android:layout_weight="1"
-android:src="@drawable/Perfil"
+android:src="@drawable/perfil"
 android:contentDescription="Perfil" />
     </LinearLayout>

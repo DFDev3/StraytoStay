@@ -1,5 +1,6 @@
-package com.example.straytostay.Main;
+package com.example.straytostay.Main.Adoptante;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.straytostay.R;
+import com.example.straytostay.StartUp.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -42,8 +44,14 @@ public class ProfileFragment extends Fragment {
 
         // Logout button
         logoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            nameText.setVisibility(View.GONE);
+            phoneText.setVisibility(View.GONE);
+            addressText.setVisibility(View.GONE);
+            adminIdText.setVisibility(View.GONE);
             mAuth.signOut();
-            getActivity().finish(); // Closes the app or navigate to login
+
         });
 
         return view;
@@ -95,7 +103,6 @@ public class ProfileFragment extends Fragment {
         phoneText.setText("Phone: " + (phone != null ? phone : "N/A"));
         addressText.setText("Address: " + address);
         adminIdText.setText("AdminID: " + adminId);
-        userTypeText.setText("User Type: " + userType);
 
         Log.d("ProfileFragment", "Fetched user data: Name=" + name + ", Phone=" + phone + ", Address=" + address + ", AdminID=" + adminId);
     }
