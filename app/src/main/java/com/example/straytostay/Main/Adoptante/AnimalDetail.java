@@ -10,57 +10,94 @@ import android.view.ViewGroup;
 
 import com.example.straytostay.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AnimalDetail#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AnimalDetail extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class DetalleAnimalActivity extends AppCompatActivity {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ImageView imageAnimal;
+    private TextView textNombre, textEdadRaza, textSexo, textTamano,
+            textContenidoDescripcion, textNombreRefugio;
+    private LinearLayout layoutVacunas;
 
-    public AnimalDetail() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AnimalDetail.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AnimalDetail newInstance(String param1, String param2) {
-        AnimalDetail fragment = new AnimalDetail();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private DatabaseReference databaseReference;
+    private String animalId;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        setContentView(R.layout.activity_detalle_animal); // Asegúrate de usar el layout correcto
+
+        // Recibir ID desde Intent
+        animalId = getIntent().getStringExtra("animalId");
+
+        // Inicializar vistas
+        imageAnimal = findViewById(R.id.imageAnimal);
+        textNombre = findViewById(R.id.textNombre);
+        textEdadRaza = findViewById(R.id.textEdadRaza);
+        textSexo = findViewById(R.id.textSexo);
+        textTamano = findViewById(R.id.textTamano);
+        textContenidoDescripcion = findViewById(R.id.textContenidoDescripcion);
+        textNombreRefugio = findViewById(R.id.textNombreRefugio);
+        layoutVacunas = findViewById(R.id.layoutVacunas);
+
+        // Obtener referencia Firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference("animales").child(animalId);
+
+        // Cargar datos
+        cargarDatosAnimal();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_animal_detail, container, false);
+    private void cargarDatosAnimal() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    String nombre = snapshot.child("nombre").getValue(String.class);
+                    String edad = snapshot.child("edad").getValue(String.class);
+                    String raza = snapshot.child("raza").getValue(String.class);
+                    String sexo = snapshot.child("sexo").getValue(String.class);
+                    String tamano = snapshot.child("tamano").getValue(String.class);
+                    String descripcion = snapshot.child("descripcion").getValue(String.class);
+                    String refugio = snapshot.child("refugio").getValue(String.class);
+                    String imagenUrl = snapshot.child("imagenUrl").getValue(String.class); // opcional
+
+                    List<String> vacunas = new ArrayList<>();
+                    for (DataSnapshot v : snapshot.child("vacunas").getChildren()) {
+                        vacunas.add(v.getValue(String.class));
+                    }
+
+                    // Setear datos
+                    textNombre.setText(nombre);
+                    textEdadRaza.setText(edad + " · " + raza);
+                    textSexo.setText("Sexo: " + sexo);
+                    textTamano.setText("Tamaño: " + tamano);
+                    textContenidoDescripcion.setText(descripcion);
+                    textNombreRefugio.setText(refugio);
+
+                    // Cargar vacunas como lista
+                    layoutVacunas.removeAllViews();
+                    for (String vacuna : vacunas) {
+                        TextView vText = new TextView(DetalleAnimalActivity.this);
+                        vText.setText("- " + vacuna);
+                        vText.setTextColor(Color.DKGRAY);
+                        vText.setTextSize(15);
+                        layoutVacunas.addView(vText);
+                    }
+
+                    // Si usas imagen
+                    if (imagenUrl != null && !imagenUrl.isEmpty()) {
+                        Glide.with(DetalleAnimalActivity.this)
+                                .load(imagenUrl)
+                                .centerCrop()
+                                .into(imageAnimal);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DetalleAnimalActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
