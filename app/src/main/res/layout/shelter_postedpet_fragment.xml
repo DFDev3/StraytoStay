@@ -1,6 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Barra de filtro arriba -->
+    <include layout="@layout/comp_btn_agregar_animal"/>
+
+    <!-- Cards debajo -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <include layout="@layout/comp_card_animal_shelter" />
+            <include layout="@layout/comp_card_animal_shelter" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
