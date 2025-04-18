@@ -99,15 +99,13 @@
             android:inputType="text" />
 
         <!-- Tamaño -->
-        <EditText
-            android:id="@+id/inputTamano"
+        <Spinner
+            android:id="@+id/spinnerTamanoForm"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="@string/tamano"
             android:background="@drawable/bg_input_rounded"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:inputType="text" />
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
 
         <!-- Descripción -->
         <EditText

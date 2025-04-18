@@ -27,7 +27,7 @@ public class FindFragment extends Fragment {
 
         // Buscar los spinners desde el layout incluido
         spinnerTipo = view.findViewById(R.id.spinnerTipo);
-        spinnerTamano = view.findViewById(R.id.spinnerTamano);
+        spinnerTamano = view.findViewById(R.id.spinnerTamanoForm);
         spinnerEdad = view.findViewById(R.id.spinnerEdad);
 
         configurarSpinners();

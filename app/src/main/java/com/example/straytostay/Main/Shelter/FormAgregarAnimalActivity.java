@@ -3,11 +3,9 @@ package com.example.straytostay.Main.Shelter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,15 +26,13 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    private EditText inputNombre, inputEdad, inputRaza, inputVacunas, inputTamano, inputDescripcion;
-    private Spinner spinnerTipo, spinnerEsterilizacion, spinnerSexo;
+    private EditText inputNombre, inputEdad, inputRaza, inputVacunas, inputDescripcion;
+    private Spinner spinnerTipo, spinnerEsterilizacion, spinnerSexo, spinnerTamano;
     private Button btnSeleccionarImagen, btnPublicar;
-    private ImageView imagePreview;
 
     private Uri imageUri;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
     private FirebaseFirestore db;
+    private StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,32 +40,35 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         setContentView(R.layout.shelter_form_agregar_animal);
 
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference("mascotas");
+        storageRef = FirebaseStorage.getInstance().getReference();
 
-        // Referencias UI
+        // UI references
         inputNombre = findViewById(R.id.inputNombre);
         inputEdad = findViewById(R.id.inputEdad);
         inputRaza = findViewById(R.id.inputRaza);
         inputVacunas = findViewById(R.id.inputVacunas);
-        inputTamano = findViewById(R.id.inputTamano);
         inputDescripcion = findViewById(R.id.inputDescripcion);
 
         spinnerTipo = findViewById(R.id.spinnerTipo);
         spinnerEsterilizacion = findViewById(R.id.spinnerEsterilizacion);
         spinnerSexo = findViewById(R.id.spinnerSexo);
+        spinnerTamano = findViewById(R.id.spinnerTamanoForm);
 
         btnSeleccionarImagen = findViewById(R.id.btnAgregarImagen);
-        btnPublicar = findViewById(R.id.btnAgregarImagen);
+        btnPublicar = findViewById(R.id.btnConfirmPublish);
 
-        // Spinners
+        // Spinner adapters
         spinnerTipo.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Perro", "Gato"}));
         spinnerEsterilizacion.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Esterilizado", "Sin esterilizar"}));
         spinnerSexo.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Macho", "Hembra"}));
+        spinnerTamano.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Pequeño", "Mediano", "Grande"}));
 
-        // Eventos
+        // Listeners
         btnSeleccionarImagen.setOnClickListener(v -> openFileChooser());
+
         btnPublicar.setOnClickListener(v -> {
+            if (!validateFields()) return;
+
             if (imageUri != null) {
                 subirImagenYGuardarDatos();
             } else {
@@ -79,29 +78,27 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
     }
 
     private void openFileChooser() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            imagePreview.setImageURI(imageUri);
-            imagePreview.setVisibility(View.VISIBLE);
         }
     }
 
     private void subirImagenYGuardarDatos() {
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
+
         fileRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
-                        .addOnSuccessListener(uri -> guardarAnimalEnFirestore(uri.toString())))
-                .addOnFailureListener(e -> Toast.makeText(this, "Error al subir imagen: " + e.getMessage(), Toast.LENGTH_LONG).show());
+                        .addOnSuccessListener(uri -> guardarAnimalEnFirestore(uri.toString()))
+                        .addOnFailureListener(e -> showToast("Failed to get image URL: " + e.getMessage())))
+                .addOnFailureListener(e -> showToast("Error uploading image: " + e.getMessage()));
     }
 
     private void guardarAnimalEnFirestore(String imageUrl) {
@@ -112,17 +109,13 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         String esterilizado = spinnerEsterilizacion.getSelectedItem().toString();
         String sexo = spinnerSexo.getSelectedItem().toString();
         String vacunasTexto = inputVacunas.getText().toString().trim();
-        String tamano = inputTamano.getText().toString().trim();
+        String tamano = spinnerTamano.getSelectedItem().toString();
         String descripcion = inputDescripcion.getText().toString().trim();
-
-        if (nombre.isEmpty() || edad.isEmpty() || raza.isEmpty() || vacunasTexto.isEmpty() || tamano.isEmpty() || descripcion.isEmpty()) {
-            Toast.makeText(this, "Por favor completa todos los campos.", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         List<String> vacunas = Arrays.asList(vacunasTexto.split(","));
 
         String id = db.collection("mascotas").document().getId();
+
         Map<String, Object> animal = new HashMap<>();
         animal.put("id", id);
         animal.put("nombre", nombre);
@@ -134,9 +127,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         animal.put("vacunas", vacunas);
         animal.put("tamano", tamano);
         animal.put("descripcion", descripcion);
-        if (imageUrl != null) {
-            animal.put("imagenUrl", imageUrl);
-        }
+        if (imageUrl != null) animal.put("imagenUrl", imageUrl);
 
         db.collection("mascotas").document(id)
                 .set(animal)
@@ -144,6 +135,23 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
                     Toast.makeText(this, "Animal registrado correctamente", Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Error al registrar: " + e.getMessage(), Toast.LENGTH_LONG).show());
+                .addOnFailureListener(e -> showToast("Error al registrar: " + e.getMessage()));
+    }
+
+    private boolean validateFields() {
+        if (inputNombre.getText().toString().trim().isEmpty()
+                || inputEdad.getText().toString().trim().isEmpty()
+                || inputRaza.getText().toString().trim().isEmpty()
+                || inputVacunas.getText().toString().trim().isEmpty()
+                || spinnerTamano.getSelectedItem() == null
+                || inputDescripcion.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Por favor completa todos los campos.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
