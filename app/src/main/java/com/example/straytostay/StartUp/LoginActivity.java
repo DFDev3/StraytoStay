@@ -68,8 +68,28 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             // User is already logged in
-            startActivity(new Intent(LoginActivity.this, BaseAdoptanteActivity.class));
-            finish(); // prevent returning to login
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            String uid = firebaseUser.getUid();
+
+            FirebaseFirestore.getInstance()
+                    .collection("users") // or "shelters" depending on your structure
+                    .document(uid)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            Long adminId = documentSnapshot.getLong("adminId");
+
+                            if (adminId != null) {
+                                int role = adminId.intValue();
+                                Log.e("YOOOOOOOOO", "rol: " + role);
+                                routeUserByRole(role);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Missing user role.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(LoginActivity.this, "User data not found.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 

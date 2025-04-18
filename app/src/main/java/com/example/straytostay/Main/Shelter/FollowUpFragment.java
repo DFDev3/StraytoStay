@@ -1,4 +1,4 @@
-package com.example.straytostay.Main.Adoptante;
+package com.example.straytostay.Main.Shelter;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

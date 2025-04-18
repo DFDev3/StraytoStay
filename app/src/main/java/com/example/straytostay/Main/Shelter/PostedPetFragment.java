@@ -10,7 +10,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import com.example.straytostay.Main.Shelter.FormAgregarAnimalActivity;
 import com.example.straytostay.R;
 
 public class PostedPetFragment extends Fragment {
