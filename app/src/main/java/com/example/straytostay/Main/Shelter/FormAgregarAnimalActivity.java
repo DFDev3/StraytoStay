@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -108,29 +109,28 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         String tipo = spinnerTipo.getSelectedItem().toString();
         String esterilizado = spinnerEsterilizacion.getSelectedItem().toString();
         String sexo = spinnerSexo.getSelectedItem().toString();
-        String vacunasTexto = inputVacunas.getText().toString().trim();
+        String vacunas = inputVacunas.getText().toString().trim();
         String tamano = spinnerTamano.getSelectedItem().toString();
         String descripcion = inputDescripcion.getText().toString().trim();
 
-        List<String> vacunas = Arrays.asList(vacunasTexto.split(","));
 
         String id = db.collection("mascotas").document().getId();
 
-        Map<String, Object> animal = new HashMap<>();
-        animal.put("id", id);
-        animal.put("nombre", nombre);
-        animal.put("edad", edad);
-        animal.put("raza", raza);
-        animal.put("tipo", tipo);
-        animal.put("esterilizacion", esterilizado);
-        animal.put("sexo", sexo);
-        animal.put("vacunas", vacunas);
-        animal.put("tamano", tamano);
-        animal.put("descripcion", descripcion);
-        if (imageUrl != null) animal.put("imagenUrl", imageUrl);
+        Mascota mascota = new Mascota();
+        mascota.setId(id);
+        mascota.setNombre(nombre);
+        mascota.setEdad(edad);
+        mascota.setRaza(raza);
+        mascota.setTipo(tipo);
+        mascota.setEsterilizacion(esterilizado);
+        mascota.setSexo(sexo);
+        mascota.setVacunas(mascota.getVacunas());
+        mascota.setTamano(tamano);
+        mascota.setDescripcion(descripcion);
+        mascota.setImagenUrl(imageUrl);
 
         db.collection("mascotas").document(id)
-                .set(animal)
+                .set(mascota)
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(this, "Animal registrado correctamente", Toast.LENGTH_SHORT).show();
                     finish();

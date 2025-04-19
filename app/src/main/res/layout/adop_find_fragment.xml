@@ -7,22 +7,17 @@
     <include layout="@layout/comp_search_filter"/>
 
     <!-- Cards debajo -->
-    <ScrollView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMascotas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:clipToPadding="false" />
+    </LinearLayout>
 
-            <include layout="@layout/comp_card_pet" />
-            <include layout="@layout/comp_card_pet" />
-
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

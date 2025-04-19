@@ -10,27 +10,45 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.straytostay.Classes.Mascota;
+import com.example.straytostay.Main.Adapters.MascotaAdapter;
 import com.example.straytostay.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FindFragment extends Fragment {
 
     private Spinner spinnerTipo, spinnerTamano, spinnerEdad;
+    private RecyclerView recyclerView;
+    private MascotaAdapter petAdapter;
+    private List<Mascota> listaMascotas = new ArrayList<>();
+
+    private FirebaseFirestore db;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
-        // Inflar el layout principal del fragmento
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.adop_find_fragment, container, false);
 
-        // Buscar los spinners desde el layout incluido
         spinnerTipo = view.findViewById(R.id.spinnerTipo);
-        spinnerTamano = view.findViewById(R.id.spinnerTamanoForm);
+        spinnerTamano = view.findViewById(R.id.spinnerTamanoSearch);
         spinnerEdad = view.findViewById(R.id.spinnerEdad);
 
+        recyclerView = view.findViewById(R.id.recyclerMascotas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        petAdapter = new MascotaAdapter(requireContext(),listaMascotas);
+        recyclerView.setAdapter(petAdapter);
+
         configurarSpinners();
+
+        db = FirebaseFirestore.getInstance();
+        cargarMascotas();
 
         return view;
     }
@@ -56,5 +74,21 @@ public class FindFragment extends Fragment {
         ArrayAdapter<String> edadAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, edades);
         edadAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEdad.setAdapter(edadAdapter);
+    }
+
+    private void cargarMascotas() {
+        db.collection("mascotas")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    listaMascotas.clear();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        Mascota mascota = doc.toObject(Mascota.class);
+                        listaMascotas.add(mascota);
+                    }
+                    petAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                    // Puedes mostrar un Toast si quieres manejar errores
+                });
     }
 }
