@@ -1,6 +1,9 @@
 package com.example.straytostay.Main.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,12 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
         holder.nombre.setText(mascota.getNombre());
         holder.tipo.setText(mascota.getTipo());
         holder.edad.setText("Edad: " + mascota.getEdad());
+
+        if (mascota.getImagenUrl() != null && !mascota.getImagenUrl().isEmpty()) {
+            byte[] imageBytes = Base64.decode(mascota.getImagenUrl(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            holder.imagen.setImageBitmap(bitmap);
+        }
 
 //        // Load image if available
 //        if (mascota.getImagenUrl() != null && !mascota.getImagenUrl().isEmpty()) {

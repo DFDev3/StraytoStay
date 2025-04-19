@@ -1,8 +1,11 @@
 package com.example.straytostay.Main.Shelter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -84,13 +89,34 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), PICK_IMAGE_REQUEST);
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
+
+            // Convert the image to base64
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                Bitmap resized = Bitmap.createScaledBitmap(bitmap, 400, 400, true);  // Resize
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                resized.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);  // Compress
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
+                // Store the encoded image
+                // You can either store it directly in Firestore or pass it to the upload method
+                guardarAnimalEnFirestore(encodedImage);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
     private void subirImagenYGuardarDatos() {
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
@@ -102,7 +128,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> showToast("Error uploading image: " + e.getMessage()));
     }
 
-    private void guardarAnimalEnFirestore(String imageUrl) {
+    private void guardarAnimalEnFirestore(String encodedImage) {
         String nombre = inputNombre.getText().toString().trim();
         String edad = inputEdad.getText().toString().trim();
         String raza = inputRaza.getText().toString().trim();
@@ -127,7 +153,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         mascota.setVacunas(mascota.getVacunas());
         mascota.setTamano(tamano);
         mascota.setDescripcion(descripcion);
-        mascota.setImagenUrl(imageUrl);
+        mascota.setImagenUrl(encodedImage);
 
         db.collection("mascotas").document(id)
                 .set(mascota)
