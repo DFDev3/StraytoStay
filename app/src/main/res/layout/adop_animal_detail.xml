@@ -96,24 +96,16 @@
             android:textColor="#0D47A1"
             android:textSize="18sp"
             android:layout_marginBottom="8dp" />
+
+
         <TextView
             android:id="@+id/textVacunas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="tetano"
+            android:text="Tetano"
             android:textSize="16sp"
             android:textColor="#424242"
             android:layout_marginBottom="16dp" />
-
-        <LinearLayout
-            android:id="@+id/layoutVacunas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp">
-            <!-- Vacunas individuales se agregarán dinámicamente -->
-        </LinearLayout>
 
         <!-- Botón aplicar -->
         <Button
