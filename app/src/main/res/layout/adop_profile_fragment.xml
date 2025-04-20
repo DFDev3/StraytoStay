@@ -4,83 +4,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@color/light_gray">
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#FFFFFF">
 
-    <!-- Profile Header -->
-    <TextView
-        android:id="@+id/profile_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/dark_blue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- User Info -->
-    <TextView
-        android:id="@+id/profile_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Foto de perfil -->
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_perfil"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/circle_background" />
+
+    <!-- Nombre -->
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre Apellido"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/profile_header"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+
 
     <TextView
         android:id="@+id/profile_email"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="correo@ejemplo.com"
         android:textSize="16sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/profile_name"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginBottom="4dp" />
 
     <TextView
         android:id="@+id/profile_phone"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phone"
+        android:text="Teléfono"
         android:textSize="16sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/profile_email"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:id="@+id/profile_address"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address"
+        android:text="Dirección del usuario"
         android:textSize="16sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/profile_phone"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginBottom="4dp" />
 
-    <TextView
-        android:id="@+id/profile_admin_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AdminID"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/profile_address"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <!-- Formulario de adopción -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Formulario de adopción:"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btn_fill_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Llenar / Rehacer formulario"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button_border_blue_primary"
+            android:backgroundTint="@color/blue_primary"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Estado de adopción -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adopción en curso:"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_adoption_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sin adopción en curso"
+            android:layout_marginBottom="24dp" />
+
 
     <!-- Logout Button -->
     <Button
         android:id="@+id/profile_logout_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:backgroundTint="@color/red"
-        android:textColor="@color/white"
+        android:text="Cerrar sesión"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_button_border_blue"
         app:layout_constraintTop_toBottomOf="@id/profile_admin_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
+        <Button
+            android:id="@+id/btn_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eliminar cuenta"
+            android:textColor="@color/red"
+            android:background="@drawable/bg_button_border_red" />
+    </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

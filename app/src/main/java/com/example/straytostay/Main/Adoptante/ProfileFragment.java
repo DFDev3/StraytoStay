@@ -37,7 +37,6 @@ public class ProfileFragment extends Fragment {
         emailText = view.findViewById(R.id.profile_email);
         phoneText = view.findViewById(R.id.profile_phone);
         addressText = view.findViewById(R.id.profile_address);
-        adminIdText = view.findViewById(R.id.profile_admin_id);
         logoutButton = view.findViewById(R.id.profile_logout_button);
 
         fetchUserDetails();
@@ -86,10 +85,10 @@ public class ProfileFragment extends Fragment {
         String address = documentSnapshot.contains("address") ? documentSnapshot.getString("address") : "N/A";
         Long adminId = documentSnapshot.contains("adminId") ? documentSnapshot.getLong("adminId") : -1;
 
-        nameText.setText("Name: " + (name != null ? name : "N/A") + " " + (lastName != null ? lastName :"N/A"));
+        nameText.setText((name != null ? name : "N/A") + " " + (lastName != null ? lastName :"N/A"));
         phoneText.setText("Phone: " + (phone != null ? phone : "N/A"));
         addressText.setText("Address: " + address);
-        adminIdText.setText("AdminID: " + adminId);
+
 
         Log.d("ProfileFragment", "Fetched user data: Name=" + name + ", Phone=" + phone + ", Address=" + address + ", AdminID=" + adminId);
     }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main.Adoptante.ShelterFragment">
-
+<include layout="@layout/comp_card_shelter"/>
     <TextView
         android:id="@+id/title_text"
         android:layout_width="wrap_content"
