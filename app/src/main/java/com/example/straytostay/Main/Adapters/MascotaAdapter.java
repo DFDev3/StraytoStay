@@ -1,19 +1,25 @@
 package com.example.straytostay.Main.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Mascota;
+import com.example.straytostay.Main.Adoptante.AnimalDetail;
 import com.example.straytostay.R;
 
 import java.util.List;
@@ -48,15 +54,26 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
             holder.imagen.setImageBitmap(bitmap);
         }
 
-//        // Load image if available
-//        if (mascota.getImagenUrl() != null && !mascota.getImagenUrl().isEmpty()) {
-//            Glide.with(context)
-//                    .load(mascota.getImagenUrl())
-//                    .placeholder(R.drawable.placeholder_image)
-//                    .into(holder.imagen);
-//        } else {
-//            holder.imagen.setImageResource(R.drawable.placeholder_image);
-//        }
+        holder.detail.setOnClickListener(v -> {
+            Mascota mascotaChosen = mascotaList.get(position);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("animalId", mascotaChosen.getId()); // assuming getId() returns the Firebase ID
+
+
+            AnimalDetail fragment = new AnimalDetail();
+            fragment.setArguments(bundle);
+
+            FragmentTransaction transaction = ((AppCompatActivity) v.getContext())
+                    .getSupportFragmentManager()
+                    .beginTransaction();
+
+            transaction.replace(R.id.fragment_container, fragment); // your container ID
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
+
     }
 
     @Override
@@ -66,7 +83,8 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
 
     public static class MascotaViewHolder extends RecyclerView.ViewHolder {
         ImageView imagen;
-        TextView nombre, tipo, edad, descripcion;
+        TextView nombre, tipo, edad;
+        Button detail;
 
         public MascotaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +92,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
             nombre = itemView.findViewById(R.id.animalName);
             tipo = itemView.findViewById(R.id.animalBreed);
             edad = itemView.findViewById(R.id.animalAge);
+            detail = itemView.findViewById(R.id.btnVerMas);
         }
     }
 }
