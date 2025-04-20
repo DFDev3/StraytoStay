@@ -96,16 +96,17 @@
             android:textColor="#0D47A1"
             android:textSize="18sp"
             android:layout_marginBottom="8dp" />
-
-
         <TextView
             android:id="@+id/textVacunas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tetano"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="tetano"
             android:textSize="16sp"
             android:textColor="#424242"
             android:layout_marginBottom="16dp" />
+
 
         <!-- Botón aplicar -->
         <Button

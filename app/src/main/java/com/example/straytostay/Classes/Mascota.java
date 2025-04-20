@@ -1,9 +1,10 @@
 package com.example.straytostay.Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mascota {
+public class Mascota implements Serializable {
     private String id;
     private String nombre;
     private String edad;

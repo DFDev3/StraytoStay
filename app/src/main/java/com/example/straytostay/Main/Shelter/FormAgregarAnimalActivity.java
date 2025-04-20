@@ -23,6 +23,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -135,10 +136,20 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         String tipo = spinnerTipo.getSelectedItem().toString();
         String esterilizado = spinnerEsterilizacion.getSelectedItem().toString();
         String sexo = spinnerSexo.getSelectedItem().toString();
-        String vacunas = inputVacunas.getText().toString().trim();
         String tamano = spinnerTamano.getSelectedItem().toString();
         String descripcion = inputDescripcion.getText().toString().trim();
 
+        // Assuming you're getting the vacunas string from an EditText (e.g., etVacunas)
+        String vacunas = inputVacunas.getText().toString().trim();
+
+// Split the input by commas and remove extra spaces
+        String[] vacunasArray = vacunas.split(",");
+        ArrayList<String> vacunasList = new ArrayList<>();
+
+// Trim spaces and add each vaccine to the list
+        for (String vacuna : vacunasArray) {
+            vacunasList.add(vacuna.trim());
+        }
 
         String id = db.collection("mascotas").document().getId();
 
@@ -150,7 +161,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         mascota.setTipo(tipo);
         mascota.setEsterilizacion(esterilizado);
         mascota.setSexo(sexo);
-        mascota.setVacunas(mascota.getVacunas());
+        mascota.setVacunas(vacunasList);
         mascota.setTamano(tamano);
         mascota.setDescripcion(descripcion);
         mascota.setImagenUrl(encodedImage);
