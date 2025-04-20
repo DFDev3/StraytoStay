@@ -38,6 +38,104 @@
         <item>Gato</item>
         <item>Otro</item>
     </string-array>
+    <!-- Encusta adoptante -->
+
+    <!-- Pregunta 1 -->
+    <string name="p1">¿Cómo te llamas?</string>
+
+    <!-- Pregunta 2 -->
+    <string name="p2">¿Cuántos años tienes (Nombre del adoptante)?</string>
+    <string name="r2.1">Menos de 18 años</string>
+    <string name="r2.2">18 a 24 años</string>
+    <string name="r2.3">25 a 40 años</string>
+    <string name="r2.4">Mayores de 40 años u adulto mayor</string>
+
+    <!-- Pregunta 3 -->
+    <string name="p3">¿Tus padres/tutores están de acuerdo con la adopción y asumirán la responsabilidad del cuidado?</string>
+    <string name="r3.1">Sí (¡Súper! Entonces continuemos.)</string>
+    <string name="r3.2">No (Habla con ellos y vuelve cuando tengan su aprobación).</string>
+
+    <!-- Pregunta 4 -->
+    <string name="p4">¿Dónde vives actualmente?</string>
+    <string name="r4.1">Con mis padres</string>
+    <string name="r4.2">Solo/a</string>
+    <string name="r4.3">Con roomies</string>
+
+    <!-- Pregunta 5 -->
+    <string name="p5">¿Tu contrato de arrendamiento permite mascotas?</string>
+    <string name="r5.1">Sí</string>
+    <string name="r5.2">No (Lamentablemente, no podrías adoptar en este momento).</string>
+
+    <!-- Pregunta 6 -->
+    <string name="p6">¿Cómo costearás los gastos de tu mascota (alimento, salud, emergencias)?</string>
+    <string name="r6.1">Trabajo y tengo ingresos propios</string>
+    <string name="r6.2">Mis padres me apoyarán</string>
+    <string name="r6.3">Otro</string>
+
+    <!-- Pregunta 7 -->
+    <string name="p7">¿Con cuánto dinero te apoyarán tus padres?</string>
+    <string name="r7.1">Menos de $50.000 COP mensuales</string>
+    <string name="r7.2">Entre $50.000 - $100.000 COP</string>
+    <string name="r7.3">Más de $100.000 COP</string>
+
+    <!-- Pregunta 8 -->
+    <string name="p8">¿Qué presupuesto posees mensual para tu peludito?</string>
+    <string name="r8.1">Menos de $50.000 COP mensuales</string>
+    <string name="r8.2">Entre $50.000 - $100.000 COP</string>
+    <string name="r8.3">Más de $100.000 COP</string>
+
+    <!-- Pregunta 9 -->
+    <string name="p9">¿Cuál será tu forma de costear los gastos de la mascota?</string>
+
+    <!-- Pregunta 10 -->
+    <string name="p10">¿Tus padres están de acuerdo con la adopción?</string>
+    <string name="r10.1">Sí</string>
+    <string name="r10.2">No (Es importante contar con su aprobación antes de continuar).</string>
+
+    <!-- Pregunta 11 -->
+    <string name="p11">¿Qué harás con tu mascota si te mudas o cambias de ciudad?</string>
+
+    <!-- Pregunta 12 -->
+    <string name="p12">¿Tienes mascotas actualmente?</string>
+    <string name="r12.1">Sí</string>
+    <string name="r12.2">No</string>
+
+    <!-- Pregunta 13 -->
+    <string name="p13">¿Tus mascotas están esterilizadas?</string>
+    <string name="r13.1">Sí</string>
+    <string name="r13.2">No</string>
+    <string name="r13.3">No aplica</string>
+
+    <!-- Pregunta 14 -->
+    <string name="p14">¿Están vacunadas tus mascotas?</string>
+    <string name="r14.1">Sí</string>
+    <string name="r14.2">No</string>
+    <string name="r14.3">No aplica</string>
+
+    <!-- Pregunta 15 -->
+    <string name="p15">¿Tu anterior mascota fue adoptada?</string>
+    <string name="r15.1">Sí</string>
+    <string name="r15.2">No</string>
+    <string name="r15.3">No he tenido mascotas antes</string>
+
+    <!-- Pregunta 16 -->
+    <string name="p16">¿Has devuelto alguna vez una mascota?</string>
+    <string name="r16.1">Sí</string>
+    <string name="r16.2">No</string>
+
+    <!-- Pregunta 17 -->
+    <string name="p17">¿Por qué devolviste a tu mascota?</string>
+
+    <!-- Pregunta 18 -->
+    <string name="p18">¿Qué especie te interesa adoptar?</string>
+    <string name="r18.1">Perro</string>
+    <string name="r18.2">Gato</string>
+
+    <!-- Pregunta 19 -->
+    <string name="p19">¿Tienes alguna preferencia de tamaño/raza/edad?</string>
+
+    <!-- Pregunta 20 -->
+    <string name="p20">¿Cuál es la razón principal por la que quieres adoptar una mascota?</string>
 
     <string-array name="esterilizacion_array">
         <item>Sí</item>

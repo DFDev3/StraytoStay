@@ -28,7 +28,6 @@ public class AnimalDetail extends Fragment {
     private ImageView imageAnimal;
     private TextView textNombre, textEdadRaza, textSexo, textTamano,
     textContenidoDescripcion, textNombreRefugio, textVacunas;
-
     private DatabaseReference databaseReference;
     private String animalId;
 
@@ -57,7 +56,6 @@ public class AnimalDetail extends Fragment {
         textTamano = view.findViewById(R.id.textTamano);
         textContenidoDescripcion = view.findViewById(R.id.textContenidoDescripcion);
         textNombreRefugio = view.findViewById(R.id.textNombreRefugio);
-        textVacunas = view.findViewById(R.id.layoutVacunas);
 
         // Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("mascotas").child(animalId);
