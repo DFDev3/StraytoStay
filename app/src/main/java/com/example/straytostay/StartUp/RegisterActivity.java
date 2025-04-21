@@ -37,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         nameInput = findViewById(R.id.firstNameInput);
-        lastNameInput = findViewById(R.id.lastNameInput);
         phoneInput = findViewById(R.id.phoneInput);
         citizenIdInput = findViewById(R.id.idInput);
         addressInput = findViewById(R.id.addressInput);
@@ -58,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser() {
         // Get input values
         String name = nameInput.getText().toString().trim();
-        String lastName = lastNameInput.getText().toString().trim();
         String phone = phoneInput.getText().toString().trim();
         String citizenId = citizenIdInput.getText().toString().trim();
         String address = addressInput.getText().toString().trim();
@@ -73,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String uid = mAuth.getCurrentUser().getUid();
 
                         // Create Usuario object with default adminID = 0
-                        Usuario user = new Usuario(name, lastName, phone, citizenId, address, email, 0);
+                        Usuario user = new Usuario(name, phone, citizenId, address, email, 0,uid);
 
                         db.collection("users")
                                 .document(uid)

@@ -41,16 +41,6 @@
             android:background="@drawable/edittext_background"
             android:layout_marginBottom="12dp" />
 
-        <!-- Apellido -->
-        <EditText
-            android:id="@+id/lastNameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="  Apellido"
-            android:drawableLeft="@drawable/ic_user"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="12dp" />
 
         <!-- Teléfono -->
         <EditText
