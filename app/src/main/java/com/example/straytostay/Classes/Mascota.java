@@ -15,14 +15,14 @@ public class Mascota implements Serializable {
     private ArrayList<String> vacunas;
     private String tamano;
     private String descripcion;
-    private String imagenUrl;
+    private String imagenUrl, refugio;
 
     // Required empty constructor for Firestore
     public Mascota() {}
 
     // Full constructor
     public Mascota(String id, String nombre, String edad, String raza, String tipo, String esterilizacion,
-                   String sexo, ArrayList<String> vacunas, String tamano, String descripcion, String imagenUrl) {
+                   String sexo, ArrayList<String> vacunas, String tamano, String descripcion, String refugio, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
@@ -34,11 +34,21 @@ public class Mascota implements Serializable {
         this.tamano = tamano;
         this.descripcion = descripcion;
         this.imagenUrl = imagenUrl;
+        this.refugio = refugio;
     }
 
     // Getters and Setters
 
     public String getId() { return id; }
+
+    public String getRefugio() {
+        return refugio;
+    }
+
+    public void setRefugio(String refugio) {
+        this.refugio = refugio;
+    }
+
     public void setId(String id) { this.id = id; }
 
     public String getNombre() { return nombre; }

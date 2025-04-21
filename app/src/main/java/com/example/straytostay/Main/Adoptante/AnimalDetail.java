@@ -61,6 +61,7 @@ public class AnimalDetail extends Fragment {
         textNombreRefugio = view.findViewById(R.id.textNombreRefugio);
         textVacunas = view.findViewById(R.id.textVacunas);
 
+
         cargarDatosAnimal();
 
         return view;
@@ -79,7 +80,7 @@ public class AnimalDetail extends Fragment {
                     String tamano = document.getString("tamano");
                     String esterilizacion = document.getString("esterilizacion");
                     String descripcion = document.getString("descripcion");
-//                    String refugio = document.getString("refugio");
+                    String refugio = document.getString("refugio");
                     String imagenUrl = document.getString("imagenUrl");  // Base64 string for the image
 
                     List<String> vacunasList = (List<String>) document.get("vacunas");
@@ -91,7 +92,7 @@ public class AnimalDetail extends Fragment {
                     textTamano.setText("Tamaño: " + tamano);
                     textEsterilizado.setText(esterilizacion);
                     textContenidoDescripcion.setText(descripcion);
-//                    textNombreRefugio.setText(refugio);
+                    textNombreRefugio.setText(refugio);
 
                     // Display the image if available
                     if (imagenUrl != null && !imagenUrl.isEmpty()) {

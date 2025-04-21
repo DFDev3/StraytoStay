@@ -31,7 +31,7 @@
         <EditText
             android:id="@+id/inputNombre"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:hint="@string/nombre"
             android:background="@drawable/bg_input_rounded"
             android:padding="16dp"
@@ -42,7 +42,7 @@
         <EditText
             android:id="@+id/inputEdad"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:hint="@string/edad"
             android:background="@drawable/bg_input_rounded"
             android:padding="16dp"
@@ -53,7 +53,7 @@
         <EditText
             android:id="@+id/inputRaza"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:hint="@string/raza"
             android:background="@drawable/bg_input_rounded"
             android:padding="16dp"
@@ -64,7 +64,7 @@
         <Spinner
             android:id="@+id/spinnerTipo"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/bg_input_rounded"
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
@@ -73,7 +73,7 @@
         <Spinner
             android:id="@+id/spinnerEsterilizacion"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/bg_input_rounded"
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
@@ -82,7 +82,7 @@
         <Spinner
             android:id="@+id/spinnerSexo"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/bg_input_rounded"
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
@@ -91,7 +91,7 @@
         <EditText
             android:id="@+id/inputVacunas"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:hint="@string/vacunas"
             android:background="@drawable/bg_input_rounded"
             android:padding="16dp"
@@ -102,7 +102,7 @@
         <Spinner
             android:id="@+id/spinnerTamanoForm"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/bg_input_rounded"
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
@@ -111,19 +111,27 @@
         <EditText
             android:id="@+id/inputDescripcion"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="100dp"
             android:hint="@string/descripcion"
             android:gravity="top"
             android:background="@drawable/bg_input_rounded"
             android:padding="16dp"
             android:layout_marginBottom="24dp"
             android:inputType="textMultiLine" />
+        <ImageView
+            android:id="@+id/imagePreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="24dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_input_rounded"
+            android:visibility="gone" />
 
         <!-- Botón Agregar Imagen -->
         <Button
             android:id="@+id/btnAgregarImagen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="@string/agregar_imagen"
             android:textColor="@android:color/white"
             android:backgroundTint="#FFA726"
