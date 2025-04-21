@@ -53,7 +53,7 @@
                 android:ellipsize="end" />
 
             <TextView
-                android:id="@+id/tvEntityType"
+                android:id="@+id/tvEntityPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tipo: Refugio"
