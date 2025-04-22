@@ -2,20 +2,30 @@ package com.example.straytostay.StartUp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.straytostay.Classes.Usuario;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class RegisterShelterActivity extends AppCompatActivity {
 
@@ -35,7 +45,8 @@ public class RegisterShelterActivity extends AppCompatActivity {
     private String selectedType = "Refugio";
 
     private ImageView selectedImage;
-    private Uri imageUri; // Para almacenar temporalmente la URI de la imagen seleccionada
+    private Uri imageUri;
+    private String encodedImageBase64 = null;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,8 +71,8 @@ public class RegisterShelterActivity extends AppCompatActivity {
         nitInput = findViewById(R.id.vet_nit);
         serviciosInput = findViewById(R.id.vet_services);
         productosInput = findViewById(R.id.vet_products);
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
+        emailInput = findViewById(R.id.entity_email);
+        passwordInput = findViewById(R.id.entity_password);
 
         selectedImage = findViewById(R.id.selectedImage);
         selectImageButton = findViewById(R.id.selectImageButton);
@@ -96,6 +107,18 @@ public class RegisterShelterActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null) {
             imageUri = data.getData();
             selectedImage.setImageURI(imageUri);
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                Bitmap resized = Bitmap.createScaledBitmap(bitmap, 400, 400, true);  // Resize
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                resized.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);  // Compress
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                encodedImageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -108,38 +131,51 @@ public class RegisterShelterActivity extends AppCompatActivity {
         String nit = nitInput.getText().toString().trim();
 
         String mision = misionInput.getText().toString().trim();
+        Log.d("MISION1",mision);
         String servicios = serviciosInput.getText().toString().trim();
         String productos = productosInput.getText().toString().trim();
 
+        ArrayList<String> productosList;
+
+        if (!productos.isEmpty()) {
+            String[] productosArray = productos.split("\\s*,\\s*"); // splits by comma and trims spaces
+            productosList = new ArrayList<>(Arrays.asList(productosArray));
+        } else {
+            productosList = new ArrayList<>();
+        }
+
+        ArrayList<String> serviciosList;
+
+        if (!servicios.isEmpty()) {
+            String[] serviciosArray = servicios.split("\\s*,\\s*"); // splits by comma and trims spaces
+            serviciosList = new ArrayList<>(Arrays.asList(serviciosArray));
+        } else {
+            serviciosList = new ArrayList<>();
+        }
+
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone) ||
-                TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(nit)) {
+                TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Todos los campos obligatorios deben estar completos.", Toast.LENGTH_LONG).show();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
+        Log.d("DEBUG", "Email: " + email);
+        Log.d("DEBUG", "Password: " + password);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                String userId = mAuth.getCurrentUser().getUid();
-
-                Map<String, Object> shelterData = new HashMap<>();
-                shelterData.put("name", name);
-                shelterData.put("address", address);
-                shelterData.put("phone", phone);
-                shelterData.put("email", email);
-                shelterData.put("nit", nit);
-                shelterData.put("type", selectedType);
-                shelterData.put("logoUri", imageUri != null ? imageUri.toString() : null);
-
+                Log.d("MISION2",mision);
+                Usuario entity;
+                String uid = mAuth.getCurrentUser().getUid();
                 if (selectedType.equals("Refugio")) {
-                    shelterData.put("mision", mision);
+                    Log.d("MISION3",mision);
+                    entity = new Usuario(name, phone, address, email, 1,uid, mision, encodedImageBase64);
                 } else {
-                    shelterData.put("servicios", servicios);
-                    shelterData.put("productos", productos);
+                    entity = new Usuario(name, phone, address, email, 1,uid, nit,serviciosList, productosList,encodedImageBase64);
                 }
 
-                db.collection("shelters").document(userId).set(shelterData).addOnSuccessListener(aVoid -> {
+                db.collection("users").document(uid).set(entity).addOnSuccessListener(aVoid -> {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                     finish();

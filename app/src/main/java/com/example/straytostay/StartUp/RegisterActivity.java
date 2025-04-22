@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String uid = mAuth.getCurrentUser().getUid();
 
                         // Create Usuario object with default adminID = 0
-                        Usuario user = new Usuario(name, phone, citizenId, address, email, 0,uid);
+                        Usuario user = new Usuario(name, phone, citizenId, address, email,0,uid,null);
 
                         db.collection("users")
                                 .document(uid)
