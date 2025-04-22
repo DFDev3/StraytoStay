@@ -34,7 +34,7 @@
             android:text="StrayToStay"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#004080"
+            android:textColor="@color/blue_primary"
             android:layout_marginBottom="32dp" />
 
         <!-- Email Field -->
