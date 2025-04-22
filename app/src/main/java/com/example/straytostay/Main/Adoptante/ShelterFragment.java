@@ -66,8 +66,10 @@ public class ShelterFragment extends Fragment {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Usuario refugio = doc.toObject(Usuario.class);
+                        refugio.setUid(doc.getId()); // ✅ Add this line
                         refugiosList.add(refugio);
                     }
+
                     adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> Log.e("RefugiosFragment", "Error al cargar refugios", e));
