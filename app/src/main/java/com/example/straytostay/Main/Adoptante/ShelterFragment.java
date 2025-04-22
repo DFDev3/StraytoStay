@@ -5,14 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Usuario;
 import com.example.straytostay.Main.Adapters.ShelterAdapter;
+import com.example.straytostay.Main.ProfileFragment;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -35,7 +35,22 @@ public class ShelterFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerRefugios);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refugiosList = new ArrayList<>();
-        adapter = new ShelterAdapter(refugiosList);
+        // Inside onCreateView, replace your adapter initialization
+        adapter = new ShelterAdapter(refugiosList, refugio -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("uid", refugio.getUid());  // Pass only the UID
+
+            ProfileFragment fragment = new ProfileFragment();
+            fragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+
         recyclerView.setAdapter(adapter);
         db = FirebaseFirestore.getInstance();
 
@@ -57,4 +72,5 @@ public class ShelterFragment extends Fragment {
                 })
                 .addOnFailureListener(e -> Log.e("RefugiosFragment", "Error al cargar refugios", e));
     }
+
 }

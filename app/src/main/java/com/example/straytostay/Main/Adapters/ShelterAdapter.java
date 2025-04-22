@@ -16,25 +16,37 @@ import java.util.List;
 public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterViewHolder> {
 
     private List<Usuario> shelterList;
+    private OnItemClickListener listener;
 
-    public ShelterAdapter(List<Usuario> shelterList) {
+    public interface OnItemClickListener {
+        void onItemClick(Usuario shelter);
+    }
+
+    public ShelterAdapter(List<Usuario> shelterList, OnItemClickListener listener) {
         this.shelterList = shelterList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ShelterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comp_card_shelter, parent, false);
-        return new ShelterViewHolder(v);
+        return new ShelterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShelterViewHolder holder, int position) {
         Usuario shelter = shelterList.get(position);
-        holder.nameTextView.setText(shelter.getName());
-        holder.addressTextView.setText(shelter.getAddress());
-        holder.phoneTextView.setText(shelter.getPhone());
+        holder.name.setText(shelter.getName());
+        holder.address.setText(shelter.getAddress());
+        holder.phone.setText(shelter.getPhone());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(shelter);
+            }
+        });
     }
 
     @Override
@@ -43,13 +55,13 @@ public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterV
     }
 
     public static class ShelterViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView, addressTextView, phoneTextView;
+        TextView name, address, phone;
 
         public ShelterViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.tvEntityName);
-            addressTextView = itemView.findViewById(R.id.tvEntityAddress);
-            phoneTextView = itemView.findViewById(R.id.tvEntityPhone);
+            name = itemView.findViewById(R.id.tvEntityName);
+            address = itemView.findViewById(R.id.tvEntityAddress);
+            phone = itemView.findViewById(R.id.tvEntityPhone);
         }
     }
 }

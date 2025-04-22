@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.straytostay.Main.ProfileFragment;
 import com.example.straytostay.Main.Shelter.FollowUpFragment;
 import com.example.straytostay.Main.Shelter.PostedPetFragment;
 import com.example.straytostay.R;
@@ -33,7 +34,7 @@ public class BaseShelterActivity extends AppCompatActivity {
         // Set navigation behavior
         navPets.setOnClickListener(v -> loadFragment(new PostedPetFragment()));
         navSeguimiento.setOnClickListener(v -> loadFragment(new FollowUpFragment()));
-        navProfile.setOnClickListener(v -> loadFragment(new ProfileShelterFragment()));
+        navProfile.setOnClickListener(v -> loadFragment(new ProfileFragment()));
     }
 
     private void loadFragment(Fragment fragment) {
