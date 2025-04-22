@@ -160,26 +160,56 @@
                 android:padding="12dp"
                 android:background="@drawable/edittext_background"
                 android:layout_marginBottom="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Servicios que ofrece:"
+                android:textStyle="bold"
+                android:textColor="#004080"
+                android:layout_marginBottom="8dp" />
 
-            <EditText
+            <LinearLayout
                 android:id="@+id/vet_services"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="  Servicios que ofrece"
-                android:drawableLeft="@drawable/ic_revistas"
-                android:padding="12dp"
-                android:background="@drawable/edittext_background"
-                android:layout_marginBottom="12dp" />
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+                <!-- Servicios que ofrece (Veterinaria) -->
 
-            <EditText
+                <CheckBox android:id="@+id/service_peluqueria" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Peluquería"/>
+                <CheckBox android:id="@+id/service_urgencias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Urgencias"/>
+                <CheckBox android:id="@+id/service_vacunacion" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Vacunación"/>
+                <CheckBox android:id="@+id/service_esterilizacion" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Esterilización"/>
+                <CheckBox android:id="@+id/service_cirugias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cirugías"/>
+                <CheckBox android:id="@+id/service_consultas" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Consultas"/>
+                <CheckBox android:id="@+id/service_certificados" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Certificados"/>
+            </LinearLayout>
+
+            <!-- Productos disponibles (Veterinaria) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Productos disponibles:"
+                android:textStyle="bold"
+                android:textColor="#004080"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
                 android:id="@+id/vet_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="  Productos disponibles"
-                android:drawableLeft="@drawable/ic_books"
-                android:padding="12dp"
-                android:background="@drawable/edittext_background"
-                android:layout_marginBottom="12dp" />
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+
+                <CheckBox android:id="@+id/product_juguetes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Juguetes"/>
+                <CheckBox android:id="@+id/product_ropa" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ropa"/>
+                <CheckBox android:id="@+id/product_accesorios" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Accesorios"/>
+                <CheckBox android:id="@+id/product_comidas" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Comidas"/>
+                <CheckBox android:id="@+id/product_premios" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Premios"/>
+                <CheckBox android:id="@+id/product_helados" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Helados"/>
+                <CheckBox android:id="@+id/product_guacales" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Guacales"/>
+                <CheckBox android:id="@+id/product_medicamentos" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Medicamentos"/>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Botón de registro -->

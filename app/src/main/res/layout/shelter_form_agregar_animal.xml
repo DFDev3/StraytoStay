@@ -28,15 +28,6 @@
             android:layout_marginBottom="24dp" />
 
         <!-- Nombre -->
-        <EditText
-            android:id="@+id/inputNombre"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/nombre"
-            android:background="@drawable/bg_input_rounded"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:inputType="text" />
 
         <!-- Edad -->
         <EditText
@@ -48,6 +39,15 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp"
             android:inputType="number" />
+        <EditText
+            android:id="@+id/inputNombre"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_input_rounded"
+            android:hint="@string/nombre"
+            android:inputType="text"
+            android:padding="16dp" />
 
         <!-- Raza -->
         <EditText
@@ -64,6 +64,7 @@
         <Spinner
             android:id="@+id/spinnerTipo"
             android:layout_width="match_parent"
+
             android:layout_height="50dp"
             android:background="@drawable/bg_input_rounded"
             android:padding="8dp"
@@ -88,15 +89,89 @@
             android:layout_marginBottom="16dp" />
 
         <!-- Vacunas -->
-        <EditText
-            android:id="@+id/inputVacunas"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/vacunas"
-            android:background="@drawable/bg_input_rounded"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"
-            android:inputType="text" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vacunas"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Checkboxes para vacunas -->
+        <CheckBox
+            android:id="@+id/vacuna_rabia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rabia" />
+
+
+        <CheckBox
+            android:id="@+id/vacuna_moquillo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Moquillo" />
+
+        <CheckBox
+            android:id="@+id/vacuna_parvovirus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parvovirus" />
+
+        <CheckBox
+            android:id="@+id/vacuna_hepatitis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hepatitis" />
+
+        <CheckBox
+            android:id="@+id/vacuna_leptospirosis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leptospirosis" />
+
+        <CheckBox
+            android:id="@+id/vacuna_bordetella"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bordetella" />
+
+        <CheckBox
+            android:id="@+id/vacuna_parainfluenza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parainfluenza" />
+
+        <CheckBox
+            android:id="@+id/vacuna_panleucopenia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Panleucopenia (Gato)" />
+
+        <CheckBox
+            android:id="@+id/vacuna_rinotraqueitis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rinotraqueitis (Gato)" />
+
+        <CheckBox
+            android:id="@+id/vacuna_calicivirus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calicivirus (Gato)" />
+
+        <CheckBox
+            android:id="@+id/vacuna_leucemia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leucemia felina (FeLV)" />
+
+        <CheckBox
+            android:id="@+id/vacuna_fiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inmunodeficiencia felina (FIV)" />
 
         <!-- Tamaño -->
         <Spinner

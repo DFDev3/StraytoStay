@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +28,6 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    private EditText inputNombre, inputEdad, inputRaza, inputVacunas, inputDescripcion;
+    private EditText inputNombre, inputEdad, inputRaza, inputDescripcion;
     private Spinner spinnerTipo, spinnerEsterilizacion, spinnerSexo, spinnerTamano;
     private Button btnSeleccionarImagen, btnPublicar;
     private ImageView imagePreview;
@@ -46,8 +45,8 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private String encodedImageBase64 = null;
 
-
-
+    private CheckBox vacunaRabia, vacunaMoquillo, vacunaParvovirus, vacunaHepatitis,
+            vacunaLeptospirosis, vacunaBordetella, vacunaParainfluenza, vacunaPanleucopenia, vacunaRinotraqueitis, vacunaCalicivirus, vacunaFelv, vacunaFIV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +56,9 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        // UI references
         inputNombre = findViewById(R.id.inputNombre);
         inputEdad = findViewById(R.id.inputEdad);
         inputRaza = findViewById(R.id.inputRaza);
-        inputVacunas = findViewById(R.id.inputVacunas);
         inputDescripcion = findViewById(R.id.inputDescripcion);
 
         spinnerTipo = findViewById(R.id.spinnerTipo);
@@ -73,138 +70,109 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         btnSeleccionarImagen = findViewById(R.id.btnAgregarImagen);
         btnPublicar = findViewById(R.id.btnConfirmPublish);
 
-        // Spinner adapters
-        spinnerTipo.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Perro", "Gato"}));
-        spinnerEsterilizacion.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Esterilizado", "Sin esterilizar"}));
-        spinnerSexo.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Macho", "Hembra"}));
-        spinnerTamano.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Pequeño", "Mediano", "Grande"}));
+        String[] tiposAnimales = {"Selecciona el tipo", "Perro", "Gato"};
+        String[] esterilizacionOptions = {"Selecciona la esterilización", "Esterilizado", "Sin esterilizar"};
+        String[] sexoOptions = {"Selecciona el sexo", "Macho", "Hembra"};
+        String[] tamanoOptions = {"Selecciona el tamaño", "Pequeño", "Mediano", "Grande"};
 
-        // Listeners
-        btnSeleccionarImagen.setOnClickListener(v -> openFileChooser());
+        spinnerTipo.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tiposAnimales));
+        spinnerTipo.setSelection(0);
 
-        btnPublicar.setOnClickListener(v -> {
+        spinnerEsterilizacion.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, esterilizacionOptions));
+        spinnerEsterilizacion.setSelection(0);
 
-            if (!validateFields()) return;
+        spinnerSexo.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sexoOptions));
+        spinnerSexo.setSelection(0);
 
-            if (encodedImageBase64 != null) {
+        spinnerTamano.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tamanoOptions));
+        spinnerTamano.setSelection(0);
 
-                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                if (currentUser == null) {
-                    Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        vacunaRabia = findViewById(R.id.vacuna_rabia);
+        vacunaMoquillo = findViewById(R.id.vacuna_moquillo);
+        vacunaParvovirus = findViewById(R.id.vacuna_parvovirus);
+        vacunaHepatitis = findViewById(R.id.vacuna_hepatitis);
+        vacunaLeptospirosis = findViewById(R.id.vacuna_leptospirosis);
+        vacunaBordetella = findViewById(R.id.vacuna_bordetella);
+        vacunaParainfluenza = findViewById(R.id.vacuna_parainfluenza);
 
-                String shelterUID = currentUser.getUid();
+        vacunaPanleucopenia = findViewById(R.id.vacuna_panleucopenia);
+        vacunaRinotraqueitis = findViewById(R.id.vacuna_rinotraqueitis);
+        vacunaCalicivirus = findViewById(R.id.vacuna_calicivirus);
+        vacunaFelv = findViewById(R.id.vacuna_leucemia);
+        vacunaFIV = findViewById(R.id.vacuna_fiv);
 
-                // Fetch shelter's name from Firestore
-                db.collection("users").document(shelterUID).get().addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String nombreRefugio = documentSnapshot.getString("name"); // or "nombreRefugio", based on your structure
-                        guardarAnimalEnFirestore(encodedImageBase64, nombreRefugio);
-                    }
-                });
+        btnSeleccionarImagen.setOnClickListener(v -> abrirGaleria());
 
-            } else {
-                Toast.makeText(FormAgregarAnimalActivity.this, "Por favor selecciona una imagen primero", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnPublicar.setOnClickListener(v -> guardarAnimal());
     }
 
-    private void openFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+    private void abrirGaleria() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            imagePreview.setVisibility(View.VISIBLE);
             imagePreview.setImageURI(imageUri);
 
-
-            // Convert the image to base64
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                Bitmap resized = Bitmap.createScaledBitmap(bitmap, 400, 400, true);  // Resize
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                resized.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);  // Compress
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
-                encodedImageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] imageBytes = baos.toByteArray();
+                encodedImageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void guardarAnimalEnFirestore(String encodedImage, String refugio) {
-        String nombre = inputNombre.getText().toString().trim();
-        String edad = inputEdad.getText().toString().trim();
-        String raza = inputRaza.getText().toString().trim();
+    private void guardarAnimal() {
+        String nombre = inputNombre.getText().toString();
+        String edad = inputEdad.getText().toString();
+        String raza = inputRaza.getText().toString();
+        String descripcion = inputDescripcion.getText().toString();
+
         String tipo = spinnerTipo.getSelectedItem().toString();
         String esterilizado = spinnerEsterilizacion.getSelectedItem().toString();
         String sexo = spinnerSexo.getSelectedItem().toString();
         String tamano = spinnerTamano.getSelectedItem().toString();
-        String descripcion = inputDescripcion.getText().toString().trim();
 
-        // Assuming you're getting the vacunas string from an EditText (e.g., etVacunas)
-        String vacunas = inputVacunas.getText().toString().trim();
+        List<String> vacunas = new ArrayList<>();
+        if (vacunaRabia.isChecked()) vacunas.add("Rabia");
+        if (vacunaMoquillo.isChecked()) vacunas.add("Moquillo");
+        if (vacunaParvovirus.isChecked()) vacunas.add("Parvovirus");
+        if (vacunaHepatitis.isChecked()) vacunas.add("Hepatitis");
+        if (vacunaLeptospirosis.isChecked()) vacunas.add("Leptospirosis");
+        if (vacunaBordetella.isChecked()) vacunas.add("Bordetella");
+        if (vacunaParainfluenza.isChecked()) vacunas.add("Parainfluenza");
+        if (vacunaPanleucopenia.isChecked()) vacunas.add("Panleucopenia");
+        if (vacunaRinotraqueitis.isChecked()) vacunas.add("Rinotraqueitis");
+        if (vacunaCalicivirus.isChecked()) vacunas.add("Calicivirus");
+        if (vacunaFelv.isChecked()) vacunas.add("Felv");
+        if (vacunaFIV.isChecked()) vacunas.add("FIV");
 
-// Split the input by commas and remove extra spaces
-        String[] vacunasArray = vacunas.split(",");
-        ArrayList<String> vacunasList = new ArrayList<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("nombre", nombre);
+        data.put("edad", edad);
+        data.put("raza", raza);
+        data.put("descripcion", descripcion);
+        data.put("tipo", tipo);
+        data.put("esterilizacion", esterilizado);
+        data.put("sexo", sexo);
+        data.put("tamano", tamano);
+        data.put("vacunas", vacunas);
+        data.put("imagenBase64", encodedImageBase64);
 
-// Trim spaces and add each vaccine to the list
-        for (String vacuna : vacunasArray) {
-            vacunasList.add(vacuna.trim());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            db.collection("animales").add(data)
+                    .addOnSuccessListener(documentReference -> Toast.makeText(this, "Animal guardado", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show());
         }
-
-        String id = db.collection("mascotas").document().getId();
-
-        Mascota mascota = new Mascota();
-        mascota.setId(id);
-        mascota.setNombre(nombre);
-        mascota.setEdad(edad);
-        mascota.setRaza(raza);
-        mascota.setTipo(tipo);
-        mascota.setEsterilizacion(esterilizado);
-        mascota.setSexo(sexo);
-        mascota.setVacunas(vacunasList);
-        mascota.setTamano(tamano);
-        mascota.setDescripcion(descripcion);
-        mascota.setImagenUrl(encodedImage);
-        mascota.setRefugio(refugio);
-
-
-
-        db.collection("mascotas").document(id)
-                .set(mascota)
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Animal registrado correctamente", Toast.LENGTH_SHORT).show();
-                    finish();
-                })
-                .addOnFailureListener(e -> showToast("Error al registrar: " + e.getMessage()));
-    }
-
-    private boolean validateFields() {
-        if (inputNombre.getText().toString().trim().isEmpty()
-                || inputEdad.getText().toString().trim().isEmpty()
-                || inputRaza.getText().toString().trim().isEmpty()
-                || inputVacunas.getText().toString().trim().isEmpty()
-                || spinnerTamano.getSelectedItem() == null
-                || inputDescripcion.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Por favor completa todos los campos.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
