@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registro Refugio/Veterinaria"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#004080"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Tipo de entidad -->
+        <RadioGroup
+            android:id="@+id/typeSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radioRefugio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refugio"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/radioVeterinaria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Veterinaria"
+                android:layout_marginStart="16dp" />
+        </RadioGroup>
+
+        <!-- Común -->
+        <EditText
+            android:id="@+id/shelter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Nombre"
+            android:drawableLeft="@drawable/ic_user"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/shelter_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Ubicación"
+            android:drawableLeft="@drawable/ic_location"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/shelter_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:drawableLeft="@drawable/ic_email"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/shelter_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Contraseña"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/ic_password"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/shelter_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Teléfonos de contacto"
+            android:inputType="phone"
+            android:drawableLeft="@drawable/ic_phone"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Refugio: solo Misión -->
+        <LinearLayout
+            android:id="@+id/refugioFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/shelter_permiso_ica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="  Misión del Refugio"
+                android:drawableLeft="@drawable/ic_password"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:layout_marginBottom="12dp" />
+        </LinearLayout>
+
+        <!-- Veterinaria: NIT, servicios, productos -->
+        <LinearLayout
+            android:id="@+id/vetFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/shelter_nit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="  NIT"
+                android:inputType="number"
+                android:drawableLeft="@drawable/ic_id"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/shelter_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="  Servicios"
+                android:drawableLeft="@drawable/ic_password"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/shelter_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="  Productos"
+                android:drawableLeft="@drawable/ic_password"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:layout_marginBottom="12dp" />
+        </LinearLayout>
+
+        <!-- Botón de registrar -->
+        <Button
+            android:id="@+id/shelter_register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar"
+            android:backgroundTint="#004080"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Barra de progreso -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center" />
+    </LinearLayout>
+</ScrollView>

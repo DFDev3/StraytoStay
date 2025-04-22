@@ -59,7 +59,7 @@
             android:id="@+id/idInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Cédula"
+            android:hint="  N Identificacion "
             android:inputType="number"
             android:drawableLeft="@drawable/ic_id"
             android:padding="12dp"
