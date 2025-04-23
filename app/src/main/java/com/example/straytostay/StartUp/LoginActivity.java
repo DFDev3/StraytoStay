@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,24 @@ public class LoginActivity extends AppCompatActivity {
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
+        ImageView eyeIcon = findViewById(R.id.eyeIcon);
+
+        eyeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordInput.getInputType() == (android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                    // Mostrar contraseña
+                    passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    eyeIcon.setImageResource(R.drawable.ic_eye_open);
+                } else {
+                    // Ocultar contraseña
+                    passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    eyeIcon.setImageResource(R.drawable.ic_eye_closed);
+                }
+                // Mantiene el cursor al final del texto
+                passwordInput.setSelection(passwordInput.getText().length());
+            }
+        });
         loginButton = findViewById(R.id.loginButton);
         registerUser = findViewById(R.id.signUpLink);
         registerShelter = findViewById(R.id.signUpLink2);

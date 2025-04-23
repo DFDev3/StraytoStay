@@ -90,28 +90,71 @@
             android:layout_marginBottom="12dp" />
 
         <!-- Contraseña -->
-        <EditText
-            android:id="@+id/passwordInput"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Contraseña"
-            android:inputType="textPassword"
-            android:drawableLeft="@drawable/ic_password"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:background="@drawable/edittext_background"
+                android:drawableLeft="@drawable/ic_password"
+                android:paddingStart="12dp"
+                android:paddingEnd="48dp"
+                android:drawablePadding="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:id="@+id/eyeIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_eye_closed"
+                android:contentDescription="Mostrar contraseña"
+                android:clickable="true"
+                android:focusable="true" />
+        </RelativeLayout>
 
         <!-- Confirmar contraseña -->
-        <EditText
-            android:id="@+id/confirmPasswordInput"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Confirmar contraseña"
-            android:inputType="textPassword"
-            android:drawableLeft="@drawable/ic_password"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/confirmPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Confirmar Contraseña"
+                android:inputType="textPassword"
+                android:background="@drawable/edittext_background"
+                android:drawableLeft="@drawable/ic_password"
+                android:paddingStart="12dp"
+                android:paddingEnd="48dp"
+                android:drawablePadding="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:id="@+id/eyeIconConfirm"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_eye_closed"
+                android:contentDescription="Mostrar contraseña"
+                android:clickable="true"
+                android:focusable="true" />
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/adop_selectedImage"

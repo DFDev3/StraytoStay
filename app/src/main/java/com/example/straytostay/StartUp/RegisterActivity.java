@@ -1,5 +1,8 @@
 package com.example.straytostay.StartUp;
 
+
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -32,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000;
 
-    private EditText nameInput, lastNameInput, phoneInput, citizenIdInput, addressInput, emailInput, passwordInput;
+    private EditText nameInput, lastNameInput, phoneInput, citizenIdInput, addressInput, emailInput, passwordInput, confirmPasswordInput;
 
     private TextView loginLink;
     private Button registerButton, selectImageButton;
@@ -43,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String encodedImageBase64;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,44 @@ public class RegisterActivity extends AppCompatActivity {
         addressInput = findViewById(R.id.addressInput);
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView eyeIcon = findViewById(R.id.eyeIcon);
+
+        eyeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordInput.getInputType() == (android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                    // Mostrar contraseña
+                    passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    eyeIcon.setImageResource(R.drawable.ic_eye_open);
+                } else {
+                    // Ocultar contraseña
+                    passwordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    eyeIcon.setImageResource(R.drawable.ic_eye_closed);
+                }
+                // Mantiene el cursor al final del texto
+                passwordInput.setSelection(passwordInput.getText().length());
+            }
+        });
+        confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView eyeIconConfirm = findViewById(R.id.eyeIconConfirm);
+
+        eyeIconConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (confirmPasswordInput.getInputType() == (android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                    // Mostrar contraseña
+                    confirmPasswordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    eyeIconConfirm.setImageResource(R.drawable.ic_eye_open);
+                } else {
+                    // Ocultar contraseña
+                    confirmPasswordInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    eyeIconConfirm.setImageResource(R.drawable.ic_eye_closed);
+                }
+                // Mantiene el cursor al final del texto
+                confirmPasswordInput.setSelection(confirmPasswordInput.getText().length());
+            }
+        });
+
         registerButton = findViewById(R.id.registerButton);
         loginLink = findViewById(R.id.loginLink);
 
