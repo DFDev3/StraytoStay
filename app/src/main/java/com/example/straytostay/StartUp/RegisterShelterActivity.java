@@ -6,10 +6,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,8 @@ public class RegisterShelterActivity extends AppCompatActivity {
     private EditText nameInput, addressInput, phoneInput, websiteInput, misionInput, nitInput, serviciosInput, productosInput, emailInput, passwordInput;
     private Button registerButton, selectImageButton;
     private ProgressBar progressBar;
+    private LinearLayout phoneContainer;
+    private ImageButton addPhoneBtn;
 
     private RadioGroup typeSelector;
     private LinearLayout refugioLayout, veterinariaLayout;
@@ -60,6 +64,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         typeSelector = findViewById(R.id.typeSelector);
+
 
         refugioLayout = findViewById(R.id.layoutRefugio);
         veterinariaLayout = findViewById(R.id.layoutVeterinaria);
@@ -100,7 +105,50 @@ public class RegisterShelterActivity extends AppCompatActivity {
         });
 
         registerButton.setOnClickListener(v -> registerEntity());
+
+        phoneContainer = findViewById(R.id.phoneContainer); // Agrega esto si usas varios teléfonos dinámicamente
+        addPhoneBtn = findViewById(R.id.addPhoneBtn);
+        addPhoneBtn.setOnClickListener(v -> addPhoneField());
+        addPhoneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPhoneField();
+            }
+        });
     }
+    private void addPhoneField() {
+        // Crear contenedor horizontal
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        layout.setPadding(0, 8, 0, 8);
+
+        // Crear nuevo EditText
+        EditText newPhone = new EditText(this);
+        newPhone.setHint("Otro teléfono");
+        newPhone.setInputType(InputType.TYPE_CLASS_PHONE);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        newPhone.setLayoutParams(params);
+        newPhone.setBackgroundResource(R.drawable.edittext_background);
+        newPhone.setPadding(20, 20, 20, 20);
+
+        // Botón para eliminar
+        ImageButton removeBtn = new ImageButton(this);
+        removeBtn.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+        removeBtn.setBackground(null);
+        removeBtn.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        removeBtn.setOnClickListener(v -> phoneContainer.removeView(layout));
+
+        layout.addView(newPhone);
+        layout.addView(removeBtn);
+
+        phoneContainer.addView(layout);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

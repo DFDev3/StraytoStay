@@ -96,17 +96,42 @@
             android:background="@drawable/edittext_background"
             android:layout_marginBottom="12dp" />
 
-        <EditText
-            android:id="@+id/entity_phone"
+        <LinearLayout
+            android:id="@+id/phoneContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Teléfonos de contacto"
-            android:inputType="phone"
-            android:drawableLeft="@drawable/ic_phone"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <EditText
+                    android:id="@+id/entity_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Teléfonos de contacto"
+                    android:inputType="phone"
+                    android:drawableLeft="@drawable/ic_phone"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/addPhoneBtn" />
+
+                <ImageButton
+                    android:id="@+id/addPhoneBtn"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:padding="6dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_add_black_24" />
+            </RelativeLayout>
+        </LinearLayout>
         <!-- Imagen / Logo -->
         <ImageView
             android:id="@+id/selectedImage"
