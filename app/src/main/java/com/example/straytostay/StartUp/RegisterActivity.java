@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.straytostay.Main.Adoptante.HomeFragment;
 import com.example.straytostay.R;
 import com.example.straytostay.Classes.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 .set(user)
                                 .addOnSuccessListener(unused -> {
                                     Toast.makeText(this, "Registered successfully!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    startActivity(new Intent(RegisterActivity.this, HomeFragment.class));
                                     finish();
                                 });
                     }

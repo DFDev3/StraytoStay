@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Usuario;
 import com.example.straytostay.Main.Adapters.ShelterAdapter;
-import com.example.straytostay.Main.ProfileFragment;
+import com.example.straytostay.Main.Shelter.ShelterProfileFragment;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -40,7 +40,7 @@ public class ShelterFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("uid", refugio.getUid());  // Pass only the UID
 
-            ProfileFragment fragment = new ProfileFragment();
+            ShelterDetailFragment fragment = new ShelterDetailFragment();
             fragment.setArguments(bundle);
 
             requireActivity().getSupportFragmentManager()
@@ -60,8 +60,7 @@ public class ShelterFragment extends Fragment {
     }
 
     private void cargarRefugios() {
-        db.collection("users")
-                .whereEqualTo("adminId", 1)
+        db.collection("shelters")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {

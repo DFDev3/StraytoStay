@@ -1,4 +1,4 @@
-package com.example.straytostay.Main;
+package com.example.straytostay.Main.Adoptante;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
@@ -36,7 +35,6 @@ public class ProfileFragment extends Fragment {
 
     private TextView adoptionStatus;
     private boolean isEditing = false;
-    private boolean isSelf = true; // true if viewing own profile
     private String viewedUserId; // uid of the profile to display
 
     @Override
@@ -81,27 +79,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-//        profilePicture.setOnClickListener(v -> openImagePicker());
 
-        // Get arguments
-        Log.d("ARGUMENTS", "Arguments: " + getArguments());
-        if (getArguments() != null && getArguments().containsKey("uid")) {
-            viewedUserId = getArguments().getString("uid");
-            isSelf = false;
-            Log.d("IS NOT SELF", "viewedUserId (from arguments): " + viewedUserId);
-        } else {
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user != null) {
-                viewedUserId = user.getUid();
-                isSelf = true;
-                Log.d("IS SELF", "viewedUserId (from arguments): " + viewedUserId);
-            } else {
-                Toast.makeText(getContext(), "No logged-in user", Toast.LENGTH_SHORT).show();
-                return view;
-            }
-        }
-
-        loadProfile(viewedUserId, isSelf);
+        loadProfile();
 
         return view;
     }
@@ -180,7 +159,11 @@ public class ProfileFragment extends Fragment {
 //            // Aquí puedes subir a Firebase Storage si lo deseas
 //        }
 //    }
-    private void loadProfile(String uid, boolean isSelfUser) {
+    private void loadProfile() {
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
         db.collection("users").document(uid).get()
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()) {
@@ -201,17 +184,12 @@ public class ProfileFragment extends Fragment {
                         etPhone.setText(phone != null ? phone : "");
                         etAddress.setText(address != null ? address : "");
 
-                        // Enable or disable edit features
-                        if (isSelfUser) {
-                            enableEditFeatures();
-                        } else {
-                            disableEditFeatures();
-                        }
                     } else {
                         Toast.makeText(getContext(), "Profile not found", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> Log.e("ProfileFragment", "Error loading profile", e));
+        }
     }
 
 
@@ -224,12 +202,4 @@ public class ProfileFragment extends Fragment {
         adoptionStatus.setVisibility(View.VISIBLE);
     }
 
-    private void disableEditFeatures() {
-        btnChangeImage.setVisibility(View.GONE);
-        btnEditConfirm.setVisibility(View.GONE);
-        btnForm.setVisibility(View.GONE);
-        btnLogout.setVisibility(View.GONE);
-        btnDelete.setVisibility(View.GONE);
-        adoptionStatus.setVisibility(View.GONE);
-    }
 }

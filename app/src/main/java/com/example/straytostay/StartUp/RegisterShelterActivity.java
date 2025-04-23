@@ -14,7 +14,11 @@ import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.straytostay.Classes.Shelter;
 import com.example.straytostay.Classes.Usuario;
+import com.example.straytostay.Classes.Vet;
+import com.example.straytostay.Main.Adoptante.HomeFragment;
+import com.example.straytostay.Main.Shelter.PostedPetFragment;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,7 +39,6 @@ public class RegisterShelterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private RadioGroup typeSelector;
-    private RadioButton radioRefugio, radioVeterinaria;
     private LinearLayout refugioLayout, veterinariaLayout;
 
     private FirebaseAuth mAuth;
@@ -159,26 +162,28 @@ public class RegisterShelterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 String uid = mAuth.getCurrentUser().getUid();
-                Usuario entity;
-                Log.d("||||||||||||||||||||", "NO ENTRÉ AL IF: " + selectedType);
+
                 if (selectedType.equals("Refugio")) {
-                    Log.d("||||||||||||||||||||", "ENTRÉ AL IF: " + selectedType);
-                    Log.d("REVISION DE MISION", "A ver: " + mision);
-
-                    entity = new Usuario(name, phone, address, email,1,uid,mision,encodedImageBase64);
+                    Shelter shelter = new Shelter(uid,1,encodedImageBase64,name,phone,address,email,mision);
+                    db.collection("shelters").document(uid).set(shelter).addOnSuccessListener(aVoid -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }).addOnFailureListener(e -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
+                    });
                 } else {
-                    Log.d("||||||||||||||||||||", "ENTRÉ AL IF: " + selectedType);
-                    entity = new Usuario(name, phone, address, email,1,uid,nit,serviciosList, productosList, encodedImageBase64);
+                    Vet vet = new Vet(uid,1,encodedImageBase64,nit, name, phone, address, email,serviciosList, productosList);
+                    db.collection("vets").document(uid).set(vet).addOnSuccessListener(aVoid -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }).addOnFailureListener(e -> {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
+                    });
                 }
-
-                db.collection("users").document(uid).set(entity).addOnSuccessListener(aVoid -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    finish();
-                }).addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
-                });
 
             } else {
                 progressBar.setVisibility(View.GONE);
