@@ -113,6 +113,23 @@
             android:background="@drawable/edittext_background"
             android:layout_marginBottom="24dp" />
 
+        <ImageView
+            android:id="@+id/adop_selectedImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/edittext_background"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_edit" />
+
+        <!-- Botón para seleccionar imagen -->
+        <Button
+            android:id="@+id/adop_selectImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar logo"
+            android:layout_marginBottom="16dp" />
+
         <!-- Botón Registrar -->
         <Button
             android:id="@+id/registerButton"

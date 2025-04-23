@@ -6,13 +6,7 @@ public class Usuario {
     private int adminId;
 
     // USUARIO (0)
-    private String name;
-    private String imageUri;
-    private String phone;
-    private String citizenId;
-    private String address;
-    private String email;
-    private String uid;
+    private String name, phone, citizenId, address, email, uid, imageUrl;
 
     // SHELTER (1)
 
@@ -28,7 +22,7 @@ public class Usuario {
     public Usuario() {
         // Required empty constructor for Firestore
     }
-    public Usuario(String name, String phone, String citizenId, String address, String email, int adminId, String uid, String imageUri) {
+    public Usuario(String name, String phone, String citizenId, String address, String email, int adminId, String uid, String imageUrl) {
         this.name = name;
         this.phone = phone;
         this.citizenId = citizenId;
@@ -36,9 +30,10 @@ public class Usuario {
         this.email = email;
         this.adminId = adminId;
         this.uid = uid;
+        this.imageUrl = imageUrl;
     }
 
-    public Usuario(String name, String phone, String address, String email, int adminId, String uid, String mision, String imageUri) {
+    public Usuario(String name, String phone, String address, String email, int adminId, String uid, String mision, String imageUrl) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -46,9 +41,10 @@ public class Usuario {
         this.adminId = adminId;
         this.uid = uid;
         this.mision = mision;
+        this.imageUrl = imageUrl;
     }
 
-    public Usuario(String name, String phone, String address, String email, int adminId, String uid, String nit, ArrayList<String> services, ArrayList<String> products, String imageUri) {
+    public Usuario(String name, String phone, String address, String email, int adminId, String uid, String nit, ArrayList<String> services, ArrayList<String> products, String imageUrl) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -58,10 +54,51 @@ public class Usuario {
         this.nit = nit;
         this.services = services;
         this.products = products;
+        this.imageUrl = imageUrl;
     }
 
     public String getUid() {
         return uid;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getMision() {
+        return mision;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public ArrayList<String> getServices() {
+        return services;
+    }
+
+    public void setServices(ArrayList<String> services) {
+        this.services = services;
+    }
+
+    public ArrayList<String> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<String> products) {
+        this.products = products;
+    }
+
+    public void setMision(String mision) {
+        this.mision = mision;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public void setUid(String uid) {

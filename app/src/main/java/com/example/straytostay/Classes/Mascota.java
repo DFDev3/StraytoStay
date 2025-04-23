@@ -6,16 +6,8 @@ import java.util.List;
 
 public class Mascota implements Serializable {
     private String id;
-    private String nombre;
-    private String edad;
-    private String raza;
-    private String tipo;
-    private String esterilizacion;
-    private String sexo;
+    private String nombre, edad, raza, tipo, esterilizacion, sexo, tamano, descripcion, imagenUrl, refugio;
     private ArrayList<String> vacunas;
-    private String tamano;
-    private String descripcion;
-    private String imagenUrl, refugio;
 
     // Required empty constructor for Firestore
     public Mascota() {}
