@@ -34,7 +34,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000;
 
-    private EditText nameInput, addressInput, phoneInput, misionInput, nitInput, serviciosInput, productosInput, emailInput, passwordInput;
+    private EditText nameInput, addressInput, phoneInput, websiteInput, misionInput, nitInput, serviciosInput, productosInput, emailInput, passwordInput;
     private Button registerButton, selectImageButton;
     private ProgressBar progressBar;
 
@@ -73,6 +73,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
         productosInput = findViewById(R.id.vet_products);
         emailInput = findViewById(R.id.entity_email);
         passwordInput = findViewById(R.id.entity_password);
+        websiteInput = findViewById(R.id.entity_website);
 
         selectedImage = findViewById(R.id.selectedImage);
         selectImageButton = findViewById(R.id.selectImageButton);
@@ -127,9 +128,11 @@ public class RegisterShelterActivity extends AppCompatActivity {
         String phone = phoneInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
-        String nit = nitInput.getText().toString().trim();
+        String website = websiteInput.getText().toString().trim();
 
         String mision = misionInput.getText().toString().trim();
+
+        String nit = nitInput.getText().toString().trim();
         String servicios = serviciosInput.getText().toString().trim();
         String productos = productosInput.getText().toString().trim();
 
@@ -164,7 +167,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
                 String uid = mAuth.getCurrentUser().getUid();
 
                 if (selectedType.equals("Refugio")) {
-                    Shelter shelter = new Shelter(uid,1,encodedImageBase64,name,phone,address,email,mision);
+                    Shelter shelter = new Shelter(uid,1,encodedImageBase64,name,phone,address,email,mision,website);
                     db.collection("shelters").document(uid).set(shelter).addOnSuccessListener(aVoid -> {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
@@ -174,7 +177,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
                     });
                 } else {
-                    Vet vet = new Vet(uid,1,encodedImageBase64,nit, name, phone, address, email,serviciosList, productosList);
+                    Vet vet = new Vet(uid,1,encodedImageBase64,nit, name, phone, address, email,serviciosList, productosList,website);
                     db.collection("vets").document(uid).set(vet).addOnSuccessListener(aVoid -> {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();

@@ -2,12 +2,12 @@ package com.example.straytostay.Classes;
 
 public class Shelter {
 
-    private String uid,imageUrl,name,phone,address,email,mission;
+    private String uid,imageUrl,name,phone,address,email,mission,website;
     private int adminId;
 
     public Shelter(){}
 
-    public Shelter(String uid, int adminId, String imageUrl,String name, String phone, String address, String email, String mision) {
+    public Shelter(String uid, int adminId, String imageUrl,String name, String phone, String address, String email, String mision,String website) {
         this.uid = uid;
         this.adminId = adminId;
         this.imageUrl = imageUrl;
@@ -16,6 +16,7 @@ public class Shelter {
         this.address = address;
         this.email = email;
         this.mission = mision;
+        this.website = website;
     }
 
     public String getUid() {
