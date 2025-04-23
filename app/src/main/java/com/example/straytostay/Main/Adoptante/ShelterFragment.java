@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.straytostay.Classes.Shelter;
 import com.example.straytostay.Classes.Usuario;
 import com.example.straytostay.Main.Adapters.ShelterAdapter;
 import com.example.straytostay.Main.Shelter.ShelterProfileFragment;
@@ -23,7 +24,7 @@ public class ShelterFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ShelterAdapter adapter;
-    private ArrayList<Usuario> refugiosList;
+    private ArrayList<Shelter> refugiosList;
     private FirebaseFirestore db;
 
     public ShelterFragment() {}
@@ -63,9 +64,11 @@ public class ShelterFragment extends Fragment {
         db.collection("shelters")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    refugiosList.clear(); // ✅ Clear list to avoid duplicates
+
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        Usuario refugio = doc.toObject(Usuario.class);
-                        refugio.setUid(doc.getId()); // ✅ Add this line
+                        Shelter refugio = doc.toObject(Shelter.class);
+                        refugio.setUid(doc.getId()); // ✅ Set the UID
                         refugiosList.add(refugio);
                     }
 

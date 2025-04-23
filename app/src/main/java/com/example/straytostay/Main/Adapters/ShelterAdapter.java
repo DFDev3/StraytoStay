@@ -8,21 +8,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.straytostay.Classes.Usuario;
+import com.example.straytostay.Classes.Shelter;
 import com.example.straytostay.R;
 
 import java.util.List;
 
 public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterViewHolder> {
 
-    private List<Usuario> shelterList;
+    private List<Shelter> shelterList;
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(Usuario shelter);
+        void onItemClick(Shelter shelter);
     }
 
-    public ShelterAdapter(List<Usuario> shelterList, OnItemClickListener listener) {
+    public ShelterAdapter(List<Shelter> shelterList, OnItemClickListener listener) {
         this.shelterList = shelterList;
         this.listener = listener;
     }
@@ -32,12 +32,12 @@ public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterV
     public ShelterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comp_card_shelter, parent, false);
-        return new ShelterViewHolder(view);
+        return  new ShelterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShelterViewHolder holder, int position) {
-        Usuario shelter = shelterList.get(position);
+        Shelter shelter = shelterList.get(position);
         holder.name.setText(shelter.getName());
         holder.address.setText(shelter.getAddress());
         holder.phone.setText(shelter.getPhone());
