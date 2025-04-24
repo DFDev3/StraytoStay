@@ -36,7 +36,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000;
 
-    private EditText nameInput, addressInput, phoneInput, websiteInput, misionInput, nitInput, serviciosInput, productosInput, emailInput, passwordInput;
+    private EditText nameInput, addressInput, mainPhoneInput, websiteInput, misionInput, nitInput, serviciosInput, productosInput, emailInput, passwordInput;
     private Button registerButton, selectImageButton;
     private ProgressBar progressBar;
     private LinearLayout phoneContainer;
@@ -71,7 +71,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
 
         nameInput = findViewById(R.id.entity_name);
         addressInput = findViewById(R.id.entity_address);
-        phoneInput = findViewById(R.id.entity_phone);
+        mainPhoneInput = findViewById(R.id.entity_phone);
         misionInput = findViewById(R.id.shelter_mission);
         nitInput = findViewById(R.id.vet_nit);
         serviciosInput = findViewById(R.id.vet_services);
@@ -147,6 +147,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
         layout.addView(removeBtn);
 
         phoneContainer.addView(layout);
+
     }
 
 
@@ -173,7 +174,6 @@ public class RegisterShelterActivity extends AppCompatActivity {
     private void registerEntity() {
         String name = nameInput.getText().toString().trim();
         String address = addressInput.getText().toString().trim();
-        String phone = phoneInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
         String website = websiteInput.getText().toString().trim();
@@ -183,6 +183,30 @@ public class RegisterShelterActivity extends AppCompatActivity {
         String nit = nitInput.getText().toString().trim();
         String servicios = serviciosInput.getText().toString().trim();
         String productos = productosInput.getText().toString().trim();
+
+        String mainPhone = mainPhoneInput.getText().toString().trim();
+
+        ArrayList<String> phoneList = new ArrayList<String>();
+
+        phoneList.add(mainPhone);
+
+        for (int i = 0; i < phoneContainer.getChildCount(); i++) {
+            View child = phoneContainer.getChildAt(i);
+            if (child instanceof LinearLayout) {
+                LinearLayout row = (LinearLayout) child;
+                for (int j = 0; j < row.getChildCount(); j++) {
+                    View rowChild = row.getChildAt(j);
+                    if (rowChild instanceof EditText) {
+                        String phone = ((EditText) rowChild).getText().toString().trim();
+                        if (!phone.isEmpty()) {
+                            phoneList.add(phone);
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         ArrayList<String> serviciosList;
 
@@ -202,8 +226,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
             productosList = null;
         }
 
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone) ||
-                TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Todos los campos obligatorios deben estar completos.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -215,7 +238,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
                 String uid = mAuth.getCurrentUser().getUid();
 
                 if (selectedType.equals("Refugio")) {
-                    Shelter shelter = new Shelter(uid,1,encodedImageBase64,name,phone,address,email,mision,website);
+                    Shelter shelter = new Shelter(uid,1,encodedImageBase64,name,phoneList,address,email,mision,website);
                     db.collection("shelters").document(uid).set(shelter).addOnSuccessListener(aVoid -> {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
@@ -225,7 +248,7 @@ public class RegisterShelterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
                     });
                 } else {
-                    Vet vet = new Vet(uid,1,encodedImageBase64,nit, name, phone, address, email,serviciosList, productosList,website);
+                    Vet vet = new Vet(uid,1,encodedImageBase64,nit, name, phoneList, address, email,serviciosList, productosList,website);
                     db.collection("vets").document(uid).set(vet).addOnSuccessListener(aVoid -> {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();

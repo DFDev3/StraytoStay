@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
@@ -19,12 +21,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShelterDetailFragment extends Fragment {
 
     private ImageView imageAnimal;
     private TextView textNombre, textPhone, textEmail, textAddress, textNit, textMision, textMisionLabel, textWebsite, textServicios, textServiciosLabel, textProductos, textProductosLabel;
+    private LinearLayout phoneListContainer;
     private String uid;
     private FirebaseFirestore db;
 
@@ -53,9 +57,10 @@ public class ShelterDetailFragment extends Fragment {
         textNombre = view.findViewById(R.id.tvName);
         textAddress = view.findViewById(R.id.tvAddress);
         textWebsite = view.findViewById(R.id.tvWebsite);
-        textPhone = view.findViewById(R.id.tvPhone);
         textEmail = view.findViewById(R.id.tvEmail);
         textNit = view.findViewById(R.id.tvNit);
+
+        phoneListContainer = view.findViewById(R.id.detailphoneContainer);
 
         textServiciosLabel = view.findViewById(R.id.tvServicesLabel);
         textServicios = view.findViewById(R.id.tvServices);
@@ -102,6 +107,8 @@ public class ShelterDetailFragment extends Fragment {
     }
 
     private void populateShelterUI(DocumentSnapshot snapshot) {
+
+
         textServicios.setVisibility(View.GONE);
         textServiciosLabel.setVisibility(View.GONE);
         textProductos.setVisibility(View.GONE);
@@ -112,19 +119,16 @@ public class ShelterDetailFragment extends Fragment {
 
         String name = snapshot.getString("name");
         String email = snapshot.getString("email");
-        String phone = snapshot.getString("phone");
         String address = snapshot.getString("address");
         String mision = snapshot.getString("mission"); // Shelter only
         String servicios = snapshot.getString("servicios"); // Vet only
         String productos = snapshot.getString("productos");
         String nit = snapshot.getString("nit");
         String imageUrl = snapshot.getString("imageUrl");
+        ArrayList<String> phoneList = (ArrayList<String>) snapshot.get("phoneList");
 
-
-        // TODO: Replace with your actual view updates
         textNombre.setText(name);
         textEmail.setText(email);
-        textPhone.setText(phone);
         textAddress.setText(address);
         if (mision != null) {
             textMisionLabel.setVisibility(View.VISIBLE);
@@ -147,6 +151,7 @@ public class ShelterDetailFragment extends Fragment {
         if (imageUrl != null && !imageUrl.isEmpty()) {
             loadImage(imageUrl);
         }
+        displayPhoneList(phoneList);
     }
 
 
@@ -164,4 +169,29 @@ public class ShelterDetailFragment extends Fragment {
             Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void displayPhoneList(List<String> phoneList) {
+        phoneListContainer.removeAllViews(); // Clear previous views if any
+
+        for (String phone : phoneList) {
+            TextView phoneView = new TextView(requireContext());
+            phoneView.setText(phone);
+            phoneView.setTextSize(16);
+            phoneView.setPadding(8, 10, 8, 8);
+            phoneView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black)); // Optional
+            phoneView.setBackgroundResource(R.drawable.edittext_background); // Optional, if you want style
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 12, 0, 0);  // Top margin of 12dp (convert to px if needed)
+
+            phoneView.setLayoutParams(params);
+            phoneListContainer.addView(phoneView);
+        }
+    }
+
 }
+
+

@@ -3,12 +3,25 @@ package com.example.straytostay.Classes;
 import java.util.ArrayList;
 
 public class Vet {
-    private String uid,imageUrl,nit,name,phone,address,email,website;
+    private String uid,imageUrl,nit,name,address,email,website;
     private int adminId;
-    private ArrayList<String> services, products;
+    private ArrayList<String> services, products, phoneList;
 
     public Vet(){}
 
+    public Vet(String uid, int adminId, String imageUrl, String nit, String name, ArrayList<String> phoneList, String address, String email, ArrayList<String> services, ArrayList<String> products, String website) {
+        this.uid = uid;
+        this.adminId = adminId;
+        this.imageUrl = imageUrl;
+        this.nit = nit;
+        this.name = name;
+        this.phoneList = phoneList;
+        this.address = address;
+        this.email = email;
+        this.services = services;
+        this.products = products;
+        this.website = website;
+    }
     public String getUid() {
         return uid;
     }
@@ -41,12 +54,12 @@ public class Vet {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public ArrayList<String> getPhoneList() {
+        return phoneList;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneList(ArrayList<String> phoneList) {
+        this.phoneList = phoneList;
     }
 
     public String getAddress() {
@@ -97,17 +110,4 @@ public class Vet {
         this.products = products;
     }
 
-    public Vet(String uid, int adminId, String imageUrl, String nit, String name, String phone, String address, String email, ArrayList<String> services, ArrayList<String> products, String website) {
-        this.uid = uid;
-        this.adminId = adminId;
-        this.imageUrl = imageUrl;
-        this.nit = nit;
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.email = email;
-        this.services = services;
-        this.products = products;
-        this.website = website;
-    }
 }

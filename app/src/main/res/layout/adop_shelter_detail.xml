@@ -215,16 +215,19 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/tvEmail"
         app:layout_constraintTop_toBottomOf="@id/socialIcons" />
+
     <!-- Contenedor dinámico de teléfonos -->
     <LinearLayout
-        android:id="@+id/phoneListContainer"
+        android:id="@+id/detailphoneContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toBottomOf="@id/tvPhone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+    </LinearLayout>
+
     <!-- Página web -->
     <TextView
         android:id="@+id/tvWebsite"
@@ -234,9 +237,8 @@
         android:text="www.refugioesperanza.org"
         android:textColor="@android:color/holo_blue_dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPhone" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

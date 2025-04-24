@@ -1,18 +1,21 @@
 package com.example.straytostay.Classes;
 
+import java.util.ArrayList;
+
 public class Shelter {
 
-    private String uid,imageUrl,name,phone,address,email,mission,website;
+    private String uid,imageUrl,name,address,email,mission,website;
+    private ArrayList<String> phoneList;
     private int adminId;
 
     public Shelter(){}
 
-    public Shelter(String uid, int adminId, String imageUrl,String name, String phone, String address, String email, String mision,String website) {
+    public Shelter(String uid, int adminId, String imageUrl,String name, ArrayList<String> phoneList, String address, String email, String mision,String website) {
         this.uid = uid;
         this.adminId = adminId;
         this.imageUrl = imageUrl;
         this.name = name;
-        this.phone = phone;
+        this.phoneList = phoneList;
         this.address = address;
         this.email = email;
         this.mission = mision;
@@ -35,20 +38,28 @@ public class Shelter {
         this.imageUrl = imageUrl;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public ArrayList<String> getPhoneList() {
+        return phoneList;
+    }
+
+    public void setPhoneList(ArrayList<String> phoneList) {
+        this.phoneList = phoneList;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getAddress() {

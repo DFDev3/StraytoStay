@@ -40,7 +40,8 @@ public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterV
         Shelter shelter = shelterList.get(position);
         holder.name.setText(shelter.getName());
         holder.address.setText(shelter.getAddress());
-        holder.phone.setText(shelter.getPhone());
+        holder.phone.setText(shelter.getPhoneList() != null && !shelter.getPhoneList().isEmpty() ? shelter.getPhoneList().get(0) : "No phone available");
+
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
