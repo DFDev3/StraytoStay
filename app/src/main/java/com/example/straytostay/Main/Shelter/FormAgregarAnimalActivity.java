@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.View;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,19 +18,16 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FormAgregarAnimalActivity extends AppCompatActivity {
 
@@ -42,7 +39,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
     private ImageView imagePreview;
     private Uri imageUri;
     private FirebaseFirestore db;
-    private StorageReference storageRef;
+    private FirebaseAuth mAuth;
     private String encodedImageBase64 = null;
 
     private CheckBox vacunaRabia, vacunaMoquillo, vacunaParvovirus, vacunaHepatitis,
@@ -54,7 +51,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         setContentView(R.layout.shelter_form_agregar_animal);
 
         db = FirebaseFirestore.getInstance();
-        storageRef = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         inputNombre = findViewById(R.id.inputNombre);
         inputEdad = findViewById(R.id.inputEdad);
@@ -142,7 +139,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         String sexo = spinnerSexo.getSelectedItem().toString();
         String tamano = spinnerTamano.getSelectedItem().toString();
 
-        List<String> vacunas = new ArrayList<>();
+        ArrayList<String> vacunas = new ArrayList<>();
         if (vacunaRabia.isChecked()) vacunas.add("Rabia");
         if (vacunaMoquillo.isChecked()) vacunas.add("Moquillo");
         if (vacunaParvovirus.isChecked()) vacunas.add("Parvovirus");
@@ -156,22 +153,51 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         if (vacunaFelv.isChecked()) vacunas.add("Felv");
         if (vacunaFIV.isChecked()) vacunas.add("FIV");
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("nombre", nombre);
-        data.put("edad", edad);
-        data.put("raza", raza);
-        data.put("descripcion", descripcion);
-        data.put("tipo", tipo);
-        data.put("esterilizacion", esterilizado);
-        data.put("sexo", sexo);
-        data.put("tamano", tamano);
-        data.put("vacunas", vacunas);
-        data.put("imagenBase64", encodedImageBase64);
+        String ShelterUid = mAuth.getCurrentUser().getUid();
+
+        final String[] refugio = {null}; // Use array to allow mutation inside inner class
+
+        db.collection("shelters").document(ShelterUid).get()
+                .addOnSuccessListener(snapshot -> {
+                    if (snapshot.exists()) {
+                        refugio[0] = snapshot.getString("name");
+                        // You can now use refugio[0] here or call guardarAnimal(refugio[0]);
+                    } else {
+                        // If not found, check "vets"
+                        db.collection("vets").document(ShelterUid).get()
+                                .addOnSuccessListener(vetSnapshot -> {
+                                    if (vetSnapshot.exists()) {
+                                        refugio[0] = vetSnapshot.getString("name");
+                                        // You can now use refugio[0] here too
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("ShelterDetail", "Error fetching from vets", e);
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ShelterDetail", "Error fetching from shelters", e);
+                });
+
+
+        Mascota pet = new Mascota();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            db.collection("animales").add(data)
-                    .addOnSuccessListener(documentReference -> Toast.makeText(this, "Animal guardado", Toast.LENGTH_SHORT).show())
+            db.collection("mascotas").add(pet)
+                    .addOnSuccessListener(documentReference -> {
+                        String uid = documentReference.getId();
+
+                        Mascota mascota = new Mascota(uid, nombre, edad, raza, tipo, esterilizado, sexo, vacunas, tamano, descripcion,refugio[0], encodedImageBase64);
+
+                        // Step 4: Save the full Mascota object with UID (optional step, you can update other fields if needed)
+                        db.collection("mascotas")
+                                .document(uid)
+                                .set(mascota)  // This step will save the Mascota object with the correct uid.
+                                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Animal guardado correctamente", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar mascota", Toast.LENGTH_SHORT).show());
+                    })
                     .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show());
         }
     }
