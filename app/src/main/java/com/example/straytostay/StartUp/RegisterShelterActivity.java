@@ -109,12 +109,6 @@ public class RegisterShelterActivity extends AppCompatActivity {
         phoneContainer = findViewById(R.id.phoneContainer); // Agrega esto si usas varios teléfonos dinámicamente
         addPhoneBtn = findViewById(R.id.addPhoneBtn);
         addPhoneBtn.setOnClickListener(v -> addPhoneField());
-        addPhoneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addPhoneField();
-            }
-        });
     }
     private void addPhoneField() {
         // Crear contenedor horizontal

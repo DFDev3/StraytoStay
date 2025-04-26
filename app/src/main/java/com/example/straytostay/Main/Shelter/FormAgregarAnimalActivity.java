@@ -5,13 +5,18 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,10 +38,12 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    private EditText inputNombre, inputEdad, inputRaza, inputDescripcion;
+    private EditText inputNombre, inputEdad, inputRaza, inputDescripcion, inputVacuna;
     private Spinner spinnerTipo, spinnerEsterilizacion, spinnerSexo, spinnerTamano;
     private Button btnSeleccionarImagen, btnPublicar;
+    private ImageButton addVacunaBtn;
     private ImageView imagePreview;
+    private LinearLayout vacunaContainer;
     private Uri imageUri;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -84,19 +91,10 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         spinnerTamano.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tamanoOptions));
         spinnerTamano.setSelection(0);
 
-        vacunaRabia = findViewById(R.id.vacuna_rabia);
-        vacunaMoquillo = findViewById(R.id.vacuna_moquillo);
-        vacunaParvovirus = findViewById(R.id.vacuna_parvovirus);
-        vacunaHepatitis = findViewById(R.id.vacuna_hepatitis);
-        vacunaLeptospirosis = findViewById(R.id.vacuna_leptospirosis);
-        vacunaBordetella = findViewById(R.id.vacuna_bordetella);
-        vacunaParainfluenza = findViewById(R.id.vacuna_parainfluenza);
-
-        vacunaPanleucopenia = findViewById(R.id.vacuna_panleucopenia);
-        vacunaRinotraqueitis = findViewById(R.id.vacuna_rinotraqueitis);
-        vacunaCalicivirus = findViewById(R.id.vacuna_calicivirus);
-        vacunaFelv = findViewById(R.id.vacuna_leucemia);
-        vacunaFIV = findViewById(R.id.vacuna_fiv);
+        inputVacuna = findViewById(R.id.animal_vacuna);
+        vacunaContainer = findViewById(R.id.vacunaContainer); // Agrega esto si usas varios teléfonos dinámicamente
+        addVacunaBtn = findViewById(R.id.addVacunaBtn);
+        addVacunaBtn.setOnClickListener(v -> addVacunaField());
 
         btnSeleccionarImagen.setOnClickListener(v -> abrirGaleria());
 
@@ -128,30 +126,70 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         }
     }
 
+    private void addVacunaField() {
+        // Crear contenedor horizontal
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        layout.setPadding(0, 8, 0, 8);
+
+        // Crear nuevo EditText
+        EditText newPhone = new EditText(this);
+        newPhone.setHint("Otra vacna");
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        newPhone.setLayoutParams(params);
+        newPhone.setBackgroundResource(R.drawable.edittext_background);
+        newPhone.setPadding(20, 20, 20, 20);
+
+        // Botón para eliminar
+        ImageButton removeBtn = new ImageButton(this);
+        removeBtn.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+        removeBtn.setBackground(null);
+        removeBtn.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        removeBtn.setOnClickListener(v -> vacunaContainer.removeView(layout));
+
+        layout.addView(newPhone);
+        layout.addView(removeBtn);
+
+        vacunaContainer.addView(layout);
+
+    }
+
     private void guardarAnimal() {
         String nombre = inputNombre.getText().toString();
         String edad = inputEdad.getText().toString();
         String raza = inputRaza.getText().toString();
         String descripcion = inputDescripcion.getText().toString();
+        String mainVacuna = inputVacuna.getText().toString();
 
         String tipo = spinnerTipo.getSelectedItem().toString();
         String esterilizado = spinnerEsterilizacion.getSelectedItem().toString();
         String sexo = spinnerSexo.getSelectedItem().toString();
         String tamano = spinnerTamano.getSelectedItem().toString();
 
-        ArrayList<String> vacunas = new ArrayList<>();
-        if (vacunaRabia.isChecked()) vacunas.add("Rabia");
-        if (vacunaMoquillo.isChecked()) vacunas.add("Moquillo");
-        if (vacunaParvovirus.isChecked()) vacunas.add("Parvovirus");
-        if (vacunaHepatitis.isChecked()) vacunas.add("Hepatitis");
-        if (vacunaLeptospirosis.isChecked()) vacunas.add("Leptospirosis");
-        if (vacunaBordetella.isChecked()) vacunas.add("Bordetella");
-        if (vacunaParainfluenza.isChecked()) vacunas.add("Parainfluenza");
-        if (vacunaPanleucopenia.isChecked()) vacunas.add("Panleucopenia");
-        if (vacunaRinotraqueitis.isChecked()) vacunas.add("Rinotraqueitis");
-        if (vacunaCalicivirus.isChecked()) vacunas.add("Calicivirus");
-        if (vacunaFelv.isChecked()) vacunas.add("Felv");
-        if (vacunaFIV.isChecked()) vacunas.add("FIV");
+        ArrayList<String> vacunaList = new ArrayList<String>();
+
+        vacunaList.add(mainVacuna);
+
+        for (int i = 0; i < vacunaContainer.getChildCount(); i++) {
+            View child = vacunaContainer.getChildAt(i);
+            if (child instanceof LinearLayout) {
+                LinearLayout row = (LinearLayout) child;
+                for (int j = 0; j < row.getChildCount(); j++) {
+                    View rowChild = row.getChildAt(j);
+                    if (rowChild instanceof EditText) {
+                        String vacuna = ((EditText) rowChild).getText().toString().trim();
+                        if (!vacuna.isEmpty()) {
+                            vacunaList.add(vacuna);
+                        }
+                    }
+                }
+            }
+        }
 
         String ShelterUid = mAuth.getCurrentUser().getUid();
 
@@ -189,7 +227,7 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
                     .addOnSuccessListener(documentReference -> {
                         String uid = documentReference.getId();
 
-                        Mascota mascota = new Mascota(uid, nombre, edad, raza, tipo, esterilizado, sexo, vacunas, tamano, descripcion,refugio[0], encodedImageBase64);
+                        Mascota mascota = new Mascota(uid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion,refugio[0], encodedImageBase64);
 
                         // Step 4: Save the full Mascota object with UID (optional step, you can update other fields if needed)
                         db.collection("mascotas")

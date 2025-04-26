@@ -99,79 +99,41 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp" />
 
-        <!-- Checkboxes para vacunas -->
-        <CheckBox
-            android:id="@+id/vacuna_rabia"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/vacunaContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rabia" />
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
 
-        <CheckBox
-            android:id="@+id/vacuna_moquillo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Moquillo" />
+                <EditText
+                    android:id="@+id/animal_vacuna"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="   Ingrese las vacunas"
+                    android:drawableLeft="@drawable/ic_phone"
+                    android:background="@drawable/edittext_background"
+                    android:padding="12dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/addVacunaBtn" />
 
-        <CheckBox
-            android:id="@+id/vacuna_parvovirus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Parvovirus" />
-
-        <CheckBox
-            android:id="@+id/vacuna_hepatitis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hepatitis" />
-
-        <CheckBox
-            android:id="@+id/vacuna_leptospirosis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leptospirosis" />
-
-        <CheckBox
-            android:id="@+id/vacuna_bordetella"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bordetella" />
-
-        <CheckBox
-            android:id="@+id/vacuna_parainfluenza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Parainfluenza" />
-
-        <CheckBox
-            android:id="@+id/vacuna_panleucopenia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Panleucopenia (Gato)" />
-
-        <CheckBox
-            android:id="@+id/vacuna_rinotraqueitis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rinotraqueitis (Gato)" />
-
-        <CheckBox
-            android:id="@+id/vacuna_calicivirus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calicivirus (Gato)" />
-
-        <CheckBox
-            android:id="@+id/vacuna_leucemia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leucemia felina (FeLV)" />
-
-        <CheckBox
-            android:id="@+id/vacuna_fiv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inmunodeficiencia felina (FIV)" />
+                <ImageButton
+                    android:id="@+id/addVacunaBtn"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:padding="6dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_add_black_24" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <!-- Tamaño -->
         <Spinner
