@@ -225,13 +225,13 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
         if (user != null) {
             db.collection("mascotas").add(pet)
                     .addOnSuccessListener(documentReference -> {
-                        String uid = documentReference.getId();
+                        String aid = documentReference.getId();
 
-                        Mascota mascota = new Mascota(uid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion,refugio[0], encodedImageBase64);
+                        Mascota mascota = new Mascota(aid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion,refugio[0], encodedImageBase64);
 
                         // Step 4: Save the full Mascota object with UID (optional step, you can update other fields if needed)
                         db.collection("mascotas")
-                                .document(uid)
+                                .document(aid)
                                 .set(mascota)  // This step will save the Mascota object with the correct uid.
                                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Animal guardado correctamente", Toast.LENGTH_SHORT).show())
                                 .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar mascota", Toast.LENGTH_SHORT).show());

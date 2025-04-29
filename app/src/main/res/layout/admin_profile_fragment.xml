@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Contenedor para imagen y botón de cambio -->
+            <FrameLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- Foto de perfil -->
+                <ImageView
+                    android:id="@+id/profile_picture_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_perfil"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/circle_background" />
+
+                <!-- Botón para cambiar la imagen -->
+                <ImageButton
+                    android:id="@+id/btn_change_image_admin"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/button_rounded"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="Cambiar imagen"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <!-- Nombre -->
+            <TextView
+                android:id="@+id/profile_name_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre Apellido"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edit_profile_name_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre Apellido"
+                android:visibility="gone"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Correo -->
+            <TextView
+                android:id="@+id/profile_email_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="correo@ejemplo.com"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edit_profile_email_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="correo@ejemplo.com"
+                android:inputType="textEmailAddress"
+                android:visibility="gone"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Teléfono -->
+            <TextView
+                android:id="@+id/profile_phone_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teléfono"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+
+            <EditText
+                android:id="@+id/edit_profile_phone_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Dirección -->
+            <TextView
+                android:id="@+id/profile_address_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección del usuario"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Logout Button -->
+            <Button
+                android:id="@+id/profile_logout_button_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cerrar sesión"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_button_border_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"/>
+            <Button
+                android:id="@+id/btn_delete_account_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eliminar cuenta"
+                android:textColor="@color/red"
+                android:background="@drawable/bg_button_border_red" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
