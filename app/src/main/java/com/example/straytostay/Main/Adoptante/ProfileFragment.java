@@ -65,6 +65,11 @@ public class ProfileFragment extends Fragment {
 
         adoptionStatus = view.findViewById(R.id.tv_adoption_status);
 
+        btnForm.setOnClickListener(v -> {
+            // Redirigir al Activity adop_activity_form
+            Intent intent = new Intent(getActivity(), Form.class);
+            startActivity(intent);
+        });
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));

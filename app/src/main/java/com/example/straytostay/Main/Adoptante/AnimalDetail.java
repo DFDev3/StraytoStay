@@ -1,5 +1,6 @@
 package com.example.straytostay.Main.Adoptante;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ public class AnimalDetail extends Fragment {
             textContenidoDescripcion, textNombreRefugio, textEsterilizado, textVacunas;
     private String animalId;
     private FirebaseFirestore db;
-
+    private Button btnAplicarAdopcion; // Definir el botón
     public static AnimalDetail newInstance(String animalId) {
         AnimalDetail fragment = new AnimalDetail();
         Bundle args = new Bundle();
@@ -60,10 +62,16 @@ public class AnimalDetail extends Fragment {
         textContenidoDescripcion = view.findViewById(R.id.textContenidoDescripcion);
         textNombreRefugio = view.findViewById(R.id.textNombreRefugio);
         textVacunas = view.findViewById(R.id.textVacunas);
-
+        btnAplicarAdopcion = view.findViewById(R.id.btnAplicarAdopcion);
 
         cargarDatosAnimal();
 
+        btnAplicarAdopcion.setOnClickListener(v -> {
+            // Redirigir al Activity adop_activity_form
+            Intent intent = new Intent(getActivity(), Form.class);
+            intent.putExtra("animalId", animalId); // Pasar el ID del animal si es necesario
+            startActivity(intent);
+        });
         return view;
     }
 

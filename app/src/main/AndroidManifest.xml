@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StraytoStay"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".Main.Adoptante.Form"
+            android:exported="false" />
+        <activity
+            android:name=".Main.Adoptante.BaseAdoptanteActivity"
+            android:exported="false" />
         <activity
             android:name=".Main.Shelter.BaseShelterActivity"
             android:exported="false" />
@@ -33,14 +39,13 @@
         <activity
             android:name=".StartUp.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.StraytoStay" >
+            android:theme="@style/Theme.StraytoStay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

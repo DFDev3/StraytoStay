@@ -39,103 +39,194 @@
         <item>Otro</item>
     </string-array>
     <!-- Encusta adoptante -->
-
     <!-- Pregunta 1 -->
     <string name="p1">¿Cómo te llamas?</string>
 
     <!-- Pregunta 2 -->
-    <string name="p2">¿Cuántos años tienes (Nombre del adoptante)?</string>
-    <string name="r2.1">Menos de 18 años</string>
-    <string name="r2.2">18 a 24 años</string>
-    <string name="r2.3">25 a 40 años</string>
-    <string name="r2.4">Mayores de 40 años u adulto mayor</string>
+    <string name="p2">¿Cuántos años tienes?</string>
+    <string name="r2_1">Menos de 18 años</string>
+    <string name="r2_2">18 a 24 años</string>
+    <string name="r2_3">25 a 40 años</string>
+    <string name="r2_4">Mayores de 40 años o adulto mayor</string>
 
     <!-- Pregunta 3 -->
     <string name="p3">¿Tus padres/tutores están de acuerdo con la adopción y asumirán la responsabilidad del cuidado?</string>
-    <string name="r3.1">Sí (¡Súper! Entonces continuemos.)</string>
-    <string name="r3.2">No (Habla con ellos y vuelve cuando tengan su aprobación).</string>
+    <string name="r3_1">Sí</string>
+    <string name="r3_2">No</string>
 
     <!-- Pregunta 4 -->
     <string name="p4">¿Dónde vives actualmente?</string>
-    <string name="r4.1">Con mis padres</string>
-    <string name="r4.2">Solo/a</string>
-    <string name="r4.3">Con roomies</string>
+    <string name="r4_1">Con mis padres</string>
+    <string name="r4_2">Solo/a</string>
+    <string name="r4_3">Con roomies</string>
 
     <!-- Pregunta 5 -->
     <string name="p5">¿Tu contrato de arrendamiento permite mascotas?</string>
-    <string name="r5.1">Sí</string>
-    <string name="r5.2">No (Lamentablemente, no podrías adoptar en este momento).</string>
+    <string name="r5_1">Sí</string>
+    <string name="r5_2">No</string>
 
     <!-- Pregunta 6 -->
     <string name="p6">¿Cómo costearás los gastos de tu mascota (alimento, salud, emergencias)?</string>
-    <string name="r6.1">Trabajo y tengo ingresos propios</string>
-    <string name="r6.2">Mis padres me apoyarán</string>
-    <string name="r6.3">Otro</string>
+    <string name="r6_1">Trabajo y tengo ingresos propios</string>
+    <string name="r6_2">Mis padres me apoyarán</string>
+    <string name="r6_3">Otro</string>
 
     <!-- Pregunta 7 -->
     <string name="p7">¿Con cuánto dinero te apoyarán tus padres?</string>
-    <string name="r7.1">Menos de $50.000 COP mensuales</string>
-    <string name="r7.2">Entre $50.000 - $100.000 COP</string>
-    <string name="r7.3">Más de $100.000 COP</string>
+    <string name="r7_1">Menos de $50.000 COP mensuales</string>
+    <string name="r7_2">Entre $50.000 - $100.000 COP</string>
+    <string name="r7_3">Más de $100.000 COP</string>
 
     <!-- Pregunta 8 -->
     <string name="p8">¿Qué presupuesto posees mensual para tu peludito?</string>
-    <string name="r8.1">Menos de $50.000 COP mensuales</string>
-    <string name="r8.2">Entre $50.000 - $100.000 COP</string>
-    <string name="r8.3">Más de $100.000 COP</string>
+    <string name="r8_1">Menos de $50.000 COP mensuales</string>
+    <string name="r8_2">Entre $50.000 - $100.000 COP</string>
+    <string name="r8_3">Más de $100.000 COP</string>
 
     <!-- Pregunta 9 -->
     <string name="p9">¿Cuál será tu forma de costear los gastos de la mascota?</string>
 
     <!-- Pregunta 10 -->
     <string name="p10">¿Tus padres están de acuerdo con la adopción?</string>
-    <string name="r10.1">Sí</string>
-    <string name="r10.2">No (Es importante contar con su aprobación antes de continuar).</string>
+    <string name="r10_1">Sí</string>
+    <string name="r10_2">No</string>
 
     <!-- Pregunta 11 -->
-    <string name="p11">¿Qué harás con tu mascota si te mudas o cambias de ciudad?</string>
+    <string name="p11">¿Ellos ayudarán con los gastos y el cuidado del animal?</string>
+    <string name="r11_1">Sí, ellos cubrirán todos los gastos</string>
+    <string name="r11_2">Compartiremos los gastos</string>
+    <string name="r11_3">No, yo asumiré toda la responsabilidad</string>
 
     <!-- Pregunta 12 -->
-    <string name="p12">¿Tienes mascotas actualmente?</string>
-    <string name="r12.1">Sí</string>
-    <string name="r12.2">No</string>
+    <string name="p12">¿Tienen un presupuesto estimado para la mascota?</string>
+    <string name="r12_1">Menos de $50.000 COP mensuales</string>
+    <string name="r12_2">Entre $50.000 - $100.000 COP</string>
+    <string name="r12_3">Más de $100.000 COP</string>
 
     <!-- Pregunta 13 -->
-    <string name="p13">¿Tus mascotas están esterilizadas?</string>
-    <string name="r13.1">Sí</string>
-    <string name="r13.2">No</string>
-    <string name="r13.3">No aplica</string>
+    <string name="p13">¿Son conscientes de que los gastos pueden aumentar debido a emergencias médicas o necesidades especiales del animal?</string>
+    <string name="r13_1">Sí</string>
+    <string name="r13_2">No</string>
 
     <!-- Pregunta 14 -->
-    <string name="p14">¿Están vacunadas tus mascotas?</string>
-    <string name="r14.1">Sí</string>
-    <string name="r14.2">No</string>
-    <string name="r14.3">No aplica</string>
+    <string name="p14">¿Tus compañeros de casa están de acuerdo con la adopción?</string>
+    <string name="r14_1">Sí</string>
+    <string name="r14_2">No</string>
 
     <!-- Pregunta 15 -->
-    <string name="p15">¿Tu anterior mascota fue adoptada?</string>
-    <string name="r15.1">Sí</string>
-    <string name="r15.2">No</string>
-    <string name="r15.3">No he tenido mascotas antes</string>
+    <string name="p15">¿Están dispuestos a convivir con el animal sin problemas de convivencia?</string>
+    <string name="r15_1">Sí</string>
+    <string name="r15_2">No</string>
 
     <!-- Pregunta 16 -->
-    <string name="p16">¿Has devuelto alguna vez una mascota?</string>
-    <string name="r16.1">Sí</string>
-    <string name="r16.2">No</string>
+    <string name="p16">¿Tu contrato de arrendamiento permite mascotas?</string>
+    <string name="r16_1">Sí</string>
+    <string name="r16_2">No</string>
 
     <!-- Pregunta 17 -->
-    <string name="p17">¿Por qué devolviste a tu mascota?</string>
+    <string name="p17">¿Vives solo, con pareja o con familia?</string>
+    <string name="r17_1">Solo</string>
+    <string name="r17_2">Con pareja</string>
+    <string name="r17_3">Con familia</string>
 
     <!-- Pregunta 18 -->
-    <string name="p18">¿Qué especie te interesa adoptar?</string>
-    <string name="r18.1">Perro</string>
-    <string name="r18.2">Gato</string>
+    <string name="p18">¿Tu pareja está de acuerdo con la adopción?</string>
+    <string name="r18_1">Sí</string>
+    <string name="r18_2">No</string>
 
     <!-- Pregunta 19 -->
-    <string name="p19">¿Tienes alguna preferencia de tamaño/raza/edad?</string>
+    <string name="p19">¿Todos en la familia están felices y de acuerdo con adoptar?</string>
+    <string name="r19_1">Sí</string>
+    <string name="r19_2">No</string>
 
     <!-- Pregunta 20 -->
-    <string name="p20">¿Cuál es la razón principal por la que quieres adoptar una mascota?</string>
+    <string name="p20">¿Cuánto tiempo libre tienes al día para tu mascota?</string>
+    <string name="r20_1">Menos de 2 horas</string>
+    <string name="r20_2">Entre 2 y 4 horas</string>
+    <string name="r20_3">Más de 4 horas</string>
+
+    <!-- Pregunta 21 -->
+    <string name="p21">¿Tienes ingresos suficientes para cubrir emergencias veterinarias?</string>
+    <string name="r21_1">Sí</string>
+    <string name="r21_2">No</string>
+
+    <!-- Pregunta 22 -->
+    <string name="p22">¿Tienes planes de mudanza en los próximos años?</string>
+    <string name="r22_1">Sí</string>
+    <string name="r22_2">No</string>
+
+    <!-- Pregunta 23 -->
+    <string name="p23">¿Qué harás con tu mascota en caso de mudarte?</string>
+
+    <!-- Pregunta 24 -->
+    <string name="p24">¿Tienes alguna condición de salud que pueda afectar el cuidado de una mascota?</string>
+    <string name="r24_1">Sí</string>
+    <string name="r24_2">No</string>
+
+    <!-- Pregunta 25 -->
+    <string name="p25">¿Qué condiciones podrían afectar el cuidado de tu amiguito peludo?</string>
+
+    <!-- Pregunta 26 -->
+    <string name="p26">Si en algún momento no puedes cuidar de tu mascota, ¿quién lo haría?</string>
+    <string name="r26_1">Tengo un familiar/amigo de confianza</string>
+    <string name="r26_2">No tengo a nadie</string>
+
+    <!-- Pregunta 27 -->
+    <string name="p27">¿Tienes suficiente espacio para la mascota que deseas adoptar?</string>
+    <string name="r27_1">Sí</string>
+    <string name="r27_2">No</string>
+
+    <!-- Pregunta 28 -->
+    <string name="p28">¿Hay otras mascotas en casa?</string>
+    <string name="r28_1">Sí</string>
+    <string name="r28_2">No</string>
+
+    <!-- Pregunta 29 -->
+    <string name="p29">Cuéntanos sobre los demás peluditos en tu hogar</string>
+
+    <!-- Pregunta 30 -->
+    <string name="p30">¿Podrías mostrarnos un video del espacio donde vivirá el peludito?</string>
+
+    <!-- Pregunta 31 -->
+    <string name="p31">¿Has tenido mascotas antes?</string>
+    <string name="r31_1">Sí</string>
+    <string name="r31_2">No, sería mi primera vez</string>
+    <string name="r31_3">Tuve una, pero ya no está conmigo</string>
+
+    <!-- Pregunta 32 -->
+    <string name="p32">¿Podrías contarnos qué sucedió con tu anterior mascota?</string>
+
+    <!-- Pregunta 33 -->
+    <string name="p33">¿Estás dispuesto a hacerte cargo de los gastos de salud, alimentación y bienestar de la mascota?</string>
+    <string name="r33_1">Sí</string>
+    <string name="r33_2">No</string>
+
+    <!-- Pregunta 34 -->
+    <string name="p34">Si la mascota aún no está esterilizada, ¿asumirías los costos y trámites para hacerlo?</string>
+    <string name="r34_1">Sí</string>
+    <string name="r34_2">No</string>
+
+    <!-- Pregunta 35 -->
+    <string name="p35">¿Qué harías si tu mascota presenta problemas de comportamiento?</string>
+    <string name="r35_1">Buscaría ayuda profesional</string>
+    <string name="r35_2">Intentaría corregirlo por mi cuenta</string>
+    <string name="r35_3">La devolvería al refugio</string>
+
+    <!-- Pregunta 36 -->
+    <string name="p36">Si por alguna razón ya no puedes tener a tu mascota, ¿qué harías?</string>
+    <string name="r36_1">Buscaría una familia responsable</string>
+    <string name="r36_2">La devolvería al refugio</string>
+
+    <!-- Pregunta 37 -->
+    <string name="p37">¿Te comprometes a enviarnos fotos y actualizaciones sobre tu mascota durante el primer año?</string>
+    <string name="r37_1">Sí</string>
+    <string name="r37_2">No</string>
+
+    <!-- Pregunta 38 -->
+    <string name="p38">¿Podemos hacer visitas o videollamadas para ver cómo está tu mascota?</string>
+    <string name="r38_1">Sí</string>
+    <string name="r38_2">No</string>
+
 
     <string-array name="esterilizacion_array">
         <item>Sí</item>
