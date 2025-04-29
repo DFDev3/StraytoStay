@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout
+        android:id="@+id/formContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -48,6 +50,18 @@
                 android:textSize="16sp" />
         </RadioGroup>
 
+        <!-- Campo de respuesta abierta -->
+        <EditText
+            android:id="@+id/editTextAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Escribe tu respuesta..."
+            android:visibility="gone"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"
+            android:layout_marginTop="16dp"
+            android:textColor="#000000" />
+
         <!-- Botón Siguiente -->
         <Button
             android:id="@+id/btnNext"
@@ -61,6 +75,5 @@
             android:padding="12dp"
             android:layout_gravity="center" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
