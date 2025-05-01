@@ -58,7 +58,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
             Mascota mascotaChosen = mascotaList.get(position);
 
             Bundle bundle = new Bundle();
-            bundle.putString("animalId", mascotaChosen.getId()); // assuming getId() returns the Firebase ID
+            bundle.putString("animalId", mascotaChosen.getAid()); // assuming getId() returns the Firebase ID
 
 
             AnimalDetail fragment = new AnimalDetail();

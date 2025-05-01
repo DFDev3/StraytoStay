@@ -30,7 +30,7 @@ public class Mascota implements Serializable {
 
     // Getters and Setters
 
-    public String getId() { return aid; }
+    public String getAid() { return aid; }
 
     public String getRefugio() {
         return refugio;
@@ -40,7 +40,7 @@ public class Mascota implements Serializable {
         this.refugio = refugio;
     }
 
-    public void setId(String aid) { this.aid = aid; }
+    public void setAid(String aid) { this.aid = aid; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

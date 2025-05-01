@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +31,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class FormAgregarAnimalActivity extends AppCompatActivity {
 
@@ -227,16 +225,20 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
                     .addOnSuccessListener(documentReference -> {
                         String aid = documentReference.getId();
 
-                        Mascota mascota = new Mascota(aid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion,refugio[0], encodedImageBase64);
+                        Mascota mascota = new Mascota(aid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion, refugio[0], encodedImageBase64);
 
-                        // Step 4: Save the full Mascota object with UID (optional step, you can update other fields if needed)
                         db.collection("mascotas")
                                 .document(aid)
-                                .set(mascota)  // This step will save the Mascota object with the correct uid.
-                                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Animal guardado correctamente", Toast.LENGTH_SHORT).show())
-                                .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar mascota", Toast.LENGTH_SHORT).show());
+                                .set(mascota)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Animal guardado correctamente", Toast.LENGTH_SHORT).show();
+                                    finish(); // 👈 Close the activity after success
+                                })
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(this, "Error al guardar mascota", Toast.LENGTH_SHORT).show());
                     })
-                    .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this, "Error al guardar", Toast.LENGTH_SHORT).show());
         }
     }
 }
