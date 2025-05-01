@@ -48,6 +48,13 @@
                 android:layout_height="wrap_content"
                 android:text="Respuesta 3"
                 android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/option4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Respuesta 4"
+                android:textSize="16sp" />
         </RadioGroup>
 
         <!-- Campo de respuesta abierta -->

@@ -201,7 +201,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="  Servicios que ofrece"
-                android:drawableLeft="@drawable/ic_revistas"
+                android:drawableLeft="@drawable/ic_location"
                 android:padding="12dp"
                 android:background="@drawable/edittext_background"
                 android:layout_marginBottom="12dp" />
@@ -211,7 +211,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="  Productos disponibles"
-                android:drawableLeft="@drawable/ic_books"
+                android:drawableLeft="@drawable/ic_location"
                 android:padding="12dp"
                 android:background="@drawable/edittext_background"
                 android:layout_marginBottom="12dp" />
