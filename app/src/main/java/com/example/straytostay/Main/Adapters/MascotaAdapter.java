@@ -46,7 +46,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
         Mascota mascota = mascotaList.get(position);
         holder.nombre.setText(mascota.getNombre());
         holder.tipo.setText(mascota.getTipo());
-        holder.edad.setText("Edad: " + mascota.getEdad());
+        holder.edad.setText("Edad: " + mascota.getEdad() + " año(s)");
 
         if (mascota.getImagenUrl() != null && !mascota.getImagenUrl().isEmpty()) {
             byte[] imageBytes = Base64.decode(mascota.getImagenUrl(), Base64.DEFAULT);

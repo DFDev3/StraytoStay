@@ -15,11 +15,17 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.straytostay.Classes.Mascota;
+import com.example.straytostay.Main.Adapters.MascotaAdapter;
 import com.example.straytostay.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +38,10 @@ public class ShelterDetailFragment extends Fragment {
     private String uid;
     private FirebaseFirestore db;
 
+    private RecyclerView recyclerView;
+    private MascotaAdapter petAdapter;
+    private List<Mascota> mascotasList = new ArrayList<>();
+    private String RefugioName;
     public static ShelterDetailFragment newInstance(String uid) {
         ShelterDetailFragment fragment = new ShelterDetailFragment();
         Bundle args = new Bundle();
@@ -71,6 +81,12 @@ public class ShelterDetailFragment extends Fragment {
         textMision = view.findViewById(R.id.tvMision);
         textMisionLabel = view.findViewById(R.id.tvMisionLabel);
 
+        recyclerView = view.findViewById(R.id.recyclerMascotasShelterDetail);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        petAdapter = new MascotaAdapter(requireContext(),mascotasList);
+        recyclerView.setAdapter(petAdapter);
+
 
 
         loadShelterDetails(uid);
@@ -85,12 +101,14 @@ public class ShelterDetailFragment extends Fragment {
         db.collection("shelters").document(uid).get()
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()) {
+                        RefugioName = snapshot.getString("name");
                         populateShelterUI(snapshot); // If found in shelters
                     } else {
                         // If not found, check "vets"
                         db.collection("vets").document(uid).get()
                                 .addOnSuccessListener(vetSnapshot -> {
                                     if (vetSnapshot.exists()) {
+                                        RefugioName = vetSnapshot.getString("name");
                                         populateShelterUI(vetSnapshot); // Found in vets
                                     } else {
                                         Toast.makeText(getContext(), "Shelter/Vet not found.", Toast.LENGTH_SHORT).show();
@@ -125,7 +143,8 @@ public class ShelterDetailFragment extends Fragment {
         String productos = snapshot.getString("productos");
         String nit = snapshot.getString("nit");
         String imageUrl = snapshot.getString("imageUrl");
-        ArrayList<String> phoneList = (ArrayList<String>) snapshot.get("phoneList");
+        List<String> phoneList = (List<String>) snapshot.get("phoneList");
+
 
         textNombre.setText(name);
         textEmail.setText(email);
@@ -152,6 +171,7 @@ public class ShelterDetailFragment extends Fragment {
             loadImage(imageUrl);
         }
         displayPhoneList(phoneList);
+        cargarMascotas(RefugioName);
     }
 
 
@@ -171,7 +191,8 @@ public class ShelterDetailFragment extends Fragment {
     }
 
     private void displayPhoneList(List<String> phoneList) {
-        phoneListContainer.removeAllViews(); // Clear previous views if any
+        phoneListContainer.removeAllViews(); // Clear previous views if any}
+        Log.d("phoneList", phoneList.toString());
 
         for (String phone : phoneList) {
             TextView phoneView = new TextView(requireContext());
@@ -190,6 +211,27 @@ public class ShelterDetailFragment extends Fragment {
             phoneView.setLayoutParams(params);
             phoneListContainer.addView(phoneView);
         }
+    }
+
+
+    private void cargarMascotas(String refugioNombre) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("mascotas")
+                .whereEqualTo("refugio", refugioNombre)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    mascotasList.clear();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        Mascota mascota = doc.toObject(Mascota.class);
+                        mascota.setAid(doc.getId()); // UID for passing to detail
+                        mascotasList.add(mascota);
+                    }
+                    petAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Error al cargar mascotas", Toast.LENGTH_SHORT).show();
+                });
     }
 
 }
