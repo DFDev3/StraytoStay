@@ -31,6 +31,16 @@
                 android:textColor="#000000"
                 android:layout_marginBottom="16dp" />
 
+            <EditText
+                android:id="@+id/openAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Escribe tu respuesta aquí"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:visibility="gone"
+                android:textSize="16sp" />
+
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
@@ -63,16 +73,6 @@
                     android:text="Respuesta 4"
                     android:textSize="16sp" />
             </RadioGroup>
-
-            <EditText
-                android:id="@+id/openAnswer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Escribe tu respuesta aquí"
-                android:padding="12dp"
-                android:background="@drawable/edittext_background"
-                android:visibility="gone"
-                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnNext"

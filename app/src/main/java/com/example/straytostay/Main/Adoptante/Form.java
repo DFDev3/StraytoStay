@@ -35,6 +35,8 @@ public class Form extends AppCompatActivity {
     private EditText openAnswer;
 
     private String currentQuestionId;
+    private final Map<String, String> userAnswers = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +98,14 @@ public class Form extends AppCompatActivity {
         radio4.setVisibility(View.GONE);
         openAnswer.setVisibility(View.GONE);
 
-        if (respuestas == null || respuestas.isEmpty()) {
+        Log.d("isOpen", String.valueOf(question.isOpen()));
+
+        if (respuestas == null || respuestas.size() == 0) {
+            Log.d("OpenAnswerDebug", "Question is open-ended. respuestas = " + respuestas);
             openAnswer.setVisibility(View.VISIBLE);
             return;
         }
+
 
         if (respuestas.size() > 0) {
             radio1.setText(respuestas.get(0));
