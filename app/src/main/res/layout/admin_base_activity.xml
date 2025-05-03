@@ -23,7 +23,7 @@
 
     <!-- 🔹 Fixed custom bottom navbar -->
     <include
-        android:id="@+id/bottomNavbarEntidad"
+        android:id="@+id/bottomNavbarAdmin"
         layout="@layout/comp_navbar_admn"/>
 
 </LinearLayout>

@@ -10,11 +10,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
 
-public class PostTips extends Fragment {
-
+public class EntitiesList extends Fragment {
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.admin_tips_fragment, container, false);
+        View view = inflater.inflate(R.layout.admin_entities_list_fragment, container, false);
 
         return view;
     }
 }
+
+
+
+
+
