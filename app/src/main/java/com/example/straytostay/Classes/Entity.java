@@ -2,14 +2,28 @@ package com.example.straytostay.Classes;
 
 import java.util.ArrayList;
 
-public class Vet {
-    private String uid,imageUrl,nit,name,address,email,website;
-    private int adminId;
+public class Entity {
+    private String uid,imageUrl,nit,name,address,email,mision,website;
+    private int adminId, verified;
     private ArrayList<String> services, products, phoneList;
 
-    public Vet(){}
+    public Entity(){}
 
-    public Vet(String uid, int adminId, String imageUrl, String nit, String name, ArrayList<String> phoneList, String address, String email, ArrayList<String> services, ArrayList<String> products, String website) {
+    public Entity(int verified, String uid, int adminId, String imageUrl, String name, ArrayList<String> phoneList, String address, String email, String mision, String website) {
+        this.verified = verified;
+        this.uid = uid;
+        this.adminId = adminId;
+        this.imageUrl = imageUrl;
+        this.name = name;
+        this.phoneList = phoneList;
+        this.address = address;
+        this.email = email;
+        this.mision = mision;
+        this.website = website;
+    }
+
+    public Entity(int verified, String uid, int adminId, String imageUrl, String nit, String name, ArrayList<String> phoneList, String address, String email, ArrayList<String> services, ArrayList<String> products, String website) {
+        this.verified = verified;
         this.uid = uid;
         this.adminId = adminId;
         this.imageUrl = imageUrl;
@@ -21,6 +35,14 @@ public class Vet {
         this.services = services;
         this.products = products;
         this.website = website;
+    }
+
+    public int getVerified() {
+        return verified;
+    }
+
+    public void setVerified(int verified) {
+        this.verified = verified;
     }
     public String getUid() {
         return uid;
@@ -110,4 +132,11 @@ public class Vet {
         this.products = products;
     }
 
+    public String getMision() {
+        return mision;
+    }
+
+    public void setMision(String mision) {
+        this.mision = mision;
+    }
 }

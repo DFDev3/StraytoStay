@@ -8,21 +8,18 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.straytostay.Main.Adoptante.HomeFragment;
+import com.example.straytostay.Main.Adoptante.UserHome;
 import com.example.straytostay.R;
 import com.example.straytostay.Classes.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterUser extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000;
 
@@ -116,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
         loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                startActivity(new Intent(RegisterUser.this, Login.class));
             }
         });
     }
@@ -164,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 .set(user)
                                 .addOnSuccessListener(unused -> {
                                     Toast.makeText(this, "Registered successfully!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, HomeFragment.class));
+                                    startActivity(new Intent(RegisterUser.this, UserHome.class));
                                     finish();
                                 });
                     }

@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.straytostay.R;
 
-public class BaseAdoptanteActivity extends AppCompatActivity {
+public class BaseAdoptante extends AppCompatActivity {
 
     private ImageView navHome, navPets, navEntities, navResources, navProfile;
 
@@ -27,14 +27,14 @@ public class BaseAdoptanteActivity extends AppCompatActivity {
 
         // Set default fragment (home)
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            loadFragment(new UserHome());
         }
 
         // Set navigation behavior
-        navHome.setOnClickListener(v -> loadFragment(new HomeFragment()));
-        navPets.setOnClickListener(v -> loadFragment(new FindFragment()));
-        navEntities.setOnClickListener(v -> loadFragment(new ShelterFragment()));
-        navResources.setOnClickListener(v -> loadFragment(new TipsFragment()));
+        navHome.setOnClickListener(v -> loadFragment(new UserHome()));
+        navPets.setOnClickListener(v -> loadFragment(new FindPets()));
+        navEntities.setOnClickListener(v -> loadFragment(new Entities()));
+        navResources.setOnClickListener(v -> loadFragment(new AdoptionTips()));
         navProfile.setOnClickListener(v -> loadFragment(new ProfileFragment()));
     }
 

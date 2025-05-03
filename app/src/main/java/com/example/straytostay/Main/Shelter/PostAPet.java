@@ -32,7 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class FormAgregarAnimalActivity extends AppCompatActivity {
+public class PostAPet extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -193,27 +193,15 @@ public class FormAgregarAnimalActivity extends AppCompatActivity {
 
         final String[] refugio = {null}; // Use array to allow mutation inside inner class
 
-        db.collection("shelters").document(ShelterUid).get()
+        db.collection("entities").document(ShelterUid).get()
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()) {
                         refugio[0] = snapshot.getString("name");
                         // You can now use refugio[0] here or call guardarAnimal(refugio[0]);
-                    } else {
-                        // If not found, check "vets"
-                        db.collection("vets").document(ShelterUid).get()
-                                .addOnSuccessListener(vetSnapshot -> {
-                                    if (vetSnapshot.exists()) {
-                                        refugio[0] = vetSnapshot.getString("name");
-                                        // You can now use refugio[0] here too
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e("ShelterDetail", "Error fetching from vets", e);
-                                });
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("ShelterDetail", "Error fetching from shelters", e);
+                    Log.e("ShelterDetail", "Error fetching from entities", e);
                 });
 
 

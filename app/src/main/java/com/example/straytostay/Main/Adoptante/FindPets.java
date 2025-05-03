@@ -22,7 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FindFragment extends Fragment {
+public class FindPets extends Fragment {
 
     private Spinner spinnerTipo, spinnerTamano, spinnerEdad;
     private RecyclerView recyclerView;

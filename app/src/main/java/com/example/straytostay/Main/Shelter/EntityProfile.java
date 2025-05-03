@@ -11,19 +11,18 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
-import com.example.straytostay.StartUp.LoginActivity;
+import com.example.straytostay.StartUp.Login;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ShelterProfileFragment extends Fragment {
+public class EntityProfile extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -52,11 +51,13 @@ public class ShelterProfileFragment extends Fragment {
         tvEmail = view.findViewById(R.id.profile_email);
         tvPhone = view.findViewById(R.id.profile_phone);
         tvAddress = view.findViewById(R.id.profile_address);
+        tvNit = view.findViewById(R.id.profile_NIT);
 
         etName = view.findViewById(R.id.edit_profile_name);
         etEmail = view.findViewById(R.id.edit_profile_email);
         etPhone = view.findViewById(R.id.edit_profile_phone);
         etAddress = view.findViewById(R.id.edit_profile_address);
+        etNit = view.findViewById(R.id.edit_profile_NIT);
 
         btnEditConfirm = view.findViewById(R.id.btn_edit_confirm);
         btnLogout = view.findViewById(R.id.profile_logout_button);
@@ -64,7 +65,7 @@ public class ShelterProfileFragment extends Fragment {
 
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+            startActivity(new Intent(getActivity(), Login.class));
             requireActivity().finish();
         });
 
@@ -89,16 +90,19 @@ public class ShelterProfileFragment extends Fragment {
         tvPhone.setVisibility(View.GONE);
         tvEmail.setVisibility(View.GONE);
         tvAddress.setVisibility(View.GONE);
+        tvNit.setVisibility(View.GONE);
 
         etName.setVisibility(View.VISIBLE);
         etPhone.setVisibility(View.VISIBLE);
         etEmail.setVisibility(View.VISIBLE);
         etAddress.setVisibility(View.VISIBLE);
+        etNit.setVisibility(View.VISIBLE);
 
         etName.setText(tvName.getText().toString());
         etEmail.setText(tvName.getText().toString());
         etPhone.setText(tvPhone.getText().toString());
         etAddress.setText(tvAddress.getText().toString());
+        etNit.setText(tvNit.getText().toString());
     }
 
     private void saveProfileChanges() {
@@ -161,43 +165,34 @@ public class ShelterProfileFragment extends Fragment {
             String uid = user.getUid();
 
             // First, try in "shelters"
-            db.collection("shelters").document(uid).get()
+            db.collection("entities").document(uid).get()
                     .addOnSuccessListener(snapshot -> {
                         if (snapshot.exists()) {
                             populateProfile(snapshot);
-                        } else {
-                            // If not found, try in "vets"
-                            db.collection("vets").document(uid).get()
-                                    .addOnSuccessListener(vetSnapshot -> {
-                                        if (vetSnapshot.exists()) {
-                                            populateProfile(vetSnapshot);
-                                        } else {
-                                            Toast.makeText(getContext(), "Profile not found in shelters or vets", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> Log.e("ProfileFragment", "Error checking vets collection", e));
                         }
                     })
-                    .addOnFailureListener(e -> Log.e("ProfileFragment", "Error checking shelters collection", e));
+                    .addOnFailureListener(e -> Log.e("ProfileFragment", "Error checking entities collection", e));
         }
     }
 
     private void populateProfile(DocumentSnapshot snapshot) {
         String name = snapshot.getString("name");
-        String lastName = snapshot.getString("lastName");
         String email = snapshot.getString("email");
         String phone = snapshot.getString("phone");
         String address = snapshot.getString("address");
+        String nit = snapshot.getString("nit");
 
-        tvName.setText((name != null ? name : "No name provided") + " " + (lastName != null ? lastName : ""));
+        tvName.setText((name != null ? name : "No name provided"));
         tvEmail.setText(email != null ? email : "Email not provided");
         tvPhone.setText(phone != null ? phone : "Phone not registered");
         tvAddress.setText(address != null ? address : "Address not registered");
+        tvNit.setText(nit != null ? nit : "Not a vet");
 
         etName.setText(name != null ? name : "");
         etEmail.setText(email != null ? email : "");
         etPhone.setText(phone != null ? phone : "");
         etAddress.setText(address != null ? address : "");
+        etNit.setText(nit != null ? nit : "");
     }
 
 

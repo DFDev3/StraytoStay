@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
 
-public class HomeFragment extends Fragment {
+public class UserHome extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

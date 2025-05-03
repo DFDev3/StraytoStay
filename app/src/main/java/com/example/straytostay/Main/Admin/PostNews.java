@@ -12,14 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.Classes.Question;
 import com.example.straytostay.R;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-public class NewsFragment extends Fragment {
+public class PostNews extends Fragment {
 
     FirebaseFirestore db;
     private Button post;

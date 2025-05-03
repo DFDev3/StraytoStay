@@ -16,15 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Mascota;
-import com.example.straytostay.Classes.Shelter;
 import com.example.straytostay.Main.Adapters.MascotaAdapter;
-import com.example.straytostay.Main.Adapters.ShelterAdapter;
-import com.example.straytostay.Main.Adoptante.AnimalDetail;
-import com.example.straytostay.Main.Adoptante.ShelterDetailFragment;
-import com.example.straytostay.Main.Shelter.FormAgregarAnimalActivity;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -52,13 +46,13 @@ public class PostedPetFragment extends Fragment {
         adapter = new MascotaAdapter(requireContext(), mascotasList);
         recyclerView.setAdapter(adapter);
 
-        getRefugio();
+        getEntidad();
 
         Agregar = view.findViewById(R.id.btnAgregarAnimal);
         Agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), FormAgregarAnimalActivity.class));
+                startActivity(new Intent(getActivity(), PostAPet.class));
 
             }
         });
@@ -66,45 +60,31 @@ public class PostedPetFragment extends Fragment {
         return view;
     }
 
-    private void getRefugio() {
+    private void getEntidad() {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String currentUid = auth.getCurrentUser().getUid();
         Log.d("userid",currentUid);
 
-        db.collection("shelters").document(currentUid).get()
+        db.collection("entities").document(currentUid).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        String refugioNombre = documentSnapshot.getString("name");
-                        cargarMascotas(refugioNombre);
-                    } else {
-                        // Not in Shelters? Try Vets
-                        db.collection("vets").document(currentUid).get()
-                                .addOnSuccessListener(vetSnapshot -> {
-                                    if (vetSnapshot.exists()) {
-                                        String refugioNombre = vetSnapshot.getString("name");
-                                        cargarMascotas(refugioNombre);
-                                    } else {
-                                        Toast.makeText(getContext(), "No se encontró el usuario en Shelters ni Vets", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    Toast.makeText(getContext(), "Error buscando en Vets", Toast.LENGTH_SHORT).show();
-                                });
+                        String entidadNombre = documentSnapshot.getString("name");
+                        cargarMascotas(entidadNombre);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Error buscando en Shelters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error buscando Entidad", Toast.LENGTH_SHORT).show();
                 });
 
     }
 
-    private void cargarMascotas(String refugioNombre) {
+    private void cargarMascotas(String entidadNombre) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("mascotas")
-                .whereEqualTo("refugio", refugioNombre)
+                .whereEqualTo("refugio", entidadNombre)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     mascotasList.clear();

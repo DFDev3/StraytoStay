@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
 
-public class TipsFragment extends Fragment {
+public class AdoptionTips extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

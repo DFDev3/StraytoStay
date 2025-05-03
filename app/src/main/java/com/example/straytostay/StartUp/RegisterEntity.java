@@ -9,18 +9,13 @@ import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.straytostay.Classes.Shelter;
-import com.example.straytostay.Classes.Usuario;
-import com.example.straytostay.Classes.Vet;
-import com.example.straytostay.Main.Adoptante.HomeFragment;
-import com.example.straytostay.Main.Shelter.PostedPetFragment;
+import com.example.straytostay.Classes.Entity;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,10 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-public class RegisterShelterActivity extends AppCompatActivity {
+public class RegisterEntity extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000;
 
@@ -232,30 +225,30 @@ public class RegisterShelterActivity extends AppCompatActivity {
                 String uid = mAuth.getCurrentUser().getUid();
 
                 if (selectedType.equals("Refugio")) {
-                    Shelter shelter = new Shelter(uid,1,encodedImageBase64,name,phoneList,address,email,mision,website);
-                    db.collection("shelters").document(uid).set(shelter).addOnSuccessListener(aVoid -> {
+                    Entity entity = new Entity(0,uid,1,encodedImageBase64,name,phoneList,address,email,mision,website);
+                    db.collection("entities").document(uid).set(entity).addOnSuccessListener(aVoid -> {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterEntity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                         finish();
                     }).addOnFailureListener(e -> {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterEntity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
                     });
                 } else {
-                    Vet vet = new Vet(uid,1,encodedImageBase64,nit, name, phoneList, address, email,serviciosList, productosList,website);
-                    db.collection("vets").document(uid).set(vet).addOnSuccessListener(aVoid -> {
+                    Entity entity = new Entity(0,uid,1,encodedImageBase64,nit,name,phoneList,address,email,serviciosList,productosList,website);
+                    db.collection("entities").document(uid).set(entity).addOnSuccessListener(aVoid -> {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(RegisterShelterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterEntity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                         finish();
                     }).addOnFailureListener(e -> {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(RegisterShelterActivity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterEntity.this, "Error al guardar datos", Toast.LENGTH_SHORT).show();
                     });
                 }
 
             } else {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(RegisterShelterActivity.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterEntity.this, "Error al registrar entidad", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -10,24 +10,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.straytostay.Classes.Shelter;
-import com.example.straytostay.Classes.Usuario;
-import com.example.straytostay.Main.Adapters.ShelterAdapter;
-import com.example.straytostay.Main.Shelter.ShelterProfileFragment;
+import com.example.straytostay.Classes.Entity;
+import com.example.straytostay.Main.Adapters.EntityAdapter;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class ShelterFragment extends Fragment {
+public class Entities extends Fragment {
 
     private RecyclerView recyclerView;
-    private ShelterAdapter adapter;
-    private ArrayList<Shelter> refugiosList;
+    private EntityAdapter adapter;
+    private ArrayList<Entity> entitiesList;
     private FirebaseFirestore db;
 
-    public ShelterFragment() {}
+    public Entities() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,13 +33,13 @@ public class ShelterFragment extends Fragment {
         View view = inflater.inflate(R.layout.adop_entities_fragment, container, false);
         recyclerView = view.findViewById(R.id.recyclerRefugios);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        refugiosList = new ArrayList<>();
+        entitiesList = new ArrayList<>();
         // Inside onCreateView, replace your adapter initialization
-        adapter = new ShelterAdapter(refugiosList, refugio -> {
+        adapter = new EntityAdapter(entitiesList, entity -> {
             Bundle bundle = new Bundle();
-            bundle.putString("uid", refugio.getUid());  // Pass only the UID
+            bundle.putString("uid", entity.getUid());  // Pass only the UID
 
-            ShelterDetailFragment fragment = new ShelterDetailFragment();
+            EntityDetail fragment = new EntityDetail();
             fragment.setArguments(bundle);
 
             requireActivity().getSupportFragmentManager()
@@ -61,15 +59,16 @@ public class ShelterFragment extends Fragment {
     }
 
     private void cargarRefugios() {
-        db.collection("shelters")
+        db.collection("entities")
+                .whereEqualTo("verified",1)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    refugiosList.clear(); // ✅ Clear list to avoid duplicates
+                    entitiesList.clear(); // ✅ Clear list to avoid duplicates
 
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        Shelter refugio = doc.toObject(Shelter.class);
+                        Entity refugio = doc.toObject(Entity.class);
                         refugio.setUid(doc.getId()); // ✅ Set the UID
-                        refugiosList.add(refugio);
+                        entitiesList.add(refugio);
                     }
 
                     adapter.notifyDataSetChanged();

@@ -16,28 +16,28 @@
             android:name=".Main.Adoptante.Form"
             android:exported="false" />
         <activity
-            android:name=".Main.Adoptante.BaseAdoptanteActivity"
+            android:name=".Main.Adoptante.BaseAdoptante"
             android:exported="false" />
         <activity
-            android:name=".Main.Shelter.BaseShelterActivity"
+            android:name=".Main.Shelter.BaseEntity"
             android:exported="false" />
         <activity
-            android:name=".Main.Shelter.FormAgregarAnimalActivity"
+            android:name=".Main.Shelter.PostAPet"
             android:exported="false" />
         <activity
-            android:name=".Main.Admin.BaseAdminActivity"
+            android:name=".Main.Admin.BaseAdmin"
             android:exported="false" />
         <activity
-            android:name=".Main.Adoptante.BaseAdoptanteActivity"
+            android:name=".Main.Adoptante.BaseAdoptante"
             android:exported="false" />
         <activity
             android:name=".StartUp.RegisterShelterActivity"
             android:exported="false" />
         <activity
-            android:name=".StartUp.RegisterActivity"
+            android:name=".StartUp.RegisterUser"
             android:exported="false" />
         <activity
-            android:name=".StartUp.LoginActivity"
+            android:name=".StartUp.Login"
             android:exported="true"
             android:theme="@style/Theme.StraytoStay">
             <intent-filter>

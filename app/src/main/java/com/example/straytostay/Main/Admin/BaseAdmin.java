@@ -1,4 +1,4 @@
-package com.example.straytostay.Main.Shelter;
+package com.example.straytostay.Main.Admin;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -7,12 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.straytostay.Main.Shelter.ShelterProfileFragment;
-import com.example.straytostay.Main.Shelter.FollowUpFragment;
-import com.example.straytostay.Main.Shelter.PostedPetFragment;
 import com.example.straytostay.R;
 
-public class BaseShelterActivity extends AppCompatActivity {
+public class BaseAdmin extends AppCompatActivity {
 
     private ImageButton navPets, navSeguimiento, navProfile;
 
@@ -28,13 +25,13 @@ public class BaseShelterActivity extends AppCompatActivity {
 
         // Set default fragment (home)
         if (savedInstanceState == null) {
-            loadFragment(new PostedPetFragment());
+            loadFragment(new PostNews());
         }
 
         // Set navigation behavior
-        navPets.setOnClickListener(v -> loadFragment(new PostedPetFragment()));
-        navSeguimiento.setOnClickListener(v -> loadFragment(new FollowUpFragment()));
-        navProfile.setOnClickListener(v -> loadFragment(new ShelterProfileFragment()));
+        navPets.setOnClickListener(v -> loadFragment(new PostNews()));
+        navSeguimiento.setOnClickListener(v -> loadFragment(new PostTips()));
+        navProfile.setOnClickListener(v -> loadFragment(new AdminProfile()));
     }
 
     private void loadFragment(Fragment fragment) {

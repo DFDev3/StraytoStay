@@ -107,6 +107,7 @@ public class Form extends AppCompatActivity {
         }
 
 
+
         if (respuestas.size() > 0) {
             radio1.setText(respuestas.get(0));
             radio1.setVisibility(View.VISIBLE);

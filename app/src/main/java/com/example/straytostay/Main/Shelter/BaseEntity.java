@@ -1,22 +1,15 @@
-package com.example.straytostay.Main.Admin;
+package com.example.straytostay.Main.Shelter;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.straytostay.Main.Admin.TipsFragment;
-import com.example.straytostay.Main.Admin.NewsFragment;
-import com.example.straytostay.Main.Admin.AdminProfileFragment;
 import com.example.straytostay.R;
 
-public class BaseAdminActivity extends AppCompatActivity {
+public class BaseEntity extends AppCompatActivity {
 
     private ImageButton navPets, navSeguimiento, navProfile;
 
@@ -32,13 +25,13 @@ public class BaseAdminActivity extends AppCompatActivity {
 
         // Set default fragment (home)
         if (savedInstanceState == null) {
-            loadFragment(new NewsFragment());
+            loadFragment(new PostedPetFragment());
         }
 
         // Set navigation behavior
-        navPets.setOnClickListener(v -> loadFragment(new NewsFragment()));
-        navSeguimiento.setOnClickListener(v -> loadFragment(new TipsFragment()));
-        navProfile.setOnClickListener(v -> loadFragment(new AdminProfileFragment()));
+        navPets.setOnClickListener(v -> loadFragment(new PostedPetFragment()));
+        navSeguimiento.setOnClickListener(v -> loadFragment(new PetFollowUp()));
+        navProfile.setOnClickListener(v -> loadFragment(new EntityProfile()));
     }
 
     private void loadFragment(Fragment fragment) {

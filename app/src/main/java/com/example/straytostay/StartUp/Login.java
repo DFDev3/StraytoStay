@@ -10,19 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.straytostay.Main.Admin.BaseAdminActivity;
-import com.example.straytostay.Main.Shelter.BaseShelterActivity;
+import com.example.straytostay.Main.Admin.BaseAdmin;
+import com.example.straytostay.Main.Adoptante.BaseAdoptante;
+import com.example.straytostay.Main.Shelter.BaseEntity;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.example.straytostay.Main.Adoptante.BaseAdoptanteActivity;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private Button loginButton;
     private TextView registerUser, registerShelter;
@@ -71,17 +70,18 @@ public class LoginActivity extends AppCompatActivity {
         registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(Login.this, RegisterUser.class));
             }
         });
 
         registerShelter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterShelterActivity.class));
+                startActivity(new Intent(Login.this, RegisterEntity.class));
             }
         });
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -104,18 +104,9 @@ public class LoginActivity extends AppCompatActivity {
                 routeUserByRole(adminId != null ? adminId.intValue() : 0);
             } else {
                 // If not found in "users", check "shelters"
-                db.collection("shelters").document(uid).get().addOnSuccessListener(shelterSnapshot -> {
+                db.collection("entities").document(uid).get().addOnSuccessListener(shelterSnapshot -> {
                     if (shelterSnapshot.exists()) {
-                        routeUserByRole(1); // 1 for shelter
-                    } else {
-                        // If not found in "shelters", check "vets"
-                        db.collection("vets").document(uid).get().addOnSuccessListener(vetSnapshot -> {
-                            if (vetSnapshot.exists()) {
-                                routeUserByRole(1); // 2 for vet
-                            } else {
-                                Toast.makeText(this, "No user data found.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        routeUserByRole(1);
                     }
                 });
             }
@@ -128,13 +119,13 @@ public class LoginActivity extends AppCompatActivity {
 
         switch (role) {
             case 0: // Adoptante
-                intent = new Intent(this, BaseAdoptanteActivity.class);
+                intent = new Intent(this, BaseAdoptante.class);
                 break;
             case 1: // Shelter
-                intent = new Intent(this, BaseShelterActivity.class);
+                intent = new Intent(this, BaseEntity.class);
                 break;
             case 2: // Admin
-                intent = new Intent(this, BaseAdminActivity.class);
+                intent = new Intent(this, BaseAdmin.class);
                 break;
             default:
                 Toast.makeText(this, "Unknown user type.", Toast.LENGTH_SHORT).show();
@@ -145,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     private void checkUserInCollection(String uid, String collection, Runnable onNotFound) {
         FirebaseFirestore.getInstance()
                 .collection(collection)
@@ -183,10 +175,9 @@ public class LoginActivity extends AppCompatActivity {
                         String uid = firebaseUser.getUid();
 
                         checkUserInCollection(uid, "users", () ->
-                                checkUserInCollection(uid, "shelters", () ->
-                                        checkUserInCollection(uid, "vets", () -> {
+                                checkUserInCollection(uid, "entities", () -> {
                                             Toast.makeText(this, "User data not found in any collection", Toast.LENGTH_SHORT).show();
-                                        })
+                                        }
                                 )
                         );
 
@@ -212,7 +203,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
 
 }

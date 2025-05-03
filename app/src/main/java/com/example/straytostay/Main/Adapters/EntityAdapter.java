@@ -5,25 +5,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.straytostay.Classes.Entity;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.straytostay.Classes.Shelter;
 import com.example.straytostay.R;
 
 import java.util.List;
 
-public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterViewHolder> {
+public class EntityAdapter extends RecyclerView.Adapter<EntityAdapter.ShelterViewHolder> {
 
-    private List<Shelter> shelterList;
+    private List<Entity> entityList;
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(Shelter shelter);
+        void onItemClick(Entity shelter);
     }
 
-    public ShelterAdapter(List<Shelter> shelterList, OnItemClickListener listener) {
-        this.shelterList = shelterList;
+    public EntityAdapter(List<Entity> entityList, OnItemClickListener listener) {
+        this.entityList = entityList;
         this.listener = listener;
     }
 
@@ -37,22 +38,22 @@ public class ShelterAdapter extends RecyclerView.Adapter<ShelterAdapter.ShelterV
 
     @Override
     public void onBindViewHolder(@NonNull ShelterViewHolder holder, int position) {
-        Shelter shelter = shelterList.get(position);
-        holder.name.setText(shelter.getName());
-        holder.address.setText(shelter.getAddress());
-        holder.phone.setText(shelter.getPhoneList() != null && !shelter.getPhoneList().isEmpty() ? shelter.getPhoneList().get(0) : "No phone available");
+        Entity entity = entityList.get(position);
+        holder.name.setText(entity.getName());
+        holder.address.setText(entity.getAddress());
+        holder.phone.setText(entity.getPhoneList() != null && !entity.getPhoneList().isEmpty() ? entity.getPhoneList().get(0) : "No phone available");
 
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onItemClick(shelter);
+                listener.onItemClick(entity);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return shelterList.size();
+        return entityList.size();
     }
 
     public static class ShelterViewHolder extends RecyclerView.ViewHolder {

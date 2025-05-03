@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".Main.Shelter.BaseShelterActivity">
+    tools:context=".Main.Shelter.BaseEntity">
 
     <!-- 🔹 Header fixed at top -->
     <include

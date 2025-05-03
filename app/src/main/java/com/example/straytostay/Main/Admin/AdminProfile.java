@@ -17,12 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
-import com.example.straytostay.StartUp.LoginActivity;
+import com.example.straytostay.StartUp.Login;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AdminProfileFragment extends Fragment {
+public class AdminProfile extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -59,7 +59,7 @@ public class AdminProfileFragment extends Fragment {
 
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+            startActivity(new Intent(getActivity(), Login.class));
             requireActivity().finish();
         });
 

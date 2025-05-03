@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.Main.Adapters.MascotaAdapter;
 import com.example.straytostay.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,7 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShelterDetailFragment extends Fragment {
+public class EntityDetail extends Fragment {
 
     private ImageView imageAnimal;
     private TextView textNombre, textPhone, textEmail, textAddress, textNit, textMision, textMisionLabel, textWebsite, textServicios, textServiciosLabel, textProductos, textProductosLabel;
@@ -42,8 +40,8 @@ public class ShelterDetailFragment extends Fragment {
     private MascotaAdapter petAdapter;
     private List<Mascota> mascotasList = new ArrayList<>();
     private String RefugioName;
-    public static ShelterDetailFragment newInstance(String uid) {
-        ShelterDetailFragment fragment = new ShelterDetailFragment();
+    public static EntityDetail newInstance(String uid) {
+        EntityDetail fragment = new EntityDetail();
         Bundle args = new Bundle();
         args.putString("uid", uid);
         fragment.setArguments(args);
@@ -98,29 +96,15 @@ public class ShelterDetailFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Try fetching from "shelters" collection first
-        db.collection("shelters").document(uid).get()
+        db.collection("entities").document(uid).get()
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()) {
                         RefugioName = snapshot.getString("name");
                         populateShelterUI(snapshot); // If found in shelters
-                    } else {
-                        // If not found, check "vets"
-                        db.collection("vets").document(uid).get()
-                                .addOnSuccessListener(vetSnapshot -> {
-                                    if (vetSnapshot.exists()) {
-                                        RefugioName = vetSnapshot.getString("name");
-                                        populateShelterUI(vetSnapshot); // Found in vets
-                                    } else {
-                                        Toast.makeText(getContext(), "Shelter/Vet not found.", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e("ShelterDetail", "Error fetching from vets", e);
-                                });
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("ShelterDetail", "Error fetching from shelters", e);
+                    Log.e("ShelterDetail", "Error fetching from entities", e);
                 });
     }
 
