@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/navBarAdmin"
+android:layout_width="match_parent"
+android:layout_height="64dp"
+android:orientation="horizontal"
+android:gravity="center"
+android:layout_gravity="bottom"
+android:background="#005BA1"
+android:paddingHorizontal="24dp"
+android:weightSum="4">
+
+
+
+<ImageView
+    android:id="@+id/nav_linked_entities"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_weight="1"
+    android:src="@drawable/entidades"
+    android:contentDescription="@string/linked_entities" />
+
+<ImageView
+    android:id="@+id/nav_educational_content"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_weight="1"
+    android:src="@drawable/ic_educational_content"
+    android:contentDescription="@string/educational_content" />
+<ImageView
+    android:id="@+id/nav_admin_list"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_weight="1"
+    android:src="@drawable/ic_admin_list"
+    android:contentDescription="@string/admin_list" />
+<ImageView
+    android:id="@+id/nav_admin_profile"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_weight="1"
+    android:src="@drawable/perfil"
+    android:contentDescription="@string/admin_profile" />
+
+</LinearLayout>
+

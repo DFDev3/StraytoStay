@@ -24,6 +24,6 @@
     <!-- 🔹 Fixed custom bottom navbar -->
     <include
         android:id="@+id/bottomNavbarEntidad"
-        layout="@layout/comp_navbar_shelter"/>
+        layout="@layout/comp_navbar_admn"/>
 
 </LinearLayout>

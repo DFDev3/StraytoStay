@@ -109,6 +109,27 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="4dp" />
 
+            <EditText
+                android:id="@+id/edit_profile_address_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dirección"
+                android:visibility="gone"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Botón Editar / Confirmar -->
+            <Button
+                android:id="@+id/btn_edit_confirm_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_border_blue_primary"
+                android:text="Editar información"
+                android:layout_marginBottom="16dp" />
+
+
+
+
             <!-- Logout Button -->
             <Button
                 android:id="@+id/profile_logout_button_admin"
