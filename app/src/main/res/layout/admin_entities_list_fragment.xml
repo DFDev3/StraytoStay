@@ -15,6 +15,9 @@
         android:text="Ver entidades pendientes"
         android:layout_marginBottom="16dp" />
 
-    <include layout="@layout/comp_card_shelter"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerEntitiesList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

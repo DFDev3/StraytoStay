@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,20 +22,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.Main.Adapters.MascotaAdapter;
 import com.example.straytostay.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EntityDetail extends Fragment {
 
-    private ImageView imageAnimal;
+    private ImageView imagen;
+    private Button btnAceptar, btnRechazar, btnEliminar;
     private TextView textNombre, textPhone, textEmail, textAddress, textNit, textMision, textMisionLabel, textWebsite, textServicios, textServiciosLabel, textProductos, textProductosLabel;
     private LinearLayout phoneListContainer;
     private String uid;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private RecyclerView recyclerView;
     private MascotaAdapter petAdapter;
@@ -54,14 +60,19 @@ public class EntityDetail extends Fragment {
         View view = inflater.inflate(R.layout.adop_shelter_detail, container, false);
 
         db = FirebaseFirestore.getInstance();
-        // Obtener ID del animal desde los argumentos
+
         if (getArguments() != null) {
             uid = getArguments().getString("uid");
             Log.e("||||||||||||||||","uid: " + uid);
         }
 
-        // Referencias UI
-        imageAnimal = view.findViewById(R.id.imageShelter);
+        // Admin
+        btnEliminar = view.findViewById(R.id.btnEliminarEntidad);
+        btnAceptar = view.findViewById(R.id.btnAceptarEntidad);
+        btnRechazar = view.findViewById(R.id.btnRechazarEntidad);
+
+        // User
+        imagen = view.findViewById(R.id.imageShelter);
         textNombre = view.findViewById(R.id.tvName);
         textAddress = view.findViewById(R.id.tvAddress);
         textWebsite = view.findViewById(R.id.tvWebsite);
@@ -85,7 +96,9 @@ public class EntityDetail extends Fragment {
         petAdapter = new MascotaAdapter(requireContext(),mascotasList);
         recyclerView.setAdapter(petAdapter);
 
-
+        btnAceptar.setVisibility(View.GONE);
+        btnRechazar.setVisibility(View.GONE);
+        btnEliminar.setVisibility(View.GONE);
 
         loadShelterDetails(uid);
 
@@ -100,6 +113,8 @@ public class EntityDetail extends Fragment {
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()) {
                         RefugioName = snapshot.getString("name");
+                        checkStatus(snapshot);
+
                         populateShelterUI(snapshot); // If found in shelters
                     }
                 })
@@ -111,13 +126,6 @@ public class EntityDetail extends Fragment {
     private void populateShelterUI(DocumentSnapshot snapshot) {
 
 
-        textServicios.setVisibility(View.GONE);
-        textServiciosLabel.setVisibility(View.GONE);
-        textProductos.setVisibility(View.GONE);
-        textProductosLabel.setVisibility(View.GONE);
-        textMision.setVisibility(View.GONE);
-        textMisionLabel.setVisibility(View.GONE);
-        textNit.setVisibility(View.GONE);
 
         String name = snapshot.getString("name");
         String email = snapshot.getString("email");
@@ -129,6 +137,13 @@ public class EntityDetail extends Fragment {
         String imageUrl = snapshot.getString("imageUrl");
         List<String> phoneList = (List<String>) snapshot.get("phoneList");
 
+        textServicios.setVisibility(View.GONE);
+        textServiciosLabel.setVisibility(View.GONE);
+        textProductos.setVisibility(View.GONE);
+        textProductosLabel.setVisibility(View.GONE);
+        textMision.setVisibility(View.GONE);
+        textMisionLabel.setVisibility(View.GONE);
+        textNit.setVisibility(View.GONE);
 
         textNombre.setText(name);
         textEmail.setText(email);
@@ -156,6 +171,26 @@ public class EntityDetail extends Fragment {
         }
         displayPhoneList(phoneList);
         cargarMascotas(RefugioName);
+
+        btnAceptar.setOnClickListener(v -> {
+            db.collection("entities").document(snapshot.getString("uid"))
+                    .update("verified", 1)
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(getContext(), "Entidad aceptada", Toast.LENGTH_SHORT).show();
+                        requireActivity().onBackPressed(); // Optional: go back after update
+                    })
+                    .addOnFailureListener(e -> Log.e("EntityDetail", "Error al aceptar", e));
+        });
+
+        btnRechazar.setOnClickListener(v -> {
+            db.collection("entities").document(snapshot.getString("uid"))
+                    .delete()
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(getContext(), "Entidad rechazada y eliminada", Toast.LENGTH_SHORT).show();
+                        requireActivity().onBackPressed(); // Optional
+                    })
+                    .addOnFailureListener(e -> Log.e("EntityDetail", "Error al rechazar", e));
+        });
     }
 
 
@@ -167,10 +202,41 @@ public class EntityDetail extends Fragment {
         try {
             byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            imageAnimal.setImageBitmap(decodedBitmap);
+            imagen.setImageBitmap(decodedBitmap);
         } catch (Exception e) {
             Log.e("ShelterDetailFragment", "Error loading image", e);
             Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void checkStatus(DocumentSnapshot snapshot){
+
+        int verified = snapshot.getLong("verified").intValue();
+
+        Log.d("CheckStatus", "Verified: " + verified);
+
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            db.collection("users").document(uid).get()
+                    .addOnSuccessListener(adminSnapshot -> {
+                        if (adminSnapshot.exists()) {
+                            int adminId = adminSnapshot.getLong("adminId").intValue();
+
+                            Log.d("CheckStatus", "AdminId: " + adminId);
+                            if (adminId == 2){
+                                btnEliminar.setVisibility(View.VISIBLE);
+                                if (verified == 0){
+                                btnAceptar.setVisibility(View.VISIBLE);
+                                btnRechazar.setVisibility(View.VISIBLE);}
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Profile not found", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.e("EntityDetail", "Error fetching current user", e));
         }
     }
 
@@ -218,6 +284,7 @@ public class EntityDetail extends Fragment {
                 });
     }
 
+    private void verificarEntidad(){}
 }
 
 
