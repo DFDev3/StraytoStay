@@ -1,7 +1,10 @@
 package com.example.straytostay.Main.Shelter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,7 +31,7 @@ public class EntityProfile extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private ImageView profileImage;
+    private ImageView profilePicture;
     private ImageButton btnChangeImage;
     private TextView tvName, tvEmail, tvPhone, tvAddress, tvNit, tvServices, tvProducts;
     private EditText etName, etEmail, etPhone, etAddress, etNit, etServices, etProducts;;
@@ -44,7 +48,7 @@ public class EntityProfile extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         // Initialize views
-        profileImage = view.findViewById(R.id.profile_picture);
+        profilePicture = view.findViewById(R.id.profile_picture);
         btnChangeImage = view.findViewById(R.id.btn_change_image);
 
         tvName = view.findViewById(R.id.profile_name);
@@ -181,6 +185,11 @@ public class EntityProfile extends Fragment {
         String phone = snapshot.getString("phone");
         String address = snapshot.getString("address");
         String nit = snapshot.getString("nit");
+        String image = snapshot.getString("imageUrl");
+
+        if (image != null && !image.isEmpty()) {
+            loadImage(image);
+        }
 
         tvName.setText((name != null ? name : "No name provided"));
         tvEmail.setText(email != null ? email : "Email not provided");
@@ -195,7 +204,17 @@ public class EntityProfile extends Fragment {
         etNit.setText(nit != null ? nit : "");
     }
 
-
+    private void loadImage(String base64Image) {
+        // Decode the Base64 string into a Bitmap
+        try {
+            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            profilePicture.setImageBitmap(decodedBitmap);
+        } catch (Exception e) {
+            Log.e("UserProfile", "Error loading image", e);
+            Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void enableEditFeatures() {
         btnChangeImage.setVisibility(View.VISIBLE);
@@ -203,6 +222,4 @@ public class EntityProfile extends Fragment {
         btnLogout.setVisibility(View.VISIBLE);
         btnDelete.setVisibility(View.VISIBLE);
     }
-
-
 }
