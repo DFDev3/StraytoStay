@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.straytostay.Classes.Answer;
 import com.example.straytostay.Classes.Question;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,22 +25,24 @@ import java.util.Map;
 
 public class Form extends AppCompatActivity {
 
-    private FirebaseFirestore db;
     private final List<Question> questionList = new ArrayList<>();
     private final Map<String, Question> questionMap = new HashMap<>();
-
+    private final Map<String, String> openResponses = new HashMap<>();
+    private final Map<String, Integer> categoryScores = new HashMap<>();
+    private FirebaseFirestore db;
     private TextView questionText;
     private RadioGroup radioGroup;
     private RadioButton radio1, radio2, radio3, radio4;
     private Button nextButton;
     private EditText openAnswer;
-
+    private int selectedIndex;
     private String currentQuestionId;
-    private final Map<String, String> userAnswers = new HashMap<>();
+    private List<Answer> currentAnswers;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.adop_activity_form);
 
@@ -89,9 +92,8 @@ public class Form extends AppCompatActivity {
         radioGroup.clearCheck();
         openAnswer.setText("");
 
-        List<String> respuestas = question.getOptions();
+        currentAnswers = question.getAnswers();
 
-        // Reset visibility
         radio1.setVisibility(View.GONE);
         radio2.setVisibility(View.GONE);
         radio3.setVisibility(View.GONE);
@@ -99,29 +101,33 @@ public class Form extends AppCompatActivity {
         openAnswer.setVisibility(View.GONE);
 
         Log.d("isOpen", String.valueOf(question.isOpen()));
+        Log.d("answers", String.valueOf(currentAnswers));
 
-        if (respuestas == null || respuestas.size() == 0) {
-            Log.d("OpenAnswerDebug", "Question is open-ended. respuestas = " + respuestas);
-            openAnswer.setVisibility(View.VISIBLE);
-            return;
+        if (currentAnswers != null && currentAnswers.size() == 1) {
+            Answer onlyAnswer = currentAnswers.get(0);
+            if ("none".equals(onlyAnswer.getCategory()) && "open".equalsIgnoreCase(onlyAnswer.getText())) {
+                Log.d("OpenAnswerDebug", "Question is open-ended. Detected via answer content.");
+                openAnswer.setVisibility(View.VISIBLE);
+                question.setOpen(true);
+                return;
+            }
         }
 
 
-
-        if (respuestas.size() > 0) {
-            radio1.setText(respuestas.get(0));
+        if (currentAnswers.size() > 0) {
+            radio1.setText(currentAnswers.get(0).getText());
             radio1.setVisibility(View.VISIBLE);
         }
-        if (respuestas.size() > 1) {
-            radio2.setText(respuestas.get(1));
+        if (currentAnswers.size() > 1) {
+            radio2.setText(currentAnswers.get(1).getText());
             radio2.setVisibility(View.VISIBLE);
         }
-        if (respuestas.size() > 2) {
-            radio3.setText(respuestas.get(2));
+        if (currentAnswers.size() > 2) {
+            radio3.setText(currentAnswers.get(2).getText());
             radio3.setVisibility(View.VISIBLE);
         }
-        if (respuestas.size() > 3) {
-            radio4.setText(respuestas.get(3));
+        if (currentAnswers.size() > 3) {
+            radio4.setText(currentAnswers.get(3).getText());
             radio4.setVisibility(View.VISIBLE);
         }
     }
@@ -132,46 +138,53 @@ public class Form extends AppCompatActivity {
 
         List<Integer> nextList = currentQuestion.getNext();
 
-        if (currentQuestion.getOptions() == null || currentQuestion.getOptions().isEmpty()) {
-            // Open answer
+        boolean isOpenEnded = currentQuestion.isOpen();
+        Log.d("BOOOOOOOOOOO", String.valueOf(isOpenEnded));
+
+        if (isOpenEnded) {
+            Log.d("ISSSSSSSSSS", "is open ended");
+            selectedIndex = -2;
             String response = openAnswer.getText().toString().trim();
             if (response.isEmpty()) {
                 Toast.makeText(this, "Please enter your answer", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            openResponses.put(currentQuestionId, response);
+
             if (nextList == null || nextList.isEmpty() || nextList.get(0) == -1) {
-                Toast.makeText(this, "Form complete!", Toast.LENGTH_SHORT).show();
-                finish();
+                completeForm();
+            } else {
+                currentQuestionId = String.format("q%02d", nextList.get(0));
+                displayQuestion(currentQuestionId);
+            }
+            return;
+        } else {
+
+            // Only called for multiple-choice questions
+            selectedIndex = getSelectedRadioIndex();
+            if (selectedIndex == -1) {
+                Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            currentQuestionId = String.format("q%02d", nextList.get(0));
-            displayQuestion(currentQuestionId);
-            return;
+            Answer selectedAnswer = currentAnswers.get(selectedIndex);
+            String category = selectedAnswer.getCategory();
+            int score = selectedAnswer.getScore();
+
+            int currentScore = categoryScores.getOrDefault(category, 0);
+            categoryScores.put(category, currentScore + score);
         }
 
-        // Multiple choice
-        int selected = getSelectedRadioIndex();
-        if (selected == -1) {
-            Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (nextList == null || selected >= nextList.size()) {
-            Toast.makeText(this, "Invalid question flow", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        int nextNum = nextList.get(selected);
+        int nextNum = nextList.get(selectedIndex);
         if (nextNum == -1) {
-            Toast.makeText(this, "Form complete!", Toast.LENGTH_SHORT).show();
-            finish();
+            completeForm();
         } else {
             currentQuestionId = String.format("q%02d", nextNum);
             displayQuestion(currentQuestionId);
         }
     }
+
 
     private int getSelectedRadioIndex() {
         int selectedId = radioGroup.getCheckedRadioButtonId();
@@ -180,5 +193,14 @@ public class Form extends AppCompatActivity {
         if (selectedId == radio3.getId()) return 2;
         if (selectedId == radio4.getId()) return 3;
         return -1;
+    }
+
+    private void completeForm() {
+        Log.d("Form", "Completed!");
+        Log.d("Scores", categoryScores.toString());
+        Log.d("OpenAnswers", openResponses.toString());
+
+        Toast.makeText(this, "Form complete!", Toast.LENGTH_LONG).show();
+        finish();
     }
 }

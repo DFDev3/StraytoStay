@@ -152,10 +152,7 @@ public class AdminProfile extends Fragment {
     private void enableEditFeatures() {
         btnChangeImage.setVisibility(View.VISIBLE);
         btnEditConfirm.setVisibility(View.VISIBLE);
-        btnForm.setVisibility(View.VISIBLE);
         btnLogout.setVisibility(View.VISIBLE);
-        btnDelete.setVisibility(View.VISIBLE);
-        adoptionStatus.setVisibility(View.VISIBLE);
     }
 
     private void saveProfileChanges() {

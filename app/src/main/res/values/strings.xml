@@ -186,6 +186,8 @@
 
     <!-- Pregunta 30 -->
     <string name="p30">¿Podrías mostrarnos un video del espacio donde vivirá el peludito?</string>
+    <string name="r30_1">Sí</string>
+    <string name="r30_2">No</string>
 
     <!-- Pregunta 31 -->
     <string name="p31">¿Has tenido mascotas antes?</string>

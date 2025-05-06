@@ -33,7 +33,6 @@ public class PostedPetFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Button Agregar;
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shelter_postedpet_fragment, container, false);

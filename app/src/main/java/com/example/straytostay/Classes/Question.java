@@ -5,14 +5,14 @@ import java.util.List;
 public class Question {
     private String text;
     private boolean isOpen;
-    private List<String> options;
+    private List<Answer> answers;
     private List<Integer> next;
 
     public Question(){}
 
-    public Question(String text, boolean isOpen, List<String> options, List<Integer> next) {
+    public Question(String text, boolean isOpen, List<Answer> answers, List<Integer> next) {
         this.text = text;
-        this.options = options;
+        this.answers = answers;
         this.isOpen = isOpen;
         this.next = next;
     }
@@ -41,11 +41,11 @@ public class Question {
         this.next = next;
     }
 
-    public List<String> getOptions() {
-        return options;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setOptions(List<String> options) {
-        this.options = options;
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }
