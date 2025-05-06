@@ -34,7 +34,8 @@ public class EntityProfile extends Fragment {
     private ImageView profilePicture;
     private ImageButton btnChangeImage;
     private TextView tvName, tvEmail, tvPhone, tvAddress, tvNit, tvServices, tvProducts;
-    private EditText etName, etEmail, etPhone, etAddress, etNit, etServices, etProducts;;
+    private EditText etName, etEmail, etPhone, etAddress, etNit, etServices, etProducts;
+    ;
     private Button btnEditConfirm, btnLogout, btnDelete;
 
     private boolean isEditing = false;
@@ -65,7 +66,6 @@ public class EntityProfile extends Fragment {
 
         btnEditConfirm = view.findViewById(R.id.btn_edit_confirm);
         btnLogout = view.findViewById(R.id.profile_logout_button);
-        btnDelete = view.findViewById(R.id.btn_delete_account);
 
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
