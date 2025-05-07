@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.straytostay.Classes.Helper;
 import com.example.straytostay.R;
 
 public class BaseAdmin extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class BaseAdmin extends AppCompatActivity {
         // Set navigation behavior
         navEntities.setOnClickListener(v -> loadFragment(new EntitiesList()));
         navTips.setOnClickListener(v -> loadFragment(new PostTips()));
-        navAdminList.setOnClickListener(v -> loadFragment(new AdminList()));
+        navAdminList.setOnClickListener(v -> loadFragment(new Helper()));
         navProfile.setOnClickListener(v -> loadFragment(new AdminProfile()));
     }
 

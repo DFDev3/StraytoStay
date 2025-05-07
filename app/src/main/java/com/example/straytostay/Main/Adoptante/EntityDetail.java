@@ -67,7 +67,6 @@ public class EntityDetail extends Fragment {
         }
 
         // Admin
-        btnEliminar = view.findViewById(R.id.btnEliminarEntidad);
         btnAceptar = view.findViewById(R.id.btnAceptarEntidad);
         btnRechazar = view.findViewById(R.id.btnRechazarEntidad);
 

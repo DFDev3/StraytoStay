@@ -3,7 +3,7 @@ package com.example.straytostay.Classes;
 import java.util.ArrayList;
 
 public class Usuario {
-    private int adminId;
+    private int adminId, score;
     private String name, phone, citizenId, address, email, uid, imageUrl;
 
 
@@ -11,11 +11,22 @@ public class Usuario {
         // Required empty constructor for Firestore
     }
 
-    public Usuario(String name, String phone, String citizenId, String address, String email, int adminId, String uid, String imageUrl) {
+    public Usuario(String name, String phone, String citizenId, String address, String email, int adminId, String uid, String imageUrl, int score) {
         this.name = name;
         this.phone = phone;
         this.citizenId = citizenId;
         this.address = address;
+        this.email = email;
+        this.adminId = adminId;
+        this.uid = uid;
+        this.imageUrl = imageUrl;
+        this.score = score;
+    }
+
+
+    public Usuario(String uid, String name, String phone, String email, String imageUrl, int adminId){
+        this.name = name;
+        this.phone = phone;
         this.email = email;
         this.adminId = adminId;
         this.uid = uid;
