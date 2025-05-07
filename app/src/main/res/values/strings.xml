@@ -85,6 +85,9 @@
 
     <!-- Pregunta 9 -->
     <string name="p9">¿Cuál será tu forma de costear los gastos de la mascota?</string>
+    <string name="r9_1">Dependeré de donaciones o ayudas externas (2)</string>
+    <string name="r9_2">Ingreso variable pero puedo cubrir gastos básicos (5)</string>
+    <string name="r9_3">No tengo cómo costearlo aún (0)</string>
 
     <!-- Pregunta 10 -->
     <string name="p10">¿Tus padres están de acuerdo con la adopción?</string>
@@ -157,6 +160,10 @@
 
     <!-- Pregunta 23 -->
     <string name="p23">¿Qué harás con tu mascota en caso de mudarte?</string>
+    <string name="r23_1">Me la llevo conmigo, buscaré un lugar pet-friendly (10)</string>
+    <string name="r23_2">Depende del lugar, intentaré llevarla (6)</string>
+    <string name="r23_3">La dejaré con familiares o amigos (4)</string>
+    <string name="r23_4">No puedo llevarla, buscaré una nueva familia (0)</string>
 
     <!-- Pregunta 24 -->
     <string name="p24">¿Tienes alguna condición de salud que pueda afectar el cuidado de una mascota?</string>
@@ -165,7 +172,10 @@
 
     <!-- Pregunta 25 -->
     <string name="p25">¿Qué condiciones podrían afectar el cuidado de tu amiguito peludo?</string>
-
+    <string name="r25_1">Tengo una condición que puede afectar en ciertos momentos, pero cuento con ayuda (6)</string>
+    <string name="r25_2">Tengo una condición de salud que podría impedirme cuidar de una mascota sin ayuda constante(3)</string>
+    <string name="r25_3">Tengo una condición grave y no cuento con red de apoyo para el cuidado (0)</string>
+    <string name="r25_4">Tengo una condición leve, pero estoy en control médico y con apoyo familiar (8)</string>
     <!-- Pregunta 26 -->
     <string name="p26">Si en algún momento no puedes cuidar de tu mascota, ¿quién lo haría?</string>
     <string name="r26_1">Tengo un familiar/amigo de confianza</string>
@@ -195,7 +205,10 @@
 
     <!-- Pregunta 32 -->
     <string name="p32">¿Podrías contarnos qué sucedió con tu anterior mascota?</string>
-
+    <string name="r32_1">Falleció de forma natural o por edad avanzada y recibió atención (10)</string>
+    <string name="r32_2">Falleció por enfermedad tratada con veterinario(8)</string>
+    <string name="r32_3">La entregué en adopción por causas justificadas (6)</string>
+    <string name="r32_4">Se escapó/ fue abandonada o murió por descuido (1)</string>
     <!-- Pregunta 33 -->
     <string name="p33">¿Estás dispuesto a hacerte cargo de los gastos de salud, alimentación y bienestar de la mascota?</string>
     <string name="r33_1">Sí</string>
