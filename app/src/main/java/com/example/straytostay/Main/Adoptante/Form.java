@@ -29,6 +29,7 @@ public class Form extends AppCompatActivity {
     private final Map<String, Question> questionMap = new HashMap<>();
     private final Map<String, String> openResponses = new HashMap<>();
     private final Map<String, Integer> categoryScores = new HashMap<>();
+    Map<String, Integer> maxPossibleScores = new HashMap<>();
     private FirebaseFirestore db;
     private TextView questionText;
     private RadioGroup radioGroup;
@@ -38,7 +39,6 @@ public class Form extends AppCompatActivity {
     private int selectedIndex;
     private String currentQuestionId;
     private List<Answer> currentAnswers;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,11 +149,17 @@ public class Form extends AppCompatActivity {
         String category = selectedAnswer.getCategory();
         int score = selectedAnswer.getScore();
 
+        // Scores
         int currentScore = categoryScores.getOrDefault(category, 0);
         categoryScores.put(category, currentScore + score);
 
-        int totalScore = categoryScores.getOrDefault("total", 0);
-        categoryScores.put("total", totalScore + score);
+        // Scores for Normalization
+        Map<String, Integer> maxPossibleScores = new HashMap<>();
+        maxPossibleScores.put("Available Time", 20);
+        maxPossibleScores.put("Environment", 50);
+        maxPossibleScores.put("Resources", 40);
+        maxPossibleScores.put("LifeStyle", 60);
+
 
         int nextNum = nextList.get(selectedIndex);
         if (nextNum == -1) {
@@ -161,6 +167,28 @@ public class Form extends AppCompatActivity {
             for (Map.Entry<String, Integer> entry : categoryScores.entrySet()) {
                 Log.d("Scores", entry.getKey() + ": " + entry.getValue());
             }
+
+            Map<String, Float> normalizedScores = new HashMap<>();
+            int NormScoresSum = 0;
+
+            for (Map.Entry<String, Integer> entry : categoryScores.entrySet()) {
+                String cat = entry.getKey();
+                int rawScore = entry.getValue();
+                int maxScore = maxPossibleScores.getOrDefault(cat, 1); // prevent division by zero
+
+                float normalized = rawScore / (float) maxScore * 100f;
+                NormScoresSum += normalized;
+
+                Log.d("AAAAAAAAAAAAA", "Each: " + normalized + " and Sum is now " + NormScoresSum);
+
+
+                normalizedScores.put(cat, normalized); // ✅ fixed
+                Log.d("Normalized Scores", cat + ": " + normalized);
+            }
+
+            float totalNormScore = NormScoresSum / 4;
+            normalizedScores.put("Total", totalNormScore);
+            Log.d("Total Normalized Score", "Total" + ": " + totalNormScore);
 
 
         } else {

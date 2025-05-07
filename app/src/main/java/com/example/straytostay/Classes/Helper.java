@@ -88,7 +88,7 @@ public class Helper extends Fragment {
                                 new Answer(getString(R.string.r8_1), "Resources", 4),
                                 new Answer(getString(R.string.r8_2), "Resources", 6),
                                 new Answer(getString(R.string.r8_3), "Resources", 8)),
-                        List.of(27, 27, 27)),
+                        List.of(20,20,20)),
 
                 new Question(
                         getString(R.string.p9),
@@ -97,7 +97,7 @@ public class Helper extends Fragment {
                                 new Answer(getString(R.string.r9_1), "Resources", 2),
                                 new Answer(getString(R.string.r9_2), "Resources", 5),
                                 new Answer(getString(R.string.r9_3), "Resources", 0)),
-                        List.of(27,27,27)),
+                        List.of(20,20,20)),
 
                 new Question(
                         getString(R.string.p10),
@@ -114,7 +114,7 @@ public class Helper extends Fragment {
                                 new Answer(getString(R.string.r11_1), "Resources", 10),
                                 new Answer(getString(R.string.r11_2), "Resources", 7),
                                 new Answer(getString(R.string.r11_3), "Resources", 8)),
-                        List.of(12, 27, 8)),
+                        List.of(12, 20, 8)),
 
                 new Question(
                         getString(R.string.p12),
@@ -131,7 +131,7 @@ public class Helper extends Fragment {
                         List.of(
                                 new Answer(getString(R.string.r13_1), "Resources", 10),
                                 new Answer(getString(R.string.r13_2), "Resources", 0)),
-                        List.of(27, 27)),
+                        List.of(20, 20)),
 
                 new Question(
                         getString(R.string.p14),
@@ -155,7 +155,7 @@ public class Helper extends Fragment {
                         List.of(
                                 new Answer(getString(R.string.r16_1), "Environment", 10),
                                 new Answer(getString(R.string.r16_2), "Environment", 0)),
-                        List.of(8, 27)),
+                        List.of(8, 20)),
 
                 new Question(
                         getString(R.string.p17),
