@@ -2,7 +2,9 @@ package com.example.straytostay.Main.Adoptante;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -10,7 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.straytostay.Classes.Answer;
 import com.example.straytostay.Classes.Question;
@@ -23,7 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Form extends AppCompatActivity {
+
+
+public class Form extends Fragment {
 
     private final List<Question> questionList = new ArrayList<>();
     private final Map<String, Question> questionMap = new HashMap<>();
@@ -40,26 +47,25 @@ public class Form extends AppCompatActivity {
     private String currentQuestionId;
     private List<Answer> currentAnswers;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.adop_activity_form);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.adop_activity_form, container, false);
 
         db = FirebaseFirestore.getInstance();
 
-        questionText = findViewById(R.id.textQuestion);
-        openAnswer = findViewById(R.id.openAnswer);
-        radioGroup = findViewById(R.id.radioGroup);
-        radio1 = findViewById(R.id.option1);
-        radio2 = findViewById(R.id.option2);
-        radio3 = findViewById(R.id.option3);
-        radio4 = findViewById(R.id.option4);
-        nextButton = findViewById(R.id.btnNext);
+        questionText = view.findViewById(R.id.textQuestion);
+        openAnswer = view.findViewById(R.id.openAnswer);
+        radioGroup = view.findViewById(R.id.radioGroup);
+        radio1 = view.findViewById(R.id.option1);
+        radio2 = view.findViewById(R.id.option2);
+        radio3 = view.findViewById(R.id.option3);
+        radio4 = view.findViewById(R.id.option4);
+        nextButton = view.findViewById(R.id.btnNext);
 
         fetchQuestions();
 
         nextButton.setOnClickListener(v -> handleNext());
+
+        return view;
     }
 
     private void fetchQuestions() {
@@ -76,7 +82,7 @@ public class Form extends AppCompatActivity {
                         currentQuestionId = "q02";
                         displayQuestion(currentQuestionId);
                     } else {
-                        Toast.makeText(this, "Error loading questions", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Error loading questions", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -84,7 +90,7 @@ public class Form extends AppCompatActivity {
     private void displayQuestion(String questionId) {
         Question question = questionMap.get(questionId);
         if (question == null) {
-            Toast.makeText(this, "Question not found: " + questionId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Question not found: " + questionId, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -141,7 +147,7 @@ public class Form extends AppCompatActivity {
         // Only called for multiple-choice questions
         selectedIndex = getSelectedRadioIndex();
         if (selectedIndex == -1) {
-            Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Please select an option", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -163,12 +169,11 @@ public class Form extends AppCompatActivity {
 
         int nextNum = nextList.get(selectedIndex);
         if (nextNum == -1) {
-            completeForm();
             for (Map.Entry<String, Integer> entry : categoryScores.entrySet()) {
                 Log.d("Scores", entry.getKey() + ": " + entry.getValue());
             }
 
-            Map<String, Float> normalizedScores = new HashMap<>();
+            HashMap<String, Float> normalizedScores = new HashMap<>();
             int NormScoresSum = 0;
 
             for (Map.Entry<String, Integer> entry : categoryScores.entrySet()) {
@@ -190,6 +195,8 @@ public class Form extends AppCompatActivity {
             normalizedScores.put("Total", totalNormScore);
             Log.d("Total Normalized Score", "Total" + ": " + totalNormScore);
 
+            completeForm(normalizedScores);
+
 
         } else {
             currentQuestionId = String.format("q%02d", nextNum);
@@ -207,12 +214,19 @@ public class Form extends AppCompatActivity {
         return -1;
     }
 
-    private void completeForm() {
+    private void completeForm(HashMap<String, Float> normalizedScores) {
         Log.d("Form", "Completed!");
         Log.d("Scores", categoryScores.toString());
-        Log.d("OpenAnswers", openResponses.toString());
 
-        Toast.makeText(this, "Form complete!", Toast.LENGTH_LONG).show();
-        finish();
+        Toast.makeText(requireContext(), "Form complete!", Toast.LENGTH_LONG).show();
+
+        FormThankYou fragment = FormThankYou.newInstance(normalizedScores);
+
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment) // make sure this ID exists in the layout of Form.java
+                .addToBackStack(null)
+                .commit();
     }
 }

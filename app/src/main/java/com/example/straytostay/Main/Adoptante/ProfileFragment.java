@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.straytostay.R;
 import com.example.straytostay.StartUp.Login;
@@ -70,8 +71,13 @@ public class ProfileFragment extends Fragment {
 
         btnForm.setOnClickListener(v -> {
             // Redirigir al Activity adop_activity_form
-            Intent intent = new Intent(getActivity(), Form.class);
-            startActivity(intent);
+            FragmentTransaction transaction = requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction();
+
+            transaction.replace(R.id.fragment_container, new Form()); // Replace with your actual container ID
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();

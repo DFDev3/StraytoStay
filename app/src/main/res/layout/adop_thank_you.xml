@@ -15,4 +15,12 @@
         android:textStyle="bold"
         android:textColor="#003B8B"
         tools:ignore="MissingConstraints" />
+
+    <com.github.mikephil.charting.charts.RadarChart
+        android:id="@+id/radarChart"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="16dp"
+        tools:ignore="MissingConstraints" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

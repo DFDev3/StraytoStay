@@ -68,9 +68,18 @@ public class AnimalDetail extends Fragment {
 
         btnAplicarAdopcion.setOnClickListener(v -> {
             // Redirigir al Activity adop_activity_form
-            Intent intent = new Intent(getActivity(), Form.class);
-            intent.putExtra("animalId", animalId); // Pasar el ID del animal si es necesario
-            startActivity(intent);
+            Bundle args = new Bundle();
+            args.putString("animalId", animalId); // or putInt, depending on type
+
+            Form formFragment = new Form();
+            formFragment.setArguments(args);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, formFragment)
+                    .addToBackStack(null)
+                    .commit();
+
         });
         return view;
     }
