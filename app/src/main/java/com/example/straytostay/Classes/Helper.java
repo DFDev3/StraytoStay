@@ -94,8 +94,10 @@ public class Helper extends Fragment {
                         getString(R.string.p9),
                         true,
                         List.of(
-                                new Answer("open", "none", 0)),
-                        List.of(27)),
+                                new Answer(getString(R.string.r9_1), "Resources", 2),
+                                new Answer(getString(R.string.r9_2), "Resources", 5),
+                                new Answer(getString(R.string.r9_3), "Resources", 0)),
+                        List.of(27,27,27)),
 
                 new Question(
                         getString(R.string.p10),
@@ -201,16 +203,19 @@ public class Helper extends Fragment {
                         getString(R.string.p22),
                         false,
                         List.of(
-                                new Answer(getString(R.string.r22_1), "LifeStyle", 5),
-                                new Answer(getString(R.string.r21_2), "LifeStyle", 10)),
+                                new Answer(getString(R.string.r22_1), "Environment", 5),
+                                new Answer(getString(R.string.r21_2), "Environment", 10)),
                         List.of(23, 23)),
 
                 new Question(
                         getString(R.string.p23),
                         true,
                         List.of(
-                                new Answer("open", "none", 0)),
-                        List.of(8)),
+                                new Answer(getString(R.string.r23_1), "Environment", 10),
+                                new Answer(getString(R.string.r23_2), "Environment", 6),
+                                new Answer(getString(R.string.r23_3), "Environment", 4),
+                                new Answer(getString(R.string.r23_4), "Environment", 0)),
+                        List.of(8,8,8,8)),
 
                 new Question(
                         getString(R.string.p24),
@@ -224,8 +229,11 @@ public class Helper extends Fragment {
                         getString(R.string.p25),
                         true,
                         List.of(
-                                new Answer("open", "none", 0)),
-                        List.of(26)),
+                                new Answer(getString(R.string.r25_1), "LifeStyle", 6),
+                                new Answer(getString(R.string.r25_2), "LifeStyle", 3),
+                                new Answer(getString(R.string.r25_3), "LifeStyle", 0),
+                                new Answer(getString(R.string.r25_4), "LifeStyle", 8)),
+                        List.of(26,26,26,26)),
 
                 new Question(
                         getString(R.string.p26),
@@ -247,53 +255,55 @@ public class Helper extends Fragment {
                         getString(R.string.p28),
                         false,
                         List.of(
-                                new Answer(getString(R.string.r28_1), "LifeStyle", 8),
-                                new Answer(getString(R.string.r28_2), "LifeStyle", 10)),
+                                new Answer(getString(R.string.r28_1), "Environment", 8),
+                                new Answer(getString(R.string.r28_2), "Environment", 10)),
                         List.of(29, 30)),
 
                 new Question(
                         getString(R.string.p29),
                         true,
                         List.of(
-                                new Answer("open", "none", 0)),
-                        List.of(30)),
+                                new Answer(getString(R.string.r29_1), "LifeStyle", 7),
+                                new Answer(getString(R.string.r29_2), "LifeStyle", 0)),
+                        List.of(30,30)),
 
                 new Question(
                         getString(R.string.p30),
                         true,
                         List.of(
                                 new Answer(getString(R.string.r30_1), "Environment", 10),
-                                new Answer(getString(R.string.r30_2), "Environment", 0)),
-                        List.of(31)),
+                                new Answer(getString(R.string.r30_2), "Environment", 8)),
+                        List.of(31,31)),
                 new Question(
                         getString(R.string.p31),
                         false,
                         List.of(
-                                new Answer(getString(R.string.r31_1), "LifeStyle", 10),
-                                new Answer(getString(R.string.r31_2), "LifeStyle", 7),
-                                new Answer(getString(R.string.r31_3), "LifeStyle", 8)),
-                        List.of(33, 33, 32)),
+                                new Answer(getString(R.string.r31_1), "Resources", 10),
+                                new Answer(getString(R.string.r31_2), "Resources", 7)),
+                        List.of(32,32)),
 
                 new Question(
                         getString(R.string.p32),
                         true,
-                        List.of(new Answer("open", "none", 0)),
-                        List.of(33)),
+                        List.of(
+                                new Answer(getString(R.string.r32_1), "Resources", 10),
+                                new Answer(getString(R.string.r32_2), "Resources", 0)),
+                        List.of(33,33)),
 
                 new Question(
                         getString(R.string.p33),
                         false,
                         List.of(
-                                new Answer(getString(R.string.r33_1), "Resources", 10),
-                                new Answer(getString(R.string.r33_2), "Resources", 0)),
-                        List.of(34, 34)),
+                                new Answer(getString(R.string.r33_1), "LifeStyle", 10),
+                                new Answer(getString(R.string.r33_2), "LifeStyle", 0)),
+                        List.of(34,34)),
 
                 new Question(
                         getString(R.string.p34),
                         false,
                         List.of(
-                                new Answer(getString(R.string.r34_1), "Resources", 10),
-                                new Answer(getString(R.string.r34_2), "Resources", 0)),
+                                new Answer(getString(R.string.r34_1), "LifeStyle", 10),
+                                new Answer(getString(R.string.r34_2), "LifeStyle", 0)),
                         List.of(35, 35)),
 
                 new Question(
@@ -301,17 +311,8 @@ public class Helper extends Fragment {
                         false,
                         List.of(
                                 new Answer(getString(R.string.r35_1), "LifeStyle", 10),
-                                new Answer(getString(R.string.r35_2), "LifeStyle", 7),
-                                new Answer(getString(R.string.r35_3), "LifeStyle", 0)),
-                        List.of(36, 36, 36)),
-
-                new Question(
-                        getString(R.string.p36),
-                        false,
-                        List.of(
-                                new Answer(getString(R.string.r36_1), "LifeStyle", 10),
-                                new Answer(getString(R.string.r36_2), "LifeStyle", 5)),
-                        List.of(37, 37)));
+                                new Answer(getString(R.string.r35_2), "LifeStyle", 7)),
+                        List.of(36, 36)));
 
 
         post.setOnClickListener(v -> {

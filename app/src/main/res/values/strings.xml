@@ -39,8 +39,6 @@
         <item>Otro</item>
     </string-array>
     <!-- Encusta adoptante -->
-    <!-- Pregunta 1 -->
-    <string name="p1">¿Cómo te llamas?</string>
 
     <!-- Pregunta 2 -->
     <string name="p2">¿Cuántos años tienes?</string>
@@ -191,56 +189,43 @@
     <string name="r28_1">Sí</string>
     <string name="r28_2">No</string>
 
-    <!-- Pregunta 29 -->
-    <string name="p29">Cuéntanos sobre los demás peluditos en tu hogar</string>
-
-    <!-- Pregunta 30 -->
-    <string name="p30">¿Podrías mostrarnos un video del espacio donde vivirá el peludito?</string>
-    <string name="r30_1">Sí</string>
-    <string name="r30_2">No</string>
-
     <!-- Pregunta 31 -->
-    <string name="p31">¿Has tenido mascotas antes?</string>
-    <string name="r31_1">Sí</string>
-    <string name="r31_2">No, sería mi primera vez</string>
-    <string name="r31_3">Tuve una, pero ya no está conmigo</string>
+    <string name="p29">¿Has tenido mascotas antes?</string>
+    <string name="r29_1">Sí</string>
+    <string name="r29_2">No, sería mi primera vez</string>
+    <string name="r29_3">Tuve una, pero ya no está conmigo</string>
 
     <!-- Pregunta 32 -->
-    <string name="p32">¿Podrías contarnos qué sucedió con tu anterior mascota?</string>
-    <string name="r32_1">Falleció de forma natural o por edad avanzada y recibió atención (10)</string>
-    <string name="r32_2">Falleció por enfermedad tratada con veterinario(8)</string>
-    <string name="r32_3">La entregué en adopción por causas justificadas (6)</string>
-    <string name="r32_4">Se escapó/ fue abandonada o murió por descuido (1)</string>
+    <string name="p30">¿Podrías contarnos qué sucedió con tu anterior mascota?</string>
+    <string name="r30_1">Falleció de forma natural o por edad avanzada y recibió atención (10)</string>
+    <string name="r30_2">Falleció por enfermedad tratada con veterinario(8)</string>
+    <string name="r30_3">La entregué en adopción por causas justificadas (6)</string>
+    <string name="r30_4">Se escapó/ fue abandonada o murió por descuido (1)</string>
     <!-- Pregunta 33 -->
-    <string name="p33">¿Estás dispuesto a hacerte cargo de los gastos de salud, alimentación y bienestar de la mascota?</string>
-    <string name="r33_1">Sí</string>
-    <string name="r33_2">No</string>
+    <string name="p31">¿Estás dispuesto a hacerte cargo de los gastos de salud, alimentación y bienestar de la mascota?</string>
+    <string name="r31_1">Sí</string>
+    <string name="r31_2">No</string>
 
     <!-- Pregunta 34 -->
-    <string name="p34">Si la mascota aún no está esterilizada, ¿asumirías los costos y trámites para hacerlo?</string>
-    <string name="r34_1">Sí</string>
-    <string name="r34_2">No</string>
+    <string name="p32">Si la mascota aún no está esterilizada, ¿asumirías los costos y trámites para hacerlo?</string>
+    <string name="r32_1">Sí</string>
+    <string name="r32_2">No</string>
 
     <!-- Pregunta 35 -->
-    <string name="p35">¿Qué harías si tu mascota presenta problemas de comportamiento?</string>
-    <string name="r35_1">Buscaría ayuda profesional</string>
-    <string name="r35_2">Intentaría corregirlo por mi cuenta</string>
-    <string name="r35_3">La devolvería al refugio</string>
+    <string name="p33">¿Qué harías si tu mascota presenta problemas de comportamiento?</string>
+    <string name="r33_1">Buscaría ayuda profesional</string>
+    <string name="r33_2">Intentaría corregirlo por mi cuenta</string>
+    <string name="r33_3">La devolvería al refugio</string>
 
     <!-- Pregunta 36 -->
-    <string name="p36">Si por alguna razón ya no puedes tener a tu mascota, ¿qué harías?</string>
-    <string name="r36_1">Buscaría una familia responsable</string>
-    <string name="r36_2">La devolvería al refugio</string>
+    <string name="p34">Si por alguna razón ya no puedes tener a tu mascota, ¿qué harías?</string>
+    <string name="r34_1">Buscaría una familia responsable</string>
+    <string name="r34_2">La devolvería al refugio</string>
 
     <!-- Pregunta 37 -->
-    <string name="p37">¿Te comprometes a enviarnos fotos y actualizaciones sobre tu mascota durante el primer año?</string>
-    <string name="r37_1">Sí</string>
-    <string name="r37_2">No</string>
-
-    <!-- Pregunta 38 -->
-    <string name="p38">¿Podemos hacer visitas o videollamadas para ver cómo está tu mascota?</string>
-    <string name="r38_1">Sí</string>
-    <string name="r38_2">No</string>
+    <string name="p35">¿Te comprometes a enviarnos fotos y actualizaciones sobre tu mascota durante el primer año?</string>
+    <string name="r35_1">Sí</string>
+    <string name="r35_2">No</string>
 
     <string name="admin_profile">Perfil del administrador</string>
     <string name="admin_list">Administradores</string>

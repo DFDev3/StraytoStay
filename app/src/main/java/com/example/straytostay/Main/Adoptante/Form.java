@@ -107,8 +107,8 @@ public class Form extends AppCompatActivity {
             Answer onlyAnswer = currentAnswers.get(0);
             if ("none".equals(onlyAnswer.getCategory()) && "open".equalsIgnoreCase(onlyAnswer.getText())) {
                 Log.d("OpenAnswerDebug", "Question is open-ended. Detected via answer content.");
-                openAnswer.setVisibility(View.VISIBLE);
-                question.setOpen(true);
+                radio1.setText(currentAnswers.get(0).getText());
+                radio1.setVisibility(View.VISIBLE);
                 return;
             }
         }
@@ -138,47 +138,31 @@ public class Form extends AppCompatActivity {
 
         List<Integer> nextList = currentQuestion.getNext();
 
-        boolean isOpenEnded = currentQuestion.isOpen();
-        Log.d("BOOOOOOOOOOO", String.valueOf(isOpenEnded));
-
-        if (isOpenEnded) {
-            Log.d("ISSSSSSSSSS", "is open ended");
-            selectedIndex = -2;
-            String response = openAnswer.getText().toString().trim();
-            if (response.isEmpty()) {
-                Toast.makeText(this, "Please enter your answer", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            openResponses.put(currentQuestionId, response);
-
-            if (nextList == null || nextList.isEmpty() || nextList.get(0) == -1) {
-                completeForm();
-            } else {
-                currentQuestionId = String.format("q%02d", nextList.get(0));
-                displayQuestion(currentQuestionId);
-            }
+        // Only called for multiple-choice questions
+        selectedIndex = getSelectedRadioIndex();
+        if (selectedIndex == -1) {
+            Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
             return;
-        } else {
-
-            // Only called for multiple-choice questions
-            selectedIndex = getSelectedRadioIndex();
-            if (selectedIndex == -1) {
-                Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Answer selectedAnswer = currentAnswers.get(selectedIndex);
-            String category = selectedAnswer.getCategory();
-            int score = selectedAnswer.getScore();
-
-            int currentScore = categoryScores.getOrDefault(category, 0);
-            categoryScores.put(category, currentScore + score);
         }
+
+        Answer selectedAnswer = currentAnswers.get(selectedIndex);
+        String category = selectedAnswer.getCategory();
+        int score = selectedAnswer.getScore();
+
+        int currentScore = categoryScores.getOrDefault(category, 0);
+        categoryScores.put(category, currentScore + score);
+
+        int totalScore = categoryScores.getOrDefault("total", 0);
+        categoryScores.put("total", totalScore + score);
 
         int nextNum = nextList.get(selectedIndex);
         if (nextNum == -1) {
             completeForm();
+            for (Map.Entry<String, Integer> entry : categoryScores.entrySet()) {
+                Log.d("Scores", entry.getKey() + ": " + entry.getValue());
+            }
+
+
         } else {
             currentQuestionId = String.format("q%02d", nextNum);
             displayQuestion(currentQuestionId);
