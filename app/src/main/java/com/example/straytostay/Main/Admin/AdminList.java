@@ -14,12 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.Classes.Usuario;
-import com.example.straytostay.Main.Adapters.AdminAdapter;
-import com.example.straytostay.Main.Adapters.EntityAdapter;
-import com.example.straytostay.Main.Adapters.MascotaAdapter;
-import com.example.straytostay.Main.Adoptante.EntityDetail;
+import com.example.straytostay.Main.Adapters.UserAdapter;
 import com.example.straytostay.Main.Shelter.PostAPet;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,10 +27,10 @@ import java.util.ArrayList;
 
 public class AdminList extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<Usuario> adminList;
+    private ArrayList<Usuario> userList;
     private Button Agregar;
 
-    private AdminAdapter adapter;
+    private UserAdapter adapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,11 +39,11 @@ public class AdminList extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerAdminList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adminList = new ArrayList<>();
+        userList = new ArrayList<>();
         // Inside onCreateView, replace your adapter initialization
-        adapter = new AdminAdapter(adminList, admin -> {
+        adapter = new UserAdapter(userList, user -> {
             Bundle bundle = new Bundle();
-            bundle.putString("uid", admin.getUid());  // Pass only the UID
+            bundle.putString("uid", user.getUid());  // Pass only the UID
 
             AdminProfile fragment = new AdminProfile();
             fragment.setArguments(bundle);
@@ -79,11 +75,11 @@ public class AdminList extends Fragment {
                 .whereEqualTo("adminId", 2)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    adminList.clear();
+                    userList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Usuario admin = doc.toObject(Usuario.class);
                         admin.setUid(doc.getId()); // UID for passing to detail
-                        adminList.add(admin);
+                        userList.add(admin);
                     }
                     adapter.notifyDataSetChanged();
                 })

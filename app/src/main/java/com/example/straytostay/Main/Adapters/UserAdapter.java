@@ -22,42 +22,42 @@ import com.example.straytostay.R;
 
 import java.util.List;
 
-public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    private final List<Usuario> adminList;
+    private final List<Usuario> userList;
     private final OnItemClickListener listener;
 
-    public AdminAdapter(List<Usuario> adminList, OnItemClickListener listener) {
-        this.adminList = adminList;
+    public UserAdapter(List<Usuario> userList, OnItemClickListener listener) {
+        this.userList = userList;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public AdminViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comp_card_shelter, parent, false);
-        return new AdminViewHolder(view);
+        return new UserViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdminViewHolder holder, int position) {
-        Usuario admin = adminList.get(position);
-        holder.name.setText(admin.getName());
-        holder.address.setText(admin.getAddress());
-        holder.phone.setText(admin.getPhone());
-        holder.image.setImageBitmap(loadImage(admin.getImageUrl()));
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        Usuario user = userList.get(position);
+        holder.name.setText(user.getName());
+        holder.address.setText(user.getAddress());
+        holder.phone.setText(user.getPhone());
+        holder.image.setImageBitmap(loadImage(user.getImageUrl()));
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onItemClick(admin);
+                listener.onItemClick(user);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return adminList.size();
+        return userList.size();
     }
 
     private Bitmap loadImage(String base64Image) {
@@ -73,14 +73,14 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Usuario admin);
+        void onItemClick(Usuario user);
     }
 
-    public static class AdminViewHolder extends RecyclerView.ViewHolder {
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView name, address, phone;
         ImageView image;
 
-        public AdminViewHolder(@NonNull View itemView) {
+        public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvEntityName);
             address = itemView.findViewById(R.id.tvEntityAddress);
@@ -88,5 +88,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
             image = itemView.findViewById(R.id.imgEntityLogo);
         }
     }
+
 }
 

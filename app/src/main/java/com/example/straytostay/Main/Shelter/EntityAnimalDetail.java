@@ -16,22 +16,38 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.straytostay.Classes.Mascota;
+import com.example.straytostay.Classes.Usuario;
+import com.example.straytostay.Main.Adapters.MascotaAdapter;
+import com.example.straytostay.Main.Adapters.UserAdapter;
+import com.example.straytostay.Main.Adoptante.AnimalDetail;
 import com.example.straytostay.R;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class EntityAnimalDetail extends Fragment {
 
+    private RecyclerView recyclerView;
     private ImageView imageAnimal;
     private TextView textNombre, textEdadRaza, textSexo, textTamano,
             textContenidoDescripcion, textNombreRefugio, textEsterilizado, textVacunas;
+    private UserAdapter adapter;
     private String animalId, shelterUid;
+    private List<Usuario> appliersList = new ArrayList<>();
     private FirebaseFirestore db;
-    private Button btnAplicarAdopcion; // Definir el botón
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static EntityAnimalDetail newInstance(String animalId, String ShelterUid) {
         EntityAnimalDetail fragment = new EntityAnimalDetail();
         Bundle args = new Bundle();
@@ -60,9 +76,26 @@ public class EntityAnimalDetail extends Fragment {
         textEdadRaza = view.findViewById(R.id.textEdadRaza);
         textSexo = view.findViewById(R.id.textSexo);
         textTamano = view.findViewById(R.id.textTamano);
-        textEsterilizado = view.findViewById(R.id.textEsterilizado);
         textContenidoDescripcion = view.findViewById(R.id.textContenidoDescripcion);
         textVacunas = view.findViewById(R.id.textVacunas);
+
+        recyclerView = view.findViewById(R.id.recyclerAppliers);
+
+        adapter = new UserAdapter(appliersList, user -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("uid", user.getUid());  // Pass only the UID
+
+            UserDetail fragment = new UserDetail();
+            fragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
 
         cargarDatosAnimal();
 
@@ -104,6 +137,9 @@ public class EntityAnimalDetail extends Fragment {
                     } else {
                         textVacunas.setText("No hay información sobre vacunas.");
                     }
+
+                    loadPostulantes(document);
+
                 } else {
                     Log.e("Firestore", "No such document!");
                 }
@@ -123,5 +159,47 @@ public class EntityAnimalDetail extends Fragment {
             Log.e("EntityAnimalDetail", "Error loading image", e);
             Toast.makeText(requireContext(), "Error loading image", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void loadPostulantes(DocumentSnapshot pet){
+
+        db.collection("mascotas").document(animalId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        List<String> appliedBy = (List<String>) documentSnapshot.get("appliedBy");
+
+                        if (appliedBy != null && !appliedBy.isEmpty()) {
+                            List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+
+                            for (String uid : appliedBy) {
+                                tasks.add(db.collection("users").document(uid).get());
+                            }
+
+                            Tasks.whenAllSuccess(tasks)
+                                    .addOnSuccessListener(results -> {
+                                        appliersList.clear();
+
+                                        for (Object result : results) {
+                                            if (result instanceof DocumentSnapshot) {
+                                                DocumentSnapshot userDoc = (DocumentSnapshot) result;
+
+                                                // Convert to Usuario object
+                                                Usuario user = new Usuario();
+                                                user.setUid(userDoc.getId());
+                                                user.setName(userDoc.getString("name"));
+                                                user.setPhone(userDoc.getString("phone"));
+                                                user.setAddress(userDoc.getString("address"));
+                                                user.setImageUrl(userDoc.getString("imageUrl"));
+
+                                                appliersList.add(user);
+                                            }
+                                        }
+
+                                        adapter.notifyDataSetChanged();
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error fetching pet or users", e));
     }
 }
