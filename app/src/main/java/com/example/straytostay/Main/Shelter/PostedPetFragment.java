@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.Main.Adapters.MascotaAdapter;
+import com.example.straytostay.Main.Adoptante.AnimalDetail;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,7 +43,20 @@ public class PostedPetFragment extends Fragment {
 
         mascotasList = new ArrayList<>();
         // Inside onCreateView, replace your adapter initialization
-        adapter = new MascotaAdapter(requireContext(), mascotasList);
+        adapter = new MascotaAdapter(mascotasList, pet -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("animalId", pet.getAid());  // Pass only the UID
+
+            AnimalDetail fragment = new AnimalDetail();
+            fragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        recyclerView.setAdapter(adapter);
         recyclerView.setAdapter(adapter);
 
         getEntidad();

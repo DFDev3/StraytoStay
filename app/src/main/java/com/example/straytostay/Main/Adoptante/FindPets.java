@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Mascota;
+import com.example.straytostay.Main.Adapters.EntityAdapter;
 import com.example.straytostay.Main.Adapters.MascotaAdapter;
 import com.example.straytostay.R;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,7 +27,7 @@ public class FindPets extends Fragment {
 
     private Spinner spinnerTipo, spinnerTamano, spinnerEdad;
     private RecyclerView recyclerView;
-    private MascotaAdapter petAdapter;
+    private MascotaAdapter adapter;
     private List<Mascota> listaMascotas = new ArrayList<>();
 
     private FirebaseFirestore db;
@@ -42,8 +43,20 @@ public class FindPets extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerMascotas);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        petAdapter = new MascotaAdapter(requireContext(),listaMascotas);
-        recyclerView.setAdapter(petAdapter);
+        adapter = new MascotaAdapter(listaMascotas, pet -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("animalId", pet.getAid());  // Pass only the UID
+
+            AnimalDetail fragment = new AnimalDetail();
+            fragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        recyclerView.setAdapter(adapter);
 
         configurarSpinners();
 
@@ -85,7 +98,7 @@ public class FindPets extends Fragment {
                         Mascota mascota = doc.toObject(Mascota.class);
                         listaMascotas.add(mascota);
                     }
-                    petAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     // Puedes mostrar un Toast si quieres manejar errores

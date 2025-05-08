@@ -43,7 +43,7 @@ public class EntityDetail extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private RecyclerView recyclerView;
-    private MascotaAdapter petAdapter;
+    private MascotaAdapter adapter;
     private List<Mascota> mascotasList = new ArrayList<>();
     private String RefugioName;
     public static EntityDetail newInstance(String uid) {
@@ -92,12 +92,23 @@ public class EntityDetail extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerMascotasShelterDetail);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        petAdapter = new MascotaAdapter(requireContext(),mascotasList);
-        recyclerView.setAdapter(petAdapter);
+        adapter = new MascotaAdapter(mascotasList, pet -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("animalId", pet.getAid());  // Pass only the UID
+
+            AnimalDetail fragment = new AnimalDetail();
+            fragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+        recyclerView.setAdapter(adapter);
 
         btnAceptar.setVisibility(View.GONE);
         btnRechazar.setVisibility(View.GONE);
-        btnEliminar.setVisibility(View.GONE);
 
         loadShelterDetails(uid);
 
@@ -276,7 +287,7 @@ public class EntityDetail extends Fragment {
                         mascota.setAid(doc.getId()); // UID for passing to detail
                         mascotasList.add(mascota);
                     }
-                    petAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Error al cargar mascotas", Toast.LENGTH_SHORT).show();

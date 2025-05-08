@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.straytostay.Classes.Entity;
 import com.example.straytostay.Classes.Mascota;
 import com.example.straytostay.Main.Adoptante.AnimalDetail;
 import com.example.straytostay.R;
@@ -27,17 +28,17 @@ import java.util.List;
 public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaViewHolder> {
 
     private final List<Mascota> mascotaList;
-    private final Context context;
+    private final MascotaAdapter.OnItemClickListener listener;
 
-    public MascotaAdapter(Context context, List<Mascota> mascotaList) {
-        this.context = context;
+    public MascotaAdapter(List<Mascota> mascotaList, MascotaAdapter.OnItemClickListener listener) {
         this.mascotaList = mascotaList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public MascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.comp_card_pet, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comp_card_pet, parent, false);
         return new MascotaViewHolder(view);
     }
 
@@ -55,25 +56,15 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.MascotaV
         }
 
         holder.detail.setOnClickListener(v -> {
-            Mascota mascotaChosen = mascotaList.get(position);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("animalId", mascotaChosen.getAid()); // assuming getId() returns the Firebase ID
-
-
-            AnimalDetail fragment = new AnimalDetail();
-            fragment.setArguments(bundle);
-
-            FragmentTransaction transaction = ((AppCompatActivity) v.getContext())
-                    .getSupportFragmentManager()
-                    .beginTransaction();
-
-            transaction.replace(R.id.fragment_container, fragment); // your container ID
-            transaction.addToBackStack(null);
-            transaction.commit();
+            if (listener != null) {
+                listener.onItemClick(mascota);
+            }
         });
 
 
+    }
+    public interface OnItemClickListener {
+        void onItemClick(Mascota pet);
     }
 
     @Override
