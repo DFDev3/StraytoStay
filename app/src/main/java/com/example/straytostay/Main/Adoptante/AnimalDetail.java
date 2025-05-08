@@ -24,6 +24,7 @@ import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class AnimalDetail extends Fragment {
     private String animalId;
     private FirebaseFirestore db;
     private Button btnAplicarAdopcion; // Definir el botón
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static AnimalDetail newInstance(String animalId) {
         AnimalDetail fragment = new AnimalDetail();
         Bundle args = new Bundle();
@@ -73,46 +75,74 @@ public class AnimalDetail extends Fragment {
 
         cargarDatosAnimal();
 
-        btnAplicarAdopcion.setOnClickListener(v -> {
+        db.collection("mascotas").document(animalId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (!documentSnapshot.exists()) return;
 
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    List<String> appliedByList = (List<String>) documentSnapshot.get("appliedBy");
+                    boolean hasApplied = appliedByList != null && appliedByList.contains(uid);
 
-            db.collection("users").document(uid).get()
-                    .addOnSuccessListener(snapshot -> {
-                        if (snapshot.exists()) {
-                            if (snapshot.get("scores") == null) {
-                                // User hasn't filled the form
-                                new AlertDialog.Builder(requireContext())
-                                        .setTitle("Form Required")
-                                        .setMessage("You need to fill out our form first. Go fill it.")
-                                        .setPositiveButton("Go", (dialog, which) -> {
-                                            ProfileFragment profileFragment = new ProfileFragment();
-                                            requireActivity().getSupportFragmentManager()
-                                                    .beginTransaction()
-                                                    .replace(R.id.fragment_container, profileFragment)
-                                                    .addToBackStack(null)
-                                                    .commit();
-                                        })
-                                        .setNegativeButton("Cancel", null)
-                                        .show();
-                            } else {
-                                // User has filled the form
-                                btnAplicarAdopcion.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_border_blue));
-                                btnAplicarAdopcion.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
-                                btnAplicarAdopcion.setText("APLICACIÓN ENVIADA");
+                    if (hasApplied) {
+                        // User already applied
+                        btnAplicarAdopcion.setText("APLICACIÓN ENVIADA");
+                        btnAplicarAdopcion.setEnabled(false);
+                        btnAplicarAdopcion.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_border_blue));
+                        btnAplicarAdopcion.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
+                        btnAplicarAdopcion.setOnClickListener(v ->
+                                Toast.makeText(requireContext(), "Ya aplicaste a esta mascota.", Toast.LENGTH_SHORT).show()
+                        );
+                    } else {
+                        // Check if user filled the form (has 'scores')
+                        db.collection("users").document(uid).get()
+                                .addOnSuccessListener(snapshot -> {
+                                    if (!snapshot.exists()) return;
 
+                                    if (snapshot.get("scores") == null) {
+                                        // Show dialog to go fill the form
+                                        btnAplicarAdopcion.setOnClickListener(v -> {
+                                            new AlertDialog.Builder(requireContext())
+                                                    .setTitle("Formulario requerido")
+                                                    .setMessage("Debes completar el formulario antes de aplicar. ¿Deseas hacerlo ahora?")
+                                                    .setPositiveButton("Ir", (dialog, which) -> {
+                                                        ProfileFragment profileFragment = new ProfileFragment();
+                                                        requireActivity().getSupportFragmentManager()
+                                                                .beginTransaction()
+                                                                .replace(R.id.fragment_container, profileFragment)
+                                                                .addToBackStack(null)
+                                                                .commit();
+                                                    })
+                                                    .setNegativeButton("Cancelar", null)
+                                                    .show();
+                                        });
+                                    } else {
+                                        // User is eligible to apply
+                                        btnAplicarAdopcion.setEnabled(true);
+                                        btnAplicarAdopcion.setOnClickListener(v -> {
+                                            db.collection("mascotas").document(animalId)
+                                                    .update("appliedBy", FieldValue.arrayUnion(uid))
+                                                    .addOnSuccessListener(unused -> {
+                                                        Toast.makeText(requireContext(), "Has aplicado exitosamente.", Toast.LENGTH_SHORT).show();
+                                                        btnAplicarAdopcion.setText("APLICACIÓN ENVIADA");
+                                                        btnAplicarAdopcion.setEnabled(false);
+                                                        btnAplicarAdopcion.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_border_blue));
+                                                        btnAplicarAdopcion.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Log.e("Firestore", "Error al aplicar", e);
+                                                        Toast.makeText(requireContext(), "Ocurrió un error al aplicar.", Toast.LENGTH_SHORT).show();
+                                                    });
+                                        });
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("Firestore", "Error obteniendo usuario", e);
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error obteniendo mascota", e);
+                });
 
-
-
-
-
-                            }
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e("CheckScores", "Failed to check scores field", e);
-                    });
-        });
 
         verEntidad.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

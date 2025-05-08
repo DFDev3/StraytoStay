@@ -226,7 +226,7 @@ public class Form extends Fragment {
 
         Toast.makeText(requireContext(), "Form complete!", Toast.LENGTH_LONG).show();
 
-        FormThankYou fragment = FormThankYou.newInstance(normalizedScores);
+        ProfileFragment fragment = new ProfileFragment();
 
 
         getParentFragmentManager()
