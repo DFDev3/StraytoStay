@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 
 public class PostedPetFragment extends Fragment {
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private MascotaAdapter adapter;
 
     private ArrayList<Mascota> mascotasList;
@@ -44,18 +44,38 @@ public class PostedPetFragment extends Fragment {
         mascotasList = new ArrayList<>();
         // Inside onCreateView, replace your adapter initialization
         adapter = new MascotaAdapter(mascotasList, pet -> {
+
             Bundle bundle = new Bundle();
-            bundle.putString("animalId", pet.getAid());  // Pass only the UID
+            bundle.putString("animalId", pet.getAid());
 
-            AnimalDetail fragment = new AnimalDetail();
-            fragment.setArguments(bundle);
+            String shelterUid = mAuth.getCurrentUser().getUid();
 
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            db.collection("entities").document(shelterUid).get()
+                    .addOnSuccessListener(snapshot -> {
+                        Fragment fragment;
+
+                        if (snapshot.exists()) {
+                            // User is a shelter
+                            bundle.putString("ShelterUid", shelterUid);
+                            fragment = new EntityAnimalDetail();
+                        } else {
+                            // Regular user
+                            bundle.putString("ShelterUid", "none");
+                            fragment = new AnimalDetail();
+                        }
+
+                        fragment.setArguments(bundle);
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("MascotaAdapter", "Error checking entity", e);
+                    });
         });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setAdapter(adapter);
 

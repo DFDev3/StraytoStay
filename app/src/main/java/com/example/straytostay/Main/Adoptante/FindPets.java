@@ -91,6 +91,7 @@ public class FindPets extends Fragment {
 
     private void cargarMascotas() {
         db.collection("mascotas")
+                .whereEqualTo("estado","Abierta")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     listaMascotas.clear();

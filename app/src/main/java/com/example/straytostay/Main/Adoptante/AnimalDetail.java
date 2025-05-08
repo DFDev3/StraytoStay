@@ -1,8 +1,10 @@
 package com.example.straytostay.Main.Adoptante;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -15,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.straytostay.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,7 +32,7 @@ public class AnimalDetail extends Fragment {
 
     private ImageView imageAnimal;
     private TextView textNombre, textEdadRaza, textSexo, textTamano,
-            textContenidoDescripcion, textNombreRefugio, textEsterilizado, textVacunas;
+            textContenidoDescripcion, textNombreRefugio, textEsterilizado, textVacunas, verEntidad;
     private String animalId;
     private FirebaseFirestore db;
     private Button btnAplicarAdopcion; // Definir el botón
@@ -39,6 +43,8 @@ public class AnimalDetail extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    private String entityUid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,24 +69,65 @@ public class AnimalDetail extends Fragment {
         textNombreRefugio = view.findViewById(R.id.textNombreRefugio);
         textVacunas = view.findViewById(R.id.textVacunas);
         btnAplicarAdopcion = view.findViewById(R.id.btnAplicarAdopcion);
+        verEntidad = view.findViewById(R.id.verEntidad);
 
         cargarDatosAnimal();
 
         btnAplicarAdopcion.setOnClickListener(v -> {
-            // Redirigir al Activity adop_activity_form
-            Bundle args = new Bundle();
-            args.putString("animalId", animalId); // or putInt, depending on type
 
-            Form formFragment = new Form();
-            formFragment.setArguments(args);
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            db.collection("users").document(uid).get()
+                    .addOnSuccessListener(snapshot -> {
+                        if (snapshot.exists()) {
+                            if (snapshot.get("scores") == null) {
+                                // User hasn't filled the form
+                                new AlertDialog.Builder(requireContext())
+                                        .setTitle("Form Required")
+                                        .setMessage("You need to fill out our form first. Go fill it.")
+                                        .setPositiveButton("Go", (dialog, which) -> {
+                                            ProfileFragment profileFragment = new ProfileFragment();
+                                            requireActivity().getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.fragment_container, profileFragment)
+                                                    .addToBackStack(null)
+                                                    .commit();
+                                        })
+                                        .setNegativeButton("Cancel", null)
+                                        .show();
+                            } else {
+                                // User has filled the form
+                                btnAplicarAdopcion.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_border_blue));
+                                btnAplicarAdopcion.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
+                                btnAplicarAdopcion.setText("APLICACIÓN ENVIADA");
+
+
+
+
+
+
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("CheckScores", "Failed to check scores field", e);
+                    });
+        });
+
+        verEntidad.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("uid", entityUid);  // Now uses the field
+
+            EntityDetail fragment = new EntityDetail();
+            fragment.setArguments(bundle);
 
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, formFragment)
+                    .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
                     .commit();
-
         });
+
         return view;
     }
 
@@ -100,6 +147,22 @@ public class AnimalDetail extends Fragment {
                     String refugio = document.getString("refugio");
                     String imagenUrl = document.getString("imagenUrl");  // Base64 string for the image
 
+                    db.collection("entities")
+                            .whereEqualTo("name", refugio)
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    DocumentSnapshot theDocument = queryDocumentSnapshots.getDocuments().get(0);
+                                    entityUid = theDocument.getId(); // UID of the entity
+                                    Log.d("EntityUID", "UID: " + entityUid);
+                                    // Use entityUid as needed
+                                } else {
+                                    Log.d("EntityUID", "No entity found with that name.");
+                                }
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("EntityUID", "Error fetching entity UID", e);
+                            });
                     List<String> vacunasList = (List<String>) document.get("vacunas");
 
                     // Set text fields

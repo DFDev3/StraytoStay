@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.straytostay.Classes.Answer;
 import com.example.straytostay.Classes.Question;
 import com.example.straytostay.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -32,6 +33,7 @@ import java.util.Map;
 
 public class Form extends Fragment {
 
+    private final String uid = FirebaseAuth.getInstance().getUid();
     private final List<Question> questionList = new ArrayList<>();
     private final Map<String, Question> questionMap = new HashMap<>();
     private final Map<String, String> openResponses = new HashMap<>();
@@ -217,6 +219,10 @@ public class Form extends Fragment {
     private void completeForm(HashMap<String, Float> normalizedScores) {
         Log.d("Form", "Completed!");
         Log.d("Scores", categoryScores.toString());
+
+        db.collection("users").document(uid)
+                .update("scores", normalizedScores)
+                .addOnFailureListener(e -> Log.e("Form", "Error al subir puntajes", e));
 
         Toast.makeText(requireContext(), "Form complete!", Toast.LENGTH_LONG).show();
 

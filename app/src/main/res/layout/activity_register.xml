@@ -170,7 +170,7 @@
             android:id="@+id/adop_selectImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seleccionar logo"
+            android:text="Seleccionar foto de perfil"
             android:layout_marginBottom="16dp" />
 
         <!-- Botón Registrar -->

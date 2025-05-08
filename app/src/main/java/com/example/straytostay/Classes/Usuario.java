@@ -1,9 +1,11 @@
 package com.example.straytostay.Classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Usuario {
-    private int adminId, score;
+    private int adminId;
+    private HashMap<String, Float> scores;
     private String name, phone, citizenId, address, email, uid, imageUrl;
 
 
@@ -11,26 +13,23 @@ public class Usuario {
         // Required empty constructor for Firestore
     }
 
-    public Usuario(String name, String phone, String citizenId, String address, String email, int adminId, String uid, String imageUrl, int score) {
+    public Usuario( String uid, String name, String phone, String citizenId, String address, String email, int adminId, String imageUrl) {
+        this.uid = uid;
         this.name = name;
         this.phone = phone;
         this.citizenId = citizenId;
         this.address = address;
         this.email = email;
         this.adminId = adminId;
-        this.uid = uid;
         this.imageUrl = imageUrl;
-        this.score = score;
     }
 
+    public HashMap<String, Float> getScores() {
+        return scores;
+    }
 
-    public Usuario(String uid, String name, String phone, String email, String imageUrl, int adminId){
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.adminId = adminId;
-        this.uid = uid;
-        this.imageUrl = imageUrl;
+    public void setScores(HashMap<String, Float> scores) {
+        this.scores = scores;
     }
 
     public int getAdminId() {

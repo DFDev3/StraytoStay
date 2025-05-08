@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mascota implements Serializable {
-    private String aid, nombre, edad, raza, tipo, esterilizacion, sexo, tamano, descripcion, imagenUrl, refugio;
-    private ArrayList<String> vacunas;
+    private String aid, nombre, edad, raza, tipo, esterilizacion, sexo, tamano, descripcion, estado, imagenUrl, refugio;
+    private ArrayList<String> vacunas, appliedBy;
 
     // Required empty constructor for Firestore
     public Mascota() {}
 
     // Full constructor
     public Mascota(String aid, String nombre, String edad, String raza, String tipo, String esterilizacion,
-                   String sexo, ArrayList<String> vacunas, String tamano, String descripcion, String refugio, String imagenUrl) {
+                   String sexo, ArrayList<String> vacunas, String tamano, String descripcion, String estado, String refugio, String imagenUrl) {
         this.aid = aid;
         this.nombre = nombre;
         this.edad = edad;
@@ -24,11 +24,28 @@ public class Mascota implements Serializable {
         this.vacunas = vacunas;
         this.tamano = tamano;
         this.descripcion = descripcion;
+        this.estado = estado;
         this.imagenUrl = imagenUrl;
         this.refugio = refugio;
     }
 
     // Getters and Setters
+
+    public ArrayList<String> getAppliedBy() {
+        return appliedBy;
+    }
+
+    public void setAppliedBy(ArrayList<String> appliedBy) {
+        this.appliedBy = appliedBy;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public String getAid() { return aid; }
 

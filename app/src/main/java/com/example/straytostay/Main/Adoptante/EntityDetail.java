@@ -279,6 +279,7 @@ public class EntityDetail extends Fragment {
 
         db.collection("mascotas")
                 .whereEqualTo("refugio", refugioNombre)
+                .whereEqualTo("estado", "Abierta")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     mascotasList.clear();

@@ -213,7 +213,7 @@ public class PostAPet extends AppCompatActivity {
                     .addOnSuccessListener(documentReference -> {
                         String aid = documentReference.getId();
 
-                        Mascota mascota = new Mascota(aid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion, refugio[0], encodedImageBase64);
+                        Mascota mascota = new Mascota(aid, nombre, edad, raza, tipo, esterilizado, sexo, vacunaList, tamano, descripcion, "Abierta", refugio[0], encodedImageBase64);
 
                         db.collection("mascotas")
                                 .document(aid)
