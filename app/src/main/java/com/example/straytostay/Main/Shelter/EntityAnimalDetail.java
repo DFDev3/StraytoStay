@@ -41,13 +41,14 @@ public class EntityAnimalDetail extends Fragment {
 
     private RecyclerView recyclerView;
     private ImageView imageAnimal;
+    private Button btnToggleEstudio;
     private TextView textNombre, textEdadRaza, textSexo, textTamano,
-            textContenidoDescripcion, textNombreRefugio, textEsterilizado, textVacunas;
+    textContenidoDescripcion, textNombreRefugio, textEsterilizado, textVacunas;
     private UserAdapter adapter;
+    private FirebaseFirestore db;
     private String animalId, shelterUid;
     private List<Usuario> appliersList = new ArrayList<>();
-    private FirebaseFirestore db;
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private boolean isOpen;
     public static EntityAnimalDetail newInstance(String animalId, String ShelterUid) {
         EntityAnimalDetail fragment = new EntityAnimalDetail();
         Bundle args = new Bundle();
@@ -78,6 +79,7 @@ public class EntityAnimalDetail extends Fragment {
         textTamano = view.findViewById(R.id.textTamano);
         textContenidoDescripcion = view.findViewById(R.id.textContenidoDescripcion);
         textVacunas = view.findViewById(R.id.textVacunas);
+        btnToggleEstudio = view.findViewById(R.id.btnCerrarEstudio);
 
         recyclerView = view.findViewById(R.id.recyclerAppliers);
 
@@ -99,8 +101,51 @@ public class EntityAnimalDetail extends Fragment {
 
         cargarDatosAnimal();
 
+        // Call this when initializing the view
+        db.collection("mascotas").document(animalId).get().addOnSuccessListener(documentSnapshot -> {
+            if (!documentSnapshot.exists()) return;
+
+            String estado = documentSnapshot.getString("estado");
+            isOpen = estado != null && estado.equals("Abierta");
+
+            showApplication();  // Now it's safe to call
+
+            btnToggleEstudio.setOnClickListener(v -> {
+                isOpen = !isOpen;
+                showApplication();
+                Log.d("AtVerified?", "bool - " + isOpen);
+            });
+        });
+
+        showApplication();
+
+        btnToggleEstudio.setOnClickListener(v -> {
+            isOpen = !isOpen;
+            showApplication();
+            Log.d("AtVerified?", "bool - " + isOpen);
+        });
+
 
         return view;
+    }
+
+    private void showApplication(){
+        if (isOpen){
+            btnToggleEstudio.setText("CERRAR POSTULACIONES");
+            db.collection("mascotas").document(animalId).update("estado","Cerrada");
+        } else {
+            btnToggleEstudio.setText("ABRIR POSTULACIONES");
+            db.collection("mascotas").document(animalId).update("estado","Abierta");
+        }
+    }
+
+    private boolean checkStatus(){
+        db.collection("mascotas").document(animalId).get().addOnSuccessListener(documentSnapshot -> {
+            if (!documentSnapshot.exists()) return;
+            String estado = documentSnapshot.getString("estado");
+            boolean isOpen = estado != null && estado.equals("Abierta");
+        });
+        return isOpen;
     }
 
     private void cargarDatosAnimal() {

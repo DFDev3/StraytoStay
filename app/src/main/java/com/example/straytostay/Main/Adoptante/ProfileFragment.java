@@ -203,7 +203,6 @@ public class ProfileFragment extends Fragment {
 
     private void populateProfile(DocumentSnapshot snapshot){
         String name = snapshot.getString("name");
-        String lastName = snapshot.getString("lastName");
         String email = snapshot.getString("email");
         String phone = snapshot.getString("phone");
         String address = snapshot.getString("address");
@@ -214,7 +213,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // Set data with fallback if any field is null
-        tvName.setText((name != null ? name : "No name provided") + " " + (lastName != null ? lastName : ""));
+        tvName.setText((name != null ? name : "No name provided"));
         tvEmail.setText(email != null ? email : "Email not provided");
         tvPhone.setText(phone != null ? phone : "Phone not registered");
         tvAddress.setText(address != null ? address : "Address not registered");
