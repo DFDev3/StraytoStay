@@ -86,6 +86,7 @@ public class EntityAnimalDetail extends Fragment {
         adapter = new UserAdapter(appliersList, user -> {
             Bundle bundle = new Bundle();
             bundle.putString("uid", user.getUid());  // Pass only the UID
+            bundle.putString("aid", animalId);
 
             UserDetail fragment = new UserDetail();
             fragment.setArguments(bundle);

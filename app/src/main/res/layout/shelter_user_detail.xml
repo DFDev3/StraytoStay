@@ -66,5 +66,14 @@
 
         <!-- Add more details as needed -->
 
+        <Button
+            android:id="@+id/btn_winner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_button_border_blue_primary"
+            android:text="Aprobar Adoptante"
+            android:layout_marginBottom="16dp" />
+
     </LinearLayout>
 </ScrollView>

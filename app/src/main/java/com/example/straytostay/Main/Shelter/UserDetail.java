@@ -1,5 +1,6 @@
 package com.example.straytostay.Main.Shelter;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +40,9 @@ public class UserDetail extends Fragment {
     private RadarChart radarChart;
     private ImageView profilePicture;
     private TextView tvPhone, tvAddress, tvName;
+    private Button btnWinner;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String uid;
+    private String uid, animalId;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shelter_user_detail, container, false);
@@ -48,14 +52,41 @@ public class UserDetail extends Fragment {
         tvAddress = view.findViewById(R.id.textAddress);
         tvPhone = view.findViewById(R.id.textPhone);
         radarChart = view.findViewById(R.id.radarChart);
+        btnWinner = view.findViewById(R.id.btn_winner);
 
 
         if (getArguments() != null) {
             uid = getArguments().getString("uid");
+            animalId = getArguments().getString("aid");
         }
 
         loadRadarChart();
         loadDetail();
+
+        btnWinner.setOnClickListener(v -> {
+            Log.d("a","a");
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Aprobar Adoptante?")
+                    .setMessage("Se iniciará el proceso de adopción con el usuario")
+                    .setPositiveButton("Ir", (dialog, which) -> {
+                        db.collection("mascotas")
+                                .document(animalId)
+                                .update("appliedBy", Collections.singletonList(uid),"estado","Adoptada")
+                                .addOnSuccessListener(aVoid -> Log.d("Firestore", "appliedBy updated with UID"))
+                                .addOnFailureListener(e -> Log.e("Firestore", "Error updating appliedBy", e));
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("animalId", animalId);
+
+                        AdoptedList fragment = new AdoptedList();
+                        fragment.setArguments(bundle);
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    });
+        });
 
         return view;
     }

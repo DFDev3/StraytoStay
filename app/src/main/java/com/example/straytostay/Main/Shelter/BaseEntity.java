@@ -30,7 +30,7 @@ public class BaseEntity extends AppCompatActivity {
 
         // Set navigation behavior
         navPets.setOnClickListener(v -> loadFragment(new PostedPetFragment()));
-        navSeguimiento.setOnClickListener(v -> loadFragment(new PetFollowUp()));
+        navSeguimiento.setOnClickListener(v -> loadFragment(new AdoptedList()));
         navProfile.setOnClickListener(v -> loadFragment(new EntityProfile()));
     }
 

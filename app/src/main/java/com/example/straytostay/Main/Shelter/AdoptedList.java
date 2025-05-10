@@ -1,6 +1,5 @@
 package com.example.straytostay.Main.Shelter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,9 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class PostedPetFragment extends Fragment {
+public class AdoptedList extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private MascotaAdapter adapter;
 
@@ -78,18 +76,8 @@ public class PostedPetFragment extends Fragment {
         });
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setAdapter(adapter);
 
         getEntidad();
-
-        Agregar = view.findViewById(R.id.btnAgregarAnimal);
-        Agregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PostAPet.class));
-
-            }
-        });
 
         return view;
     }
@@ -119,8 +107,7 @@ public class PostedPetFragment extends Fragment {
 
         db.collection("mascotas")
                 .whereEqualTo("refugio", entidadNombre)
-                .whereIn("estado", Arrays.asList("Cerrada", "Abierta"))
-
+                .whereEqualTo("estado","Adoptada")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     mascotasList.clear();
