@@ -31,7 +31,6 @@ public class AdoptedList extends Fragment {
     private ArrayList<Mascota> mascotasList;
     private RecyclerView recyclerView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Button Agregar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,16 +50,16 @@ public class AdoptedList extends Fragment {
 
             db.collection("entities").document(shelterUid).get()
                     .addOnSuccessListener(snapshot -> {
-                        Fragment fragment;
+                        PetFollowUp fragment = new PetFollowUp();
 
                         if (snapshot.exists()) {
                             // User is a shelter
                             bundle.putString("ShelterUid", shelterUid);
-                            fragment = new EntityAnimalDetail();
+
                         } else {
                             // Regular user
                             bundle.putString("ShelterUid", "none");
-                            fragment = new AnimalDetail();
+
                         }
 
                         fragment.setArguments(bundle);

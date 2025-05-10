@@ -85,7 +85,8 @@ public class UserDetail extends Fragment {
                                 .replace(R.id.fragment_container, fragment)
                                 .addToBackStack(null)
                                 .commit();
-                    });
+                    })
+                    .show();
         });
 
         return view;

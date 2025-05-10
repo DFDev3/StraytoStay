@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mascota implements Serializable {
-    private String aid, nombre, edad, raza, tipo, esterilizacion, sexo, tamano, descripcion, estado, imagenUrl, refugio;
+    private String aid, nombre, edad, raza, tipo, esterilizacion, sexo, tamano, descripcion, estado, imageUrl, refugio;
     private ArrayList<String> vacunas, appliedBy;
 
     // Required empty constructor for Firestore
@@ -13,7 +13,7 @@ public class Mascota implements Serializable {
 
     // Full constructor
     public Mascota(String aid, String nombre, String edad, String raza, String tipo, String esterilizacion,
-                   String sexo, ArrayList<String> vacunas, String tamano, String descripcion, String estado, String refugio, String imagenUrl) {
+                   String sexo, ArrayList<String> vacunas, String tamano, String descripcion, String estado, String refugio, String imageUrl) {
         this.aid = aid;
         this.nombre = nombre;
         this.edad = edad;
@@ -25,7 +25,7 @@ public class Mascota implements Serializable {
         this.tamano = tamano;
         this.descripcion = descripcion;
         this.estado = estado;
-        this.imagenUrl = imagenUrl;
+        this.imageUrl = imageUrl;
         this.refugio = refugio;
     }
 
@@ -91,6 +91,6 @@ public class Mascota implements Serializable {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getImagenUrl() { return imagenUrl; }
-    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }

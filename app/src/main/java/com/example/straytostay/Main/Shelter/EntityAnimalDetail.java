@@ -132,10 +132,10 @@ public class EntityAnimalDetail extends Fragment {
 
     private void showApplication(){
         if (isOpen){
-            btnToggleEstudio.setText("CERRAR POSTULACIONES");
+            btnToggleEstudio.setText("ABRIR POSTULACIONES");
             db.collection("mascotas").document(animalId).update("estado","Cerrada");
         } else {
-            btnToggleEstudio.setText("ABRIR POSTULACIONES");
+            btnToggleEstudio.setText("CERRAR POSTULACIONES");
             db.collection("mascotas").document(animalId).update("estado","Abierta");
         }
     }
@@ -161,7 +161,7 @@ public class EntityAnimalDetail extends Fragment {
                     String sexo = document.getString("sexo");
                     String tamano = document.getString("tamano");
                     String descripcion = document.getString("descripcion");
-                    String imagenUrl = document.getString("imagenUrl");  // Base64 string for the image
+                    String imagenUrl = document.getString("imageUrl");  // Base64 string for the image
 
                     List<String> vacunasList = (List<String>) document.get("vacunas");
 

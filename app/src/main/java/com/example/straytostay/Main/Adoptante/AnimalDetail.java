@@ -175,7 +175,7 @@ public class AnimalDetail extends Fragment {
                     String esterilizacion = document.getString("esterilizacion");
                     String descripcion = document.getString("descripcion");
                     String refugio = document.getString("refugio");
-                    String imagenUrl = document.getString("imagenUrl");  // Base64 string for the image
+                    String imagenUrl = document.getString("imageUrl");  // Base64 string for the image
 
                     db.collection("entities")
                             .whereEqualTo("name", refugio)
