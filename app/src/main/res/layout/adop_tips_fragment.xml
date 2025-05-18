@@ -47,38 +47,11 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/content_libros"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLibros"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="8dp">
+            android:layout_height="match_parent"/>
 
-            <!-- Recurso libro 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_books"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="fitXY" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Guía de cuidados básicos"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Puedes añadir más libros aquí -->
-        </LinearLayout>
 
         <!-- VIDEOS -->
         <LinearLayout
@@ -107,36 +80,10 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/content_videos"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerVideos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="8dp">
-
-            <!-- Recurso video 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_videos"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="fitXY" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Cómo bañar a tu mascota"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="match_parent"/>
 
         <!-- REVISTAS -->
         <LinearLayout
@@ -165,36 +112,10 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/content_revistas"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRevistas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="8dp">
-
-            <!-- Recurso revista 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_revistas"
-                    android:layout_marginEnd="8dp"
-                    android:scaleType="fitXY" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Revista Animal Care - Edición 2024"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </ScrollView>

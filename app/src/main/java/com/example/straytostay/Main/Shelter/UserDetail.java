@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.straytostay.Classes.Noticia;
 import com.example.straytostay.R;
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -37,11 +38,11 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDetail extends Fragment {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RadarChart radarChart;
     private ImageView profilePicture;
     private TextView tvPhone, tvAddress, tvName;
     private Button btnWinner;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String uid, animalId;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,14 +65,28 @@ public class UserDetail extends Fragment {
         loadDetail();
 
         btnWinner.setOnClickListener(v -> {
-            Log.d("a","a");
+            Noticia unused = new Noticia();
+            loadAnimalData(animalId, (name, imageUrl) -> {
+                db.collection("noticias").add(unused)
+                        .addOnSuccessListener(newsSnapshot -> {
+                            String nid = newsSnapshot.getId();
+
+                            Noticia news = new Noticia(nid, "Nuevo Integrante de la Familia! " + name + " ha encontrado su nuevo hogar!", imageUrl);
+                            db.collection("noticias")
+                                    .document(nid)
+                                    .set(news);
+                        });
+            });
+
+
+            Log.d("a", "a");
             new AlertDialog.Builder(requireContext())
                     .setTitle("Aprobar Adoptante?")
                     .setMessage("Se iniciará el proceso de adopción con el usuario")
                     .setPositiveButton("Ir", (dialog, which) -> {
                         db.collection("mascotas")
                                 .document(animalId)
-                                .update("appliedBy", Collections.singletonList(uid),"estado","Adoptada")
+                                .update("appliedBy", Collections.singletonList(uid), "estado", "Adoptada")
                                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "appliedBy updated with UID"))
                                 .addOnFailureListener(e -> Log.e("Firestore", "Error updating appliedBy", e));
 
@@ -91,6 +106,24 @@ public class UserDetail extends Fragment {
 
         return view;
     }
+
+    private void loadAnimalData(String animalId, AnimalDataCallback callback) {
+        db.collection("mascotas").document(animalId).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String name = documentSnapshot.getString("nombre");
+                String imageUrl = documentSnapshot.getString("imageUrl");
+                callback.onDataLoaded(name, imageUrl);
+            } else {
+                callback.onDataLoaded(null, null); // Handle nulls safely
+            }
+        }).addOnFailureListener(e -> {
+            callback.onDataLoaded(null, null); // On error
+        });
+    }
+
+
+
+
 
     private void loadDetail() {
         db.collection("users").document(uid).get()
@@ -194,4 +227,11 @@ public class UserDetail extends Fragment {
             }
         });
     }
+
+    public interface AnimalDataCallback {
+        void onDataLoaded(String name, String imageUrl);
+    }
+
+
+
 }

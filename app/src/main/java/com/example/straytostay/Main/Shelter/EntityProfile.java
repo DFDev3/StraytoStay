@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
+
 public class EntityProfile extends Fragment {
 
     private FirebaseAuth mAuth;
@@ -57,6 +59,8 @@ public class EntityProfile extends Fragment {
         tvPhone = view.findViewById(R.id.profile_phone);
         tvAddress = view.findViewById(R.id.profile_address);
         tvNit = view.findViewById(R.id.profile_NIT);
+        tvServices = view.findViewById(R.id.profile_services);
+        tvProducts = view.findViewById(R.id.profile_products);
 
         etName = view.findViewById(R.id.edit_profile_name);
         etEmail = view.findViewById(R.id.edit_profile_email);
@@ -100,7 +104,6 @@ public class EntityProfile extends Fragment {
         etPhone.setVisibility(View.VISIBLE);
         etEmail.setVisibility(View.VISIBLE);
         etAddress.setVisibility(View.VISIBLE);
-        etNit.setVisibility(View.VISIBLE);
 
         etName.setText(tvName.getText().toString());
         etEmail.setText(tvName.getText().toString());
@@ -182,20 +185,44 @@ public class EntityProfile extends Fragment {
     private void populateProfile(DocumentSnapshot snapshot) {
         String name = snapshot.getString("name");
         String email = snapshot.getString("email");
-        String phone = snapshot.getString("phone");
         String address = snapshot.getString("address");
         String nit = snapshot.getString("nit");
         String image = snapshot.getString("imageUrl");
 
+        List<String> phoneList = (List<String>) snapshot.get("phoneList");
+        String phone = (phoneList != null && !phoneList.isEmpty()) ? phoneList.get(0) : "";
+
+        List<String> serviciosList = (List<String>) snapshot.get("services");
+        if (serviciosList != null && !serviciosList.isEmpty()) {
+            String servicios = String.join(" • ", serviciosList);
+            tvServices.setText(servicios);
+        } else {
+            tvServices.setText("No hay información sobre servicios.");
+        }
+
+        List<String> productosList = (List<String>) snapshot.get("products");
+        if (productosList != null && !productosList.isEmpty()) {
+            String productos = String.join(" • ", productosList);
+            tvProducts.setText(productos);
+        } else {
+            tvProducts.setText("No hay información sobre productos.");
+        }
+
+
         if (image != null && !image.isEmpty()) {
             loadImage(image);
+        }
+
+        if (snapshot.getString("nit") == null || snapshot.getString("nit").isEmpty()){
+            tvNit.setVisibility(getView().GONE);
+            tvServices.setVisibility(getView().GONE);
+            tvProducts.setVisibility(getView().GONE);
         }
 
         tvName.setText((name != null ? name : "No name provided"));
         tvEmail.setText(email != null ? email : "Email not provided");
         tvPhone.setText(phone != null ? phone : "Phone not registered");
         tvAddress.setText(address != null ? address : "Address not registered");
-        tvNit.setText(nit != null ? nit : "Not a vet");
 
         etName.setText(name != null ? name : "");
         etEmail.setText(email != null ? email : "");

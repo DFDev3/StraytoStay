@@ -8,6 +8,17 @@
     android:background="#FFFFFF"
     android:gravity="center_horizontal">
 
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Bienvenido a StrayToStay!"
+        android:textColor="#005BA1"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="16dp" />
+
 
     <!-- Contenido central de la pantalla -->
     <ScrollView
@@ -17,26 +28,16 @@
         android:paddingHorizontal="24dp"
         android:paddingTop="8dp">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Aquí va el contenido específico de la vista de inicio -->
-            <TextView
-                android:id="@+id/welcomeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¡Bienvenido a StrayToStay!"
-                android:textColor="#005BA1"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="16dp" />
-
-            <!-- Puedes agregar más Cards, imágenes o RecyclerViews aquí -->
-            <include layout="@layout/comp_card_news" />
-            <include layout="@layout/comp_card_news" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHomeNews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <!-- ... -->
 

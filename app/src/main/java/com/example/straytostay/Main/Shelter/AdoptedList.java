@@ -34,7 +34,7 @@ public class AdoptedList extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.shelter_postedpet_fragment, container, false);
+        View view = inflater.inflate(R.layout.shelter_adoptedlist_fragment, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerMascotasShelter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

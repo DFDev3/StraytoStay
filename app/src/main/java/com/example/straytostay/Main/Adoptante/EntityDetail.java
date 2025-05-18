@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.straytostay.Classes.Mascota;
+import com.example.straytostay.Classes.Noticia;
 import com.example.straytostay.Main.Adapters.MascotaAdapter;
 import com.example.straytostay.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,22 +31,21 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class EntityDetail extends Fragment {
 
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final List<Mascota> mascotasList = new ArrayList<>();
     private ImageView imagen;
     private Button btnAceptar, btnRechazar, btnEliminar;
     private TextView textNombre, textPhone, textEmail, textAddress, textNit, textMision, textMisionLabel, textWebsite, textServicios, textServiciosLabel, textProductos, textProductosLabel;
     private LinearLayout phoneListContainer;
     private String uid;
     private FirebaseFirestore db;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
     private RecyclerView recyclerView;
     private MascotaAdapter adapter;
-    private List<Mascota> mascotasList = new ArrayList<>();
     private String RefugioName;
+
     public static EntityDetail newInstance(String uid) {
         EntityDetail fragment = new EntityDetail();
         Bundle args = new Bundle();
@@ -63,7 +63,7 @@ public class EntityDetail extends Fragment {
 
         if (getArguments() != null) {
             uid = getArguments().getString("uid");
-            Log.e("||||||||||||||||","uid: " + uid);
+            Log.e("||||||||||||||||", "uid: " + uid);
         }
 
         // Admin
@@ -136,7 +136,6 @@ public class EntityDetail extends Fragment {
     private void populateShelterUI(DocumentSnapshot snapshot) {
 
 
-
         String name = snapshot.getString("name");
         String email = snapshot.getString("email");
         String address = snapshot.getString("address");
@@ -190,6 +189,18 @@ public class EntityDetail extends Fragment {
                         requireActivity().onBackPressed(); // Optional: go back after update
                     })
                     .addOnFailureListener(e -> Log.e("EntityDetail", "Error al aceptar", e));
+
+            Noticia noticia = new Noticia();
+            db.collection("noticias").add(noticia)
+                    .addOnSuccessListener(newsSnapshot -> {
+
+                        String nid = newsSnapshot.getId();
+
+                        Noticia news = new Noticia(nid, "El refugio " + name + " se ha unido a nuestra familia",imageUrl);
+                        db.collection("noticias")
+                                .document(nid)
+                                .set(news);
+                    });
         });
 
         btnRechazar.setOnClickListener(v -> {
@@ -204,9 +215,6 @@ public class EntityDetail extends Fragment {
     }
 
 
-
-
-
     private void loadImage(String base64Image) {
         // Decode the Base64 string into a Bitmap
         try {
@@ -219,12 +227,11 @@ public class EntityDetail extends Fragment {
         }
     }
 
-    private void checkStatus(DocumentSnapshot snapshot){
+    private void checkStatus(DocumentSnapshot snapshot) {
 
         int verified = snapshot.getLong("verified").intValue();
 
         Log.d("CheckStatus", "Verified: " + verified);
-
 
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -236,11 +243,11 @@ public class EntityDetail extends Fragment {
                             int adminId = adminSnapshot.getLong("adminId").intValue();
 
                             Log.d("CheckStatus", "AdminId: " + adminId);
-                            if (adminId == 2){
-                                btnEliminar.setVisibility(View.VISIBLE);
-                                if (verified == 0){
-                                btnAceptar.setVisibility(View.VISIBLE);
-                                btnRechazar.setVisibility(View.VISIBLE);}
+                            if (adminId == 2) {
+                                if (verified == 0) {
+                                    btnAceptar.setVisibility(View.VISIBLE);
+                                    btnRechazar.setVisibility(View.VISIBLE);
+                                }
                             }
                         } else {
                             Toast.makeText(getContext(), "Profile not found", Toast.LENGTH_SHORT).show();
@@ -295,7 +302,8 @@ public class EntityDetail extends Fragment {
                 });
     }
 
-    private void verificarEntidad(){}
+    private void verificarEntidad() {
+    }
 }
 
 
