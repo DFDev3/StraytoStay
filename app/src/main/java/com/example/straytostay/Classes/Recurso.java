@@ -4,15 +4,15 @@ public class Recurso {
 
     private String rid, tipo, titulo, link, imagenUrl;
 
-    public Recurso() {
-    }
-
     public Recurso(String rid, String tipo, String titulo, String link, String imagenUrl) {
         this.rid = rid;
         this.tipo = tipo;
         this.titulo = titulo;
         this.link = link;
         this.imagenUrl = imagenUrl;
+    }
+
+    public Recurso() {
     }
 
     public String getRid() {

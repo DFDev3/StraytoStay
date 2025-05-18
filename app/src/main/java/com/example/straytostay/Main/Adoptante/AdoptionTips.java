@@ -66,7 +66,6 @@ public class AdoptionTips extends Fragment {
         recyclerVideos.setAdapter(videosAdapter);
 
 
-
         recyclerLibros.setVisibility(View.GONE);
         recyclerRevistas.setVisibility(View.GONE);
         recyclerVideos.setVisibility(View.GONE);
@@ -148,7 +147,7 @@ public class AdoptionTips extends Fragment {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Recurso revista = doc.toObject(Recurso.class);
                         revista.setRid(doc.getId()); // UID for passing to detail
-                        librosList.add(revista);
+                        revistasList.add(revista);
                     }
                     revistasAdapter.notifyDataSetChanged();
                 })

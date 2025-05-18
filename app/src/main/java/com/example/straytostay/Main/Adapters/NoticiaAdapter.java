@@ -89,6 +89,7 @@ public class NoticiaAdapter extends RecyclerView.Adapter<NoticiaAdapter.NoticiaV
             super(itemView);
             image = itemView.findViewById(R.id.cardImage);
             titulo = itemView.findViewById(R.id.cardTitle);
+            descripcion = itemView.findViewById(R.id.cardDescription);
         }
     }
 }

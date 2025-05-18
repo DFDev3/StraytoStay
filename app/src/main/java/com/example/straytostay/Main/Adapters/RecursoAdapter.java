@@ -40,7 +40,7 @@ public class RecursoAdapter extends RecyclerView.Adapter<RecursoAdapter.RecursoV
     @NonNull
     @Override
     public RecursoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comp_card_news, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comp_card_tips, parent, false);
         return new RecursoViewHolder(view);
     }
 
@@ -55,6 +55,10 @@ public class RecursoAdapter extends RecyclerView.Adapter<RecursoAdapter.RecursoV
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
             holder.image.setImageBitmap(bitmap);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            listener.onItemClick(recurso);
+        });
     }
 
     private Bitmap loadImage(String base64Image) {
