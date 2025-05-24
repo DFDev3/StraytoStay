@@ -103,50 +103,60 @@ public class EntityAnimalDetail extends Fragment {
         cargarDatosAnimal();
 
         // Call this when initializing the view
-        db.collection("mascotas").document(animalId).get().addOnSuccessListener(documentSnapshot -> {
-            if (!documentSnapshot.exists()) return;
-
-            String estado = documentSnapshot.getString("estado");
-            isOpen = estado != null && estado.equals("Abierta");
-
-            showApplication();  // Now it's safe to call
+        fetchEstado(animalId, isOpenResult -> {
+            isOpen = isOpenResult;
+            showApplication();
 
             btnToggleEstudio.setOnClickListener(v -> {
                 isOpen = !isOpen;
                 showApplication();
-                Log.d("AtVerified?", "bool - " + isOpen);
+
+                // Update Firestore ONLY here
+                FirebaseFirestore.getInstance()
+                        .collection("mascotas")
+                        .document(animalId)
+                        .update("estado", isOpen ? "Abierta" : "Cerrada")
+                        .addOnSuccessListener(unused -> Log.d("ToggleEstado", "Estado updated"))
+                        .addOnFailureListener(e -> Log.e("ToggleEstado", "Error updating estado", e));
             });
+
         });
 
         showApplication();
 
-        btnToggleEstudio.setOnClickListener(v -> {
-            isOpen = !isOpen;
-            showApplication();
-            Log.d("AtVerified?", "bool - " + isOpen);
-        });
-
-
         return view;
     }
 
-    private void showApplication(){
-        if (isOpen){
-            btnToggleEstudio.setText("ABRIR POSTULACIONES");
-            db.collection("mascotas").document(animalId).update("estado","Cerrada");
-        } else {
-            btnToggleEstudio.setText("CERRAR POSTULACIONES");
-            db.collection("mascotas").document(animalId).update("estado","Abierta");
-        }
+    public interface EstadoCallback {
+        void onEstadoLoaded(boolean isOpen);
     }
 
-    private boolean checkStatus(){
-        db.collection("mascotas").document(animalId).get().addOnSuccessListener(documentSnapshot -> {
-            if (!documentSnapshot.exists()) return;
-            String estado = documentSnapshot.getString("estado");
-            boolean isOpen = estado != null && estado.equals("Abierta");
-        });
-        return isOpen;
+    private void fetchEstado(String animalId, EstadoCallback callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("mascotas").document(animalId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (!documentSnapshot.exists()) {
+                        callback.onEstadoLoaded(false); // default to false
+                        return;
+                    }
+
+                    String estado = documentSnapshot.getString("estado");
+                    boolean isOpen = estado != null && estado.equals("Abierta");
+                    callback.onEstadoLoaded(isOpen);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("fetchEstado", "Error fetching estado", e);
+                    callback.onEstadoLoaded(false);
+                });
+    }
+
+    private void showApplication() {
+        if (isOpen) {
+            btnToggleEstudio.setText("CERRAR POSTULACIONES");
+        } else {
+            btnToggleEstudio.setText("ABRIR POSTULACIONES");
+        }
     }
 
     private void cargarDatosAnimal() {

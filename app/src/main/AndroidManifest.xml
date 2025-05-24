@@ -28,10 +28,7 @@
             android:name=".Main.Admin.BaseAdmin"
             android:exported="false" />
         <activity
-            android:name=".Main.Adoptante.BaseAdoptante"
-            android:exported="false" />
-        <activity
-            android:name=".StartUp.RegisterShelterActivity"
+            android:name=".StartUp.RegisterEntity"
             android:exported="false" />
         <activity
             android:name=".StartUp.RegisterUser"

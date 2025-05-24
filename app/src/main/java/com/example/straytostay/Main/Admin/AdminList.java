@@ -65,10 +65,11 @@ public class AdminList extends Fragment {
 
             }
         });
+        cargarAdmins();
         return view;
     }
 
-    private void cargarAdmins(String adminNombre) {
+    private void cargarAdmins() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users")
